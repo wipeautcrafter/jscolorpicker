@@ -351,6 +351,7 @@ export class ColorPicker extends EventEmitter<{
   }
 
   private applyFormat() {
+    if (!this.$formats) return
     this.$formats.forEach(($fmt) => $fmt.removeAttribute('aria-checked'))
 
     const $checked = this.$formats.find(($fmt) => $fmt.dataset.format === this._format)
