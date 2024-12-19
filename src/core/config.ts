@@ -81,7 +81,7 @@ export const defaultConfig: PickerConfig = {
   theme: null,
   toggleStyle: 'button',
   animationDuration: 150,
-  defaultColor: '#D95D5D',
+  defaultColor: null,
   swatches: [
     '#D95D5D',
     '#DB8525',

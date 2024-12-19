@@ -107,10 +107,9 @@ export class ColorPicker extends EventEmitter<{
     this.bindDialog()
 
     // Apply default values
-    if (this.config.defaultColor) {
-      this._setAppliedColor(new Color(this.config.defaultColor))
-    }
+    this._setAppliedColor(new Color(this.config.defaultColor ?? this.$input.value))
     this.setFormat(this.config.defaultFormat)
+    this.clear()
 
     // Apply config styles
     this.$root.style.setProperty('--cp-delay', `${this.config.animationDuration}ms`)
