@@ -57,11 +57,6 @@ export interface PickerConfig {
   commitMode: 'instant' | 'confirm'
 
   /**
-   * Whether to show the cancel button.
-   */
-  showCancelButton: boolean
-
-  /**
    * Whether to show the submit button.
    */
   showSubmitButton: boolean
@@ -98,7 +93,6 @@ export const defaultConfig: PickerConfig = {
   formats: ['hex', 'rgb', 'hsv', 'hsl'],
   defaultFormat: 'hex',
   commitMode: 'confirm',
-  showCancelButton: true,
   showSubmitButton: true,
   showClearButton: true,
   dismissOnOutsideClick: true,

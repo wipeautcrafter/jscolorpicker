@@ -243,17 +243,6 @@ export class ColorPicker extends EventEmitter<{
       $eyedrop.remove()
     }
 
-    // When clicking cancel, dismiss dialog
-    const $cancel = this.$root.querySelector('.cp_cancel') as HTMLButtonElement
-    if (this.config.showCancelButton) {
-      $cancel.addEventListener('click', () => {
-        this.close()
-        this.emit('cancel')
-      })
-    } else {
-      $cancel.remove()
-    }
-
     // When clicking submit, dismiss dialog
     const $submit = this.$root.querySelector('.cp_submit') as HTMLButtonElement
     if (this.config.showSubmitButton) {
