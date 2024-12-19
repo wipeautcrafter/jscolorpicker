@@ -1,0 +1,12 @@
+body {
+  margin: 0;
+  height: 200vh;
+  padding-top: 65vh;
+
+  display: flex;
+  justify-content: center;
+}
+
+:root[data-cp-theme='dark'] {
+  background-color: #212529;
+}
