@@ -107,9 +107,10 @@ export class ColorPicker extends EventEmitter<{
     this.bindDialog()
 
     // Apply default values
-    this._setAppliedColor(new Color(this.config.defaultColor ?? this.$input.value))
-    this.setFormat(this.config.defaultFormat)
-    this.clear()
+    this.setFormat(this.config.defaultFormat, false)
+    const defaultColorInput = this.config.defaultColor ?? this.$input.value
+    this._setAppliedColor(new Color(defaultColorInput), false)
+    if (!defaultColorInput) this.clear(false)
 
     // Apply config styles
     this.$root.style.setProperty('--cp-delay', `${this.config.animationDuration}ms`)
@@ -216,7 +217,7 @@ export class ColorPicker extends EventEmitter<{
     if (this.config.enableAlpha) {
       this.alphaSlider = new Slider($alphaTrack as HTMLElement)
       this.alphaSlider.on('drag', (x) => {
-        this._setColor(this._color.alpha(x))
+        this._setColor(this._color.alpha(x), true)
       })
     } else {
       $alphaTrack.remove()
@@ -226,8 +227,8 @@ export class ColorPicker extends EventEmitter<{
     this.$colorInput.addEventListener('input', () => {
       try {
         const { color, format } = parseColor(this.$colorInput.value)
-        this._setColor(new Color(color), false)
         this.setFormat(format, false)
+        this._setColor(new Color(color), false)
       } catch (error) {
         // do nothing
       }
@@ -286,71 +287,65 @@ export class ColorPicker extends EventEmitter<{
     if (emit) this.emit('close')
   }
 
-  clear(emit = false) {
+  clear(emit = true) {
     this._unset = true
-    this.applyColor()
-    this.applyPreview()
-    if (emit) this.emit('pick', null)
+    this.updateAppliedColor(emit)
   }
 
-  setColor(color: Color | number[] | string | null, emit = false) {
+  setColor(color: Color | number[] | string | null, emit = true) {
     if (!color) return this.clear(emit)
     this._setAppliedColor(new Color(color), emit)
+  }
+
+  setFormat(format: ColorFormat, update = true) {
+    this._format = format
+    this.updateFormat()
+    if (update) {
+      this.updateColor()
+      this.updateAppliedColor()
+    }
+  }
+
+  private _setColor(color: Color, updateInput = true) {
+    if (this.config.commitMode === 'instant') {
+      return this._setAppliedColor(color)
+    }
+
+    this._color = color
+    this.updateColor(updateInput)
   }
 
   private _setAppliedColor(color: Color, emit = true) {
     this._unset = false
     this._color = color
     this._appliedColor = color
-    this.applyColor()
 
-    if (emit) this.emit('pick', this.color)
+    this.updateColor(true)
+    this.updateAppliedColor(emit)
   }
 
-  private _setColor(color: Color, updateInput = true) {
-    this._color = color
-    if (this.config.commitMode === 'instant') {
-      this._unset = false
-      this._appliedColor = color
-      this.emit('pick', this.color)
-    }
-    this.applyColor(updateInput)
-  }
-
-  private applyColor(updateInput = true) {
-    this.$root.classList.toggle('cp_unset', this._unset)
-    this.$root.style.setProperty(
-      '--cp-applied',
-      this._unset ? 'transparent' : this._appliedColor.toString()
-    )
-
+  private updateColor(updateInput = true) {
     this.$root.style.setProperty('--cp-color', this._color.toString())
     this.$root.style.setProperty('--cp-hue', this._color.hue().toString())
     this.$root.style.setProperty('--cp-alpha', this._color.alpha().toString())
-
     this.hsvSlider.moveThumb(this._color.saturation(), 1 - this._color.value())
     this.hueSlider.moveThumb(this._color.hue() / 360)
     this.alphaSlider?.moveThumb(this._color.alpha())
 
-    this.applyPreview(updateInput)
+    if (updateInput) this.$colorInput.value = this._color.string(this._format)
   }
 
-  private setFormat(format: ColorFormat, applyPreview = true) {
-    this._format = format
-    this.applyFormat()
-    if (applyPreview) this.applyPreview()
-  }
+  private updateAppliedColor(emit = true) {
+    this.$root.classList.toggle('cp_unset', this._unset)
+    this.$root.style.setProperty('--cp-applied', this.color?.toString() ?? 'transparent')
 
-  private applyPreview(updateInput = true) {
-    if (!this._format || !this._color) return
-
-    const value = this._color.string(this._format)
-
+    const value = this._appliedColor.string(this._format)
     this.$input.value = this._unset ? '-' : value
-    if (updateInput) this.$colorInput.value = value
+
+    if (emit) this.emit('pick', this.color)
   }
 
-  private applyFormat() {
+  private updateFormat() {
     if (!this.$formats) return
     this.$formats.forEach(($fmt) => $fmt.removeAttribute('aria-checked'))
 
