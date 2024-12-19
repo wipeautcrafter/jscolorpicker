@@ -78,10 +78,9 @@ export class ColorPicker extends EventEmitter<{
     }
 
     if (!this.$root) {
-      const $parent = $from.parentElement!
-      $parent.removeChild($from)
       this.$root = document.createElement('div')
-      $parent.append(this.$root)
+      $from.insertAdjacentElement('beforebegin', this.$root)
+      $from.parentElement?.removeChild($from)
     }
     this.$root.classList.add('cp_root')
 
