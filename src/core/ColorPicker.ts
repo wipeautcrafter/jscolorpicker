@@ -125,6 +125,13 @@ export class ColorPicker extends EventEmitter<{
         const $target = event.target as HTMLElement
         if (!$target.closest('.cp_root')) this.close()
       })
+
+    if (this.config.dismissOnEscape)
+      window.addEventListener('keydown', (event) => {
+        if (!this._open || event.key !== 'Escape') return
+        const $focus = document.querySelector(':focus')
+        if (!$focus || $focus.closest('.cp_root')) this.close()
+      })
   }
 
   toggle(value = !this._open) {

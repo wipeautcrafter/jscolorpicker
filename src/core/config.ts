@@ -70,6 +70,11 @@ export interface PickerConfig {
    * Whether the color picker should close when clicking outside of it.
    */
   dismissOnOutsideClick: boolean
+
+  /**
+   * Whether the color picker should close when escape is pressed.
+   */
+  dismissOnEscape: boolean
 }
 
 export const defaultConfig: PickerConfig = {
@@ -96,4 +101,5 @@ export const defaultConfig: PickerConfig = {
   showSubmitButton: true,
   showClearButton: true,
   dismissOnOutsideClick: true,
+  dismissOnEscape: true,
 }
