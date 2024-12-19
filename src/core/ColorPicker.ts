@@ -139,6 +139,9 @@ export class ColorPicker extends EventEmitter<{
   open(emit = true) {
     this._open = true
 
+    window.cp_openPicker?.close()
+    window.cp_openPicker = this
+
     this.$dialog.style.removeProperty('display')
     setTimeout(() => this.$root.classList.add('cp_open'))
 
@@ -277,6 +280,7 @@ export class ColorPicker extends EventEmitter<{
 
   close(emit = true) {
     this._open = false
+    window.cp_openPicker = undefined
     this.$root.classList.remove('cp_open')
 
     setTimeout(() => {
