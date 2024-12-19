@@ -87,7 +87,7 @@ To create a color picker, first create an input, button or div:
 Next instantiate the ColorPicker, passing an element to bind to and an (optional) configuration:
 
 ```js
-const picker = new FontPicker('#picker', {
+const picker = new ColorPicker('#picker', {
   commitMode: 'instant',
   showSubmitButton: 'false',
 })
