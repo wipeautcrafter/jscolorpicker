@@ -130,8 +130,11 @@
   position: absolute;
   z-index: 1055;
 
-  background-color: var(--cp-body-bg);
   width: auto;
+  min-width: 16rem;
+  max-width: 22rem;
+
+  background-color: var(--cp-body-bg);
 
   border: 1px solid var(--cp-border-color-translucent);
   border-radius: var(--cp-border-radius-lg);
@@ -263,6 +266,11 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.25rem;
+  justify-content: center;
+}
+
+.cp_swatches:empty {
+  display: none;
 }
 
 .cp_swatch {
@@ -290,11 +298,15 @@
   gap: 0.25rem;
 }
 
+.cp_formats:empty {
+  display: none;
+}
+
 .cp_format {
   flex: 1 1 auto;
   border: none;
   border-radius: 9999px;
-  padding: 0.25rem;
+  padding: 0.25rem 0.5rem;
 
   background: none;
   color: var(--cp-body-color);

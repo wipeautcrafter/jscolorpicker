@@ -4,7 +4,6 @@ const picker = new ColorPicker('button', {
   enableAlpha: true,
   commitMode: 'instant',
   toggleStyle: 'button',
-  showCancelButton: false,
 })
 
 picker.on('open', () => console.log('open'))
