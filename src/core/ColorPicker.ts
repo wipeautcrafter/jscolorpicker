@@ -1,3 +1,4 @@
+import { EventEmitter } from 'events'
 import { createPopper } from '@popperjs/core'
 import { Color } from '../lib/Color'
 
@@ -12,18 +13,20 @@ import type { PickerConfig } from './config'
 import type { ColorFormat } from '../lib/Color'
 import type { Instance as PopperInstance } from '@popperjs/core'
 
-export class ColorPicker {
-  get open() {
+export class ColorPicker extends EventEmitter<{
+  open: []
+  pick: [Color | null]
+  cancel: []
+  close: []
+}> {
+  get isOpen() {
     return this._open
   }
-  set open(value: boolean) {
-    this.toggle(value)
-  }
   get color() {
-    return this._color
+    return this._unset ? null : this._appliedColor
   }
-  set color(value: Color) {
-    this.setColor(value)
+  get selectedColor() {
+    return this._color
   }
   get element() {
     return this.$root
@@ -33,12 +36,13 @@ export class ColorPicker {
   }
 
   private _open = false
-  private _color: Color
+  private _unset = true
   private _format: ColorFormat
+  private _color: Color
+  private _appliedColor: Color
 
   private config: PickerConfig
   private popper?: PopperInstance
-  private previousColor: Color
 
   private $root: HTMLElement
   private $dialog: HTMLElement
@@ -53,6 +57,7 @@ export class ColorPicker {
   private $colorInput: HTMLInputElement
 
   constructor($from?: HTMLElement | string | null, config: Partial<PickerConfig> = {}) {
+    super()
     this.config = { ...defaultConfig, ...config }
 
     // Parse query and ensure element exists
@@ -98,12 +103,14 @@ export class ColorPicker {
     this.$dialog = this.$root.querySelector('.cp_dialog')!
     this.$colorInput = this.$root.querySelector('.cp_input')!
 
-    this.closeDialog()
+    this.close()
     this.populateDialog()
     this.bindDialog()
 
     // Apply default values
-    this.setColor(new Color(this.config.defaultColor))
+    if (this.config.defaultColor) {
+      this._setAppliedColor(new Color(this.config.defaultColor))
+    }
     this.setFormat(this.config.defaultFormat)
 
     // Apply config styles
@@ -117,21 +124,20 @@ export class ColorPicker {
       window.addEventListener('pointerdown', (event) => {
         if (!this._open) return
         const $target = event.target as HTMLElement
-        if (!$target.closest('.cp_root')) this.closeDialog()
+        if (!$target.closest('.cp_root')) this.close()
       })
   }
 
   toggle(value = !this._open) {
     if (value) {
-      this.openDialog()
+      this.open()
     } else {
-      this.closeDialog()
+      this.close()
     }
   }
 
-  private openDialog() {
+  open(emit = true) {
     this._open = true
-    this.previousColor = this._color.clone()
 
     this.$dialog.style.removeProperty('display')
     setTimeout(() => this.$root.classList.add('cp_open'))
@@ -148,6 +154,8 @@ export class ColorPicker {
         },
       ],
     })
+
+    if (emit) this.emit('open')
   }
 
   private populateDialog() {
@@ -160,7 +168,7 @@ export class ColorPicker {
         $swatch.dataset.color = swatch
 
         const color = new Color($swatch.dataset.color!)
-        $swatch.addEventListener('click', () => this.setColor(color))
+        $swatch.addEventListener('click', () => this._setColor(color))
 
         return $swatch
       })
@@ -187,20 +195,20 @@ export class ColorPicker {
     const $hsvTrack = this.$root.querySelector('.cp_area-hsv')
     this.hsvSlider = new Slider($hsvTrack as HTMLElement)
     this.hsvSlider.on('drag', (x, y) => {
-      this.setColor(this._color.saturation(x).value(1 - y))
+      this._setColor(this._color.saturation(x).value(1 - y))
     })
 
     const $hueTrack = this.$root.querySelector('.cp_slider-hue')
     this.hueSlider = new Slider($hueTrack as HTMLElement)
     this.hueSlider.on('drag', (x) => {
-      this.setColor(this._color.hue(x * 360))
+      this._setColor(this._color.hue(x * 360))
     })
 
     const $alphaTrack = this.$root.querySelector('.cp_slider-alpha') as HTMLElement
     if (this.config.enableAlpha) {
       this.alphaSlider = new Slider($alphaTrack as HTMLElement)
       this.alphaSlider.on('drag', (x) => {
-        this.setColor(this._color.alpha(x))
+        this._setColor(this._color.alpha(x))
       })
     } else {
       $alphaTrack.remove()
@@ -210,7 +218,7 @@ export class ColorPicker {
     this.$colorInput.addEventListener('input', () => {
       try {
         const { color, format } = parseColor(this.$colorInput.value)
-        this.setColor(new Color(color), false)
+        this._setColor(new Color(color), false)
         this.setFormat(format, false)
       } catch (error) {
         // do nothing
@@ -225,7 +233,7 @@ export class ColorPicker {
           .open()
           .then((result) => {
             const color = new Color(result.sRGBHex)
-            this.setColor(color)
+            this._setColor(color)
           })
           .catch(() => {})
       })
@@ -233,27 +241,41 @@ export class ColorPicker {
       $eyedrop.remove()
     }
 
-    // When clicking cancel, the color should be set to the color chosen prior to opening the modal
+    // When clicking cancel, dismiss dialog
     const $cancel = this.$root.querySelector('.cp_cancel') as HTMLButtonElement
     if (this.config.showCancelButton) {
       $cancel.addEventListener('click', () => {
-        this.setColor(this.previousColor)
-        this.closeDialog()
+        this.close()
+        this.emit('cancel')
       })
     } else {
       $cancel.remove()
     }
 
-    // When clicking submit, nothing has to happen: the modal just has to close
+    // When clicking submit, dismiss dialog
     const $submit = this.$root.querySelector('.cp_submit') as HTMLButtonElement
     if (this.config.showSubmitButton) {
-      $submit.addEventListener('click', () => this.closeDialog())
+      $submit.addEventListener('click', () => {
+        this._setAppliedColor(this._color)
+        this.close()
+      })
     } else {
       $submit.remove()
     }
+
+    // When clicking clear, set color to null
+    const $clear = this.$root.querySelector('.cp_clear') as HTMLButtonElement
+    if (this.config.showClearButton) {
+      $clear.addEventListener('click', () => {
+        this.clear()
+        this.close()
+      })
+    } else {
+      $clear.remove()
+    }
   }
 
-  private closeDialog() {
+  close(emit = true) {
     this._open = false
     this.$root.classList.remove('cp_open')
 
@@ -262,38 +284,78 @@ export class ColorPicker {
       this.popper?.destroy()
       this.popper = undefined
     }, this.config.animationDuration)
+
+    if (emit) this.emit('close')
   }
 
-  private setColor(color: Color, updateInput = true) {
-    this._color = color
+  clear(emit = false) {
+    this._unset = true
+    this.applyColor()
+    this.applyPreview()
+    if (emit) this.emit('pick', null)
+  }
 
-    this.hsvSlider.moveThumb(this._color.saturation(), 1 - this._color.value())
-    this.hueSlider.moveThumb(this._color.hue() / 360)
-    this.alphaSlider?.moveThumb(this._color.alpha())
+  setColor(color: Color | number[] | string | null, emit = false) {
+    if (!color) return this.clear(emit)
+    this._setAppliedColor(new Color(color), emit)
+  }
+
+  private _setAppliedColor(color: Color, emit = true) {
+    this._unset = false
+    this._color = color
+    this._appliedColor = color
+    this.applyColor()
+
+    if (emit) this.emit('pick', this.color)
+  }
+
+  private _setColor(color: Color, updateInput = true) {
+    this._color = color
+    if (this.config.commitMode === 'instant') {
+      this._unset = false
+      this._appliedColor = color
+      this.emit('pick', this.color)
+    }
+    this.applyColor(updateInput)
+  }
+
+  private applyColor(updateInput = true) {
+    this.$root.classList.toggle('cp_unset', this._unset)
+    this.$root.style.setProperty(
+      '--cp-applied',
+      this._unset ? 'transparent' : this._appliedColor.toString()
+    )
 
     this.$root.style.setProperty('--cp-color', this._color.toString())
     this.$root.style.setProperty('--cp-hue', this._color.hue().toString())
     this.$root.style.setProperty('--cp-alpha', this._color.alpha().toString())
 
-    this.updatePreview(updateInput)
+    this.hsvSlider.moveThumb(this._color.saturation(), 1 - this._color.value())
+    this.hueSlider.moveThumb(this._color.hue() / 360)
+    this.alphaSlider?.moveThumb(this._color.alpha())
+
+    this.applyPreview(updateInput)
   }
 
-  private updatePreview(updateInput = true) {
+  private setFormat(format: ColorFormat, applyPreview = true) {
+    this._format = format
+    this.applyFormat()
+    if (applyPreview) this.applyPreview()
+  }
+
+  private applyPreview(updateInput = true) {
     if (!this._format || !this._color) return
 
     const value = this._color.string(this._format)
 
-    this.$input.value = value
+    this.$input.value = this._unset ? '-' : value
     if (updateInput) this.$colorInput.value = value
   }
 
-  private setFormat(format: ColorFormat, updatePreview = true) {
-    this._format = format
+  private applyFormat() {
     this.$formats.forEach(($fmt) => $fmt.removeAttribute('aria-checked'))
 
-    const $checked = this.$formats.find(($fmt) => $fmt.dataset.format === format)
+    const $checked = this.$formats.find(($fmt) => $fmt.dataset.format === this._format)
     if ($checked) $checked.ariaChecked = 'true'
-
-    if (updatePreview) this.updatePreview()
   }
 }

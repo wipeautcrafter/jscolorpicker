@@ -20,7 +20,7 @@ export interface PickerConfig {
   /**
    * The default initial color.
    */
-  defaultColor: string
+  defaultColor: string | null
 
   /**
    * A list of predefined color swatches available for selection.

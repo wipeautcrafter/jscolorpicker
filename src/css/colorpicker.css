@@ -36,6 +36,7 @@
   --cp-bg-checker: repeating-conic-gradient(#808080 0% 25%, transparent 0% 50%) 50% / 0.5rem 0.5rem;
 
   /* Scripted */
+  --cp-applied: transparent;
   --cp-color: transparent;
   --cp-hue: 0;
   --cp-alpha: 0;
@@ -69,7 +70,7 @@
   bottom: 0;
 
   background-color: var(--cp-border-color);
-  color: var(--cp-primary);
+  color: var(--cp-body-color);
   font-size: 0.85rem;
 
   padding: 0.1rem 0 0 0.15rem;
@@ -85,7 +86,13 @@
   width: 100%;
   height: 100%;
   inset: 0;
-  background-color: var(--cp-color);
+  background-color: var(--cp-applied);
+}
+.cp_unset .cp_toggle::before {
+  background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjU2IDI1NiI+PHBhdGggZmlsbD0iI2ZmZmZmZmFhIiBkPSJNMjA4LjQ5IDE5MS41MWExMiAxMiAwIDAgMS0xNyAxN0wxMjggMTQ1bC02My41MSA2My40OWExMiAxMiAwIDAgMS0xNy0xN0wxMTEgMTI4TDQ3LjUxIDY0LjQ5YTEyIDEyIDAgMCAxIDE3LTE3TDEyOCAxMTFsNjMuNTEtNjMuNTJhMTIgMTIgMCAwIDEgMTcgMTdMMTQ1IDEyOFoiLz48L3N2Zz4=),
+    #d95d5d;
+  background-size: auto 100%;
+  background-position: 100% 50%;
 }
 .cp_caret > svg {
   transition: transform var(--cp-delay) ease-in-out;
@@ -121,6 +128,7 @@
 /* Picker dialog */
 .cp_dialog {
   position: absolute;
+  z-index: 1055;
 
   background-color: var(--cp-body-bg);
   width: auto;
