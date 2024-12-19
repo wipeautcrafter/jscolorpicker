@@ -19,20 +19,41 @@ export class ColorPicker extends EventEmitter<{
   cancel: []
   close: []
 }> {
+  /**
+   * Get whether the dialog is currently open.
+   */
   get isOpen() {
     return this._open
   }
+  /**
+   * Get the picked color.
+   */
   get color() {
     return this._unset ? null : this._appliedColor
   }
+  /**
+   * Get the color currently selected in the dialog.
+   */
   get selectedColor() {
     return this._color
   }
+  /**
+   * Get the color output format.
+   */
+  get format() {
+    return this._format
+  }
+  /**
+   * Get the root element for this picker.
+   */
   get element() {
     return this.$root
   }
-  get format() {
-    return this._format
+  /**
+   * Get the input the picker is bound to.
+   */
+  get input() {
+    return this.$input
   }
 
   private _open = false
@@ -56,6 +77,11 @@ export class ColorPicker extends EventEmitter<{
   private $formats: HTMLElement[]
   private $colorInput: HTMLInputElement
 
+  /**
+   * Create a new ColorPicker instance.
+   * @param $from The element or query to bind to. (leave null to create one)
+   * @param config The picker configuration.
+   */
   constructor($from?: HTMLElement | string | null, config: Partial<PickerConfig> = {}) {
     super()
     this.config = { ...defaultConfig, ...config }
@@ -134,14 +160,23 @@ export class ColorPicker extends EventEmitter<{
       })
   }
 
-  toggle(value = !this._open) {
+  /**
+   * Toggle whether the picker dialog is opened.
+   * @param value Force open or closed?
+   * @param emit Emit event?
+   */
+  toggle(value = !this._open, emit = true) {
     if (value) {
-      this.open()
+      this.open(emit)
     } else {
-      this.close()
+      this.close(emit)
     }
   }
 
+  /**
+   * Open the picker dialog.
+   * @param emit Emit event?
+   */
   open(emit = true) {
     this._open = true
 
@@ -273,6 +308,10 @@ export class ColorPicker extends EventEmitter<{
     }
   }
 
+  /**
+   * Close the picker dialog.
+   * @param emit Emit event?
+   */
   close(emit = true) {
     this._open = false
     window.cp_openPicker = undefined
@@ -287,16 +326,30 @@ export class ColorPicker extends EventEmitter<{
     if (emit) this.emit('close')
   }
 
+  /**
+   * Clear the picker color value.
+   * @param emit Emit event?
+   */
   clear(emit = true) {
     this._unset = true
     this.updateAppliedColor(emit)
   }
 
+  /**
+   * Set the picker color value.
+   * @param color The new color value.
+   * @param emit Emit event?
+   */
   setColor(color: Color | number[] | string | null, emit = true) {
     if (!color) return this.clear(emit)
     this._setAppliedColor(new Color(color), emit)
   }
 
+  /**
+   * Set the picker color format.
+   * @param format The color format.
+   * @param update Update colors?
+   */
   setFormat(format: ColorFormat, update = true) {
     this._format = format
     this.updateFormat()
