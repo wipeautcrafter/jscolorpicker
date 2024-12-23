@@ -75,7 +75,7 @@ This exposes the `ColorPicker` class (on window).
 Please import the ESM bundle using the `import` directive in your script:
 
 ```js
-import { ColorPicker } from 'colorpicker.js'
+import ColorPicker from 'colorpicker.js'
 ```
 
 This allows you to use `ColorPicker` directly.

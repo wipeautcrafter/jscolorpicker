@@ -1,4 +1,4 @@
-import { ColorPicker } from '../src/index'
+import ColorPicker from '../src/index'
 
 const picker = new ColorPicker('button', {
   toggleStyle: 'input',
