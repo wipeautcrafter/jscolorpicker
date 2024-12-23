@@ -20,6 +20,7 @@ A color picker component supporting light and dark color schemes, swatches, inst
     - [Dialog Only](#dialog-only)
   - [Documentation](#documentation)
   - [Customization](#customization)
+    - [Color Scheme](#color-scheme)
     - [Toggle Size](#toggle-size)
     - [CSS Variables](#css-variables)
   - [Developing](#developing)
@@ -45,7 +46,11 @@ TODO
 
 ## Screenshots
 
-TODO
+|            |                         Light                          |                         Dark                          |
+| :--------- | :----------------------------------------------------: | :---------------------------------------------------: |
+| **Button** | <img src="screenshots/button-light.png" width="50" />  | <img src="screenshots/button-dark.png" width="50" />  |
+| **Input**  | <img src="screenshots/input-light.png" width="300" />  | <img src="screenshots/input-dark.png" width="300" />  |
+| **Dialog** | <img src="screenshots/dialog-light.png" width="300" /> | <img src="screenshots/dialog-dark.png" width="300" /> |
 
 ## Installation
 
@@ -150,6 +155,17 @@ const color = await picker.openOnce(true)
 For all methods and properties, please view the [documentation](DOCUMENTATION.md).
 
 ## Customization
+
+### Color Scheme
+
+You can change the color scheme by using one of the following dataset properties:
+
+```html
+<html data-cp-theme="dark"></html>
+<html data-bs-theme="dark"></html>
+<html data-cp-theme="light"></html>
+<html data-bs-theme="light"></html>
+```
 
 ### Toggle Size
 

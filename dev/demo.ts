@@ -2,17 +2,8 @@ import ColorPicker from '../src/index'
 
 const picker = new ColorPicker('button', {
   toggleStyle: 'input',
-  swatches: [
-    '#D95D5D',
-    '#DB8525',
-    '#E8C43C',
-    '#BED649',
-    '#9ECBDB',
-    '#6399A5',
-    '#C771A1',
-    '#FFFFFF',
-    '#000000',
-  ],
+  defaultColor: 'salmon',
+  swatches: ['#D95D5D', '#DB8525', '#E8C43C', '#BED649', '#9ECBDB', '#6399A5', '#C771A1'],
 })
 
 picker.on('open', () => console.log('open'))
