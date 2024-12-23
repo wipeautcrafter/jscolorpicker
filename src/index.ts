@@ -1,3 +1,4 @@
 import './css/colorpicker.css'
+import { ColorPicker } from './core/ColorPicker'
 
-export { ColorPicker } from './core/ColorPicker'
+export default ColorPicker

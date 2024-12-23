@@ -23,7 +23,7 @@ declare interface Color {
 
 declare type ColorFormat = 'hex' | 'rgb' | 'hsv' | 'hsl';
 
-export declare class ColorPicker extends EventEmitter<{
+declare class ColorPicker extends EventEmitter<{
     open: [];
     opened: [];
     close: [];
@@ -122,6 +122,7 @@ export declare class ColorPicker extends EventEmitter<{
     private updateAppliedColor;
     private updateFormat;
 }
+export default ColorPicker;
 
 declare interface PickerConfig {
     /**

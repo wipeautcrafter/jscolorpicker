@@ -6,8 +6,8 @@ import { Slider } from './Slider'
 import { defaultConfig } from './config'
 import { parseColor } from '../lib/colorParse'
 
-import toggleContent from '../html/toggle.html?raw'
-import dialogContent from '../html/dialog.html?raw'
+import toggleContent from '../html/toggle.min.html?raw'
+import dialogContent from '../html/dialog.min.html?raw'
 
 import type { PickerConfig } from './config'
 import type { ColorFormat } from '../lib/Color'

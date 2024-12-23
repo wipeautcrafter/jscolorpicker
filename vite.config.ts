@@ -9,18 +9,13 @@ export default defineConfig({
   build: {
     lib: {
       entry: resolve(import.meta.dirname, 'src/index.ts'),
-      name: 'window',
+      name: 'ColorPicker',
       fileName: 'colorpicker',
       formats: ['iife', 'es'],
     },
     minify: true,
     rollupOptions: {
-      external: ['bootstrap'],
       output: {
-        extend: true,
-        globals: {
-          bootstrap: 'bootstrap',
-        },
         assetFileNames: 'colorpicker.[ext]',
       },
     },
