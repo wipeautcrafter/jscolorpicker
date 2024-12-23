@@ -27,7 +27,7 @@ export class ColorPicker extends EventEmitter<{
    * Get whether the dialog is currently open.
    */
   get isOpen() {
-    return !!this.$dialog
+    return this._open
   }
   /**
    * Get the picked color.
@@ -54,6 +54,7 @@ export class ColorPicker extends EventEmitter<{
     return this.$target
   }
 
+  private _open = false
   private _unset = true
   private _format: ColorFormat
 
@@ -118,14 +119,14 @@ export class ColorPicker extends EventEmitter<{
     // Dismissal events
     if (this.config.dismissOnOutsideClick)
       window.addEventListener('pointerdown', (event) => {
-        if (!this.isOpen) return
+        if (!this._open) return
         const $toggle = event.target as HTMLElement
         if (!$toggle.closest('.cp_dialog')) this.close()
       })
 
     if (this.config.dismissOnEscape)
       window.addEventListener('keydown', (event) => {
-        if (!this.isOpen || event.key !== 'Escape') return
+        if (!this._open || event.key !== 'Escape') return
         const $focus = document.querySelector(':focus')
         if (!$focus || $focus.closest('.cp_dialog')) this.close()
       })
@@ -136,7 +137,7 @@ export class ColorPicker extends EventEmitter<{
    * @param value Force open or closed?
    * @param emit Emit event?
    */
-  toggle(value = !this.isOpen, emit = true) {
+  toggle(value = !this._open, emit = true) {
     if (value) {
       this.open(emit)
     } else {
@@ -149,13 +150,15 @@ export class ColorPicker extends EventEmitter<{
    * @param emit Emit event?
    */
   open(emit = true) {
-    if (this.isOpen) return
+    if (this._open) return
+    this._open = true
+
     currentlyOpen?.close()
     currentlyOpen = this
 
     // Create dialog
     document.body.insertAdjacentHTML('beforeend', dialogContent)
-    this.$dialog = document.querySelector('.cp_dialog')!
+    this.$dialog = document.body.lastElementChild as HTMLElement
     this.$colorInput = this.$dialog.querySelector('.cp_input')!
 
     this.populateDialog()
@@ -321,18 +324,23 @@ export class ColorPicker extends EventEmitter<{
    * @param emit Emit event?
    */
   close(emit = true) {
-    if (!this.isOpen) return
-    currentlyOpen = undefined
+    if (!this._open) return
+    this._open = false
 
-    this.$dialog?.classList.remove('cp_open')
+    currentlyOpen = undefined
     this.$toggle?.classList.remove('cp_open')
 
-    setTimeout(() => {
-      this.$dialog?.remove()
-      this.popper?.destroy()
+    const $dialog = this.$dialog
+    const popper = this.popper
 
-      this.$dialog = undefined
-      this.popper = undefined
+    this.$dialog = undefined
+    this.popper = undefined
+
+    $dialog?.classList.remove('cp_open')
+
+    setTimeout(() => {
+      $dialog?.remove()
+      popper?.destroy()
 
       if (emit) this.emit('closed')
     }, this.getAnimationDuration())
