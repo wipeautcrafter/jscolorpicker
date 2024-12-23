@@ -112,8 +112,13 @@ If you want to open or close the dialog, use their respective methods:
 picker.open()
 picker.close()
 picker.toggle()
-
 picker.destroy()
+```
+
+You can also open it as a prompt, returning a promise once the picker is closed:
+
+```js
+const color = await picker.prompt()
 ```
 
 ### Setting Color
@@ -140,14 +145,14 @@ picker.on('cancel', () => console.log('cancel'))
 
 ### Dialog Only
 
-If you want to open a picker dialog without a toggle, (optionally) destroying it after, you can use the `toggleStyle` option with the `openOnce()` method:
+If you want to open a picker dialog without a toggle, (optionally) destroying it after, you can use the `toggleStyle` option with the `prompt()` method:
 
 ```js
 const picker = new ColorPicker(target, {
   toggleStyle: 'hidden',
 })
 
-const color = await picker.openOnce(true)
+const color = await picker.prompt(true)
 ```
 
 ## Documentation

@@ -2,7 +2,8 @@ import ColorPicker from '../src/index'
 
 const picker = new ColorPicker('button', {
   toggleStyle: 'input',
-  defaultColor: 'salmon',
+  commitMode: 'confirm',
+  defaultColor: '#000',
   swatches: ['#D95D5D', '#DB8525', '#E8C43C', '#BED649', '#9ECBDB', '#6399A5', '#C771A1'],
 })
 
@@ -11,6 +12,6 @@ picker.on('opened', () => console.log('opened'))
 picker.on('close', () => console.log('close'))
 picker.on('closed', () => console.log('closed'))
 picker.on('cancel', () => console.log('cancel'))
-picker.on('pick', (color) => console.log('pick', color?.toString() ?? 'none'))
+picker.on('pick', (color) => console.log(`pick ${color}`))
 
-picker.openOnce().then(console.log)
+picker.prompt().then(console.log)

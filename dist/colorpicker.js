@@ -1343,11 +1343,10 @@ class un extends yt.EventEmitter {
   /**
    * Open the picker, returning a promise with the chosen color, optionally destroying it after.
    */
-  openOnce(r = !1) {
+  prompt(r = !1) {
     return new Promise((n) => {
-      this.once("closed", () => {
-        r && this.destroy(), n(this.color);
-      }), this.open();
+      let i = null;
+      this.on("pick", (o) => i = o), this.once("close", () => n(i)), r && this.once("closed", () => this.destroy()), this.open();
     });
   }
   populateDialog() {

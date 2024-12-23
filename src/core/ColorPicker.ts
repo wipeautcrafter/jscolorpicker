@@ -192,12 +192,14 @@ export class ColorPicker extends EventEmitter<{
   /**
    * Open the picker, returning a promise with the chosen color, optionally destroying it after.
    */
-  openOnce(destroy = false): Promise<Color | null> {
+  prompt(destroy = false): Promise<Color | null> {
     return new Promise((resolve) => {
-      this.once('closed', () => {
-        if (destroy) this.destroy()
-        resolve(this.color)
-      })
+      let color: Color | null = null
+
+      this.on('pick', (newColor) => (color = newColor))
+      this.once('close', () => resolve(color))
+      if (destroy) this.once('closed', () => this.destroy())
+
       this.open()
     })
   }

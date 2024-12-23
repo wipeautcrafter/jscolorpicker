@@ -87,7 +87,7 @@ declare class ColorPicker extends EventEmitter<{
     /**
      * Open the picker, returning a promise with the chosen color, optionally destroying it after.
      */
-    openOnce(destroy?: boolean): Promise<Color | null>;
+    prompt(destroy?: boolean): Promise<Color | null>;
     private populateDialog;
     private bindDialog;
     private getAnimationDuration;
