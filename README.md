@@ -1,10 +1,10 @@
-# ColorPicker
+# JS ColorPicker
 
 A color picker component supporting light and dark color schemes, swatches, instant and submit modes, multiple color formats, CSS color parsing and way more.
 
 ## Table of Contents
 
-- [ColorPicker](#colorpicker)
+- [JS ColorPicker](#js-colorpicker)
   - [Table of Contents](#table-of-contents)
   - [Features](#features)
   - [Live Demo](#live-demo)
@@ -14,11 +14,14 @@ A color picker component supporting light and dark color schemes, swatches, inst
     - [ESM Bundle](#esm-bundle)
   - [Getting Started](#getting-started)
     - [Creation](#creation)
-    - [Opening and Closing](#opening-and-closing)
+    - [Opening](#opening)
     - [Setting Color](#setting-color)
     - [Binding Events](#binding-events)
-    - [Open Once](#open-once)
+    - [Dialog Only](#dialog-only)
   - [Documentation](#documentation)
+  - [Customization](#customization)
+    - [Toggle Size](#toggle-size)
+    - [CSS Variables](#css-variables)
   - [Developing](#developing)
 
 ## Features
@@ -96,7 +99,7 @@ const picker = new ColorPicker('#picker', {
 })
 ```
 
-### Opening and Closing
+### Opening
 
 If you want to open or close the dialog, use their respective methods:
 
@@ -130,7 +133,7 @@ picker.on('pick', (color) => console.log('pick', color))
 picker.on('cancel', () => console.log('cancel'))
 ```
 
-### Open Once
+### Dialog Only
 
 If you want to open a picker dialog without a toggle, (optionally) destroying it after, you can use the `toggleStyle` option with the `openOnce()` method:
 
@@ -145,6 +148,46 @@ const color = await picker.openOnce(true)
 ## Documentation
 
 For all methods and properties, please view the [documentation](DOCUMENTATION.md).
+
+## Customization
+
+### Toggle Size
+
+The size of the toggle button can be changed by altering the `height` property:
+
+```css
+.color-picker {
+  height: 2rem;
+}
+```
+
+### CSS Variables
+
+You can alter a variety of styles using their respective CSS variables:
+
+```css
+:root {
+  /* Animations (set to 0s to disable) */
+  --cp-delay: 150ms;
+
+  /* Metrics */
+  --cp-border-radius-sm: 0.25rem;
+  --cp-border-radius-lg: 0.5rem;
+  --cp-swatch-width: 2rem;
+
+  /* Colors */
+  --cp-body-bg: #fff;
+  --cp-body-color: #212529;
+  --cp-body-color-rgb: 33, 37, 41;
+  --cp-border-color: #dee2e6;
+  --cp-border-color-translucent: rgba(0, 0, 0, 0.175);
+  --cp-tertiary-color: rgba(33, 37, 41, 0.5);
+
+  /* Shadows */
+  --cp-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  --cp-box-shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+```
 
 ## Developing
 
