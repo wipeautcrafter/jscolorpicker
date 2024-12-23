@@ -1275,7 +1275,8 @@ class un extends yt.EventEmitter {
     const i = this.config.defaultColor ?? ((o = this.$toggle) == null ? void 0 : o.dataset.color);
     this._setCurrentColor(new q(i), !1), i || this.clear(!1), this.config.dismissOnOutsideClick && window.addEventListener("pointerdown", (s) => {
       if (!this._open) return;
-      s.target.closest(".cp_dialog") || this.close();
+      const a = s.target;
+      !a.closest(".cp_dialog") && !a.closest(".color-picker") && this.close();
     }), this.config.dismissOnEscape && window.addEventListener("keydown", (s) => {
       if (!this._open || s.key !== "Escape") return;
       const a = document.querySelector(":focus");

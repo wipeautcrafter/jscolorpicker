@@ -121,7 +121,7 @@ export class ColorPicker extends EventEmitter<{
       window.addEventListener('pointerdown', (event) => {
         if (!this._open) return
         const $toggle = event.target as HTMLElement
-        if (!$toggle.closest('.cp_dialog')) this.close()
+        if (!$toggle.closest('.cp_dialog') && !$toggle.closest('.color-picker')) this.close()
       })
 
     if (this.config.dismissOnEscape)
