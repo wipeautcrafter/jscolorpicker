@@ -47,6 +47,10 @@ export declare class ColorPicker extends EventEmitter<{
      * Get the color output format.
      */
     get format(): ColorFormat;
+    /**
+     * Get the target element.
+     */
+    get element(): HTMLElement;
     private _unset;
     private _format;
     private _color;

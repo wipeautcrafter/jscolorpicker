@@ -29,6 +29,10 @@ class ColorPicker extends EventEmitter<{
    */
   get format(): ColorFormat
   /**
+   * Get the target element.
+   */
+  get element(): HTMLElement
+  /**
    * Create a new ColorPicker instance.
    * @param $from The element or query to bind to. (leave null to create one)
    * @param config The picker configuration.

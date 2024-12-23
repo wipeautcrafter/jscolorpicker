@@ -1348,6 +1348,12 @@ class un extends yt.EventEmitter {
     return this._format;
   }
   /**
+   * Get the target element.
+   */
+  get element() {
+    return this.$target;
+  }
+  /**
    * Toggle whether the picker dialog is opened.
    * @param value Force open or closed?
    * @param emit Emit event?

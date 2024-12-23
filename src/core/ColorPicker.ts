@@ -47,6 +47,12 @@ export class ColorPicker extends EventEmitter<{
   get format() {
     return this._format
   }
+  /**
+   * Get the target element.
+   */
+  get element() {
+    return this.$target
+  }
 
   private _unset = true
   private _format: ColorFormat
