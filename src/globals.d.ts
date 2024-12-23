@@ -12,7 +12,6 @@ declare global {
 
   interface Window {
     EyeDropper?: typeof EyeDropper
-    cp_openPicker?: ColorPicker
   }
 }
 

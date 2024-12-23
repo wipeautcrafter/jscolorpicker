@@ -13,17 +13,23 @@ A color picker component supporting light and dark color schemes, swatches, inst
     - [IIFE Bundle](#iife-bundle)
     - [ESM Bundle](#esm-bundle)
   - [Getting Started](#getting-started)
+    - [Creation](#creation)
+    - [Opening and Closing](#opening-and-closing)
+    - [Setting Color](#setting-color)
+    - [Binding Events](#binding-events)
+    - [Open Once](#open-once)
   - [Documentation](#documentation)
   - [Developing](#developing)
 
 ## Features
 
 - 🌙 Dark and light themes
+- 🪞 Preview
 - 🌈 Swatches
 - 🫥 Alpha slider
 - 💧 EyeDropper
 - 📜 CSS color parsing (including names!)
-- 🔼 Button and input styles
+- 🔼 Button, input and hidden styles
 - 🔢 Multiple color formats
 - ⏱️ Customizable animation speed
 - ✅ Apply color immediately, or on submit
@@ -73,15 +79,12 @@ This allows you to use `ColorPicker` directly.
 
 ## Getting Started
 
-To create a color picker, first create an input, button or div:
+### Creation
+
+To create a color picker, first create a button:
 
 ```html
-<!-- bind to input -->
-<input id="picker" autocomplete="off" />
-<!-- OR: bind to button -->
 <button id="picker"></button>
-<!-- OR: bind to div -->
-<div id="picker"></div>
 ```
 
 Next instantiate the ColorPicker, passing an element to bind to and an (optional) configuration:
@@ -91,6 +94,52 @@ const picker = new ColorPicker('#picker', {
   commitMode: 'instant',
   showSubmitButton: 'false',
 })
+```
+
+### Opening and Closing
+
+If you want to open or close the dialog, use their respective methods:
+
+```js
+picker.open()
+picker.close()
+picker.toggle()
+
+picker.destroy()
+```
+
+### Setting Color
+
+If you want to set or clear the color, you can use the `.setColor()` and `.clear()` methods:
+
+```js
+picker.setColor('#ff00ff')
+picker.clear()
+```
+
+### Binding Events
+
+If you want to listen to certain events, like opening or picking, use the `.on()` method:
+
+```js
+picker.on('open', () => console.log('open'))
+picker.on('opened', () => console.log('opened'))
+picker.on('close', () => console.log('close'))
+picker.on('closed', () => console.log('closed'))
+picker.on('pick', (color) => console.log('pick', color))
+picker.on('cancel', () => console.log('cancel'))
+```
+
+### Open Once
+
+If you want to open a picker dialog without a toggle, (optionally) destroying it after, you can use the `toggleStyle` option with the `openOnce()` method:
+
+```js
+const picker = new ColorPicker(target, {
+  toggleStyle: 'hidden',
+})
+
+const color = await picker.openOnce(true)
 ```
 
 ## Documentation

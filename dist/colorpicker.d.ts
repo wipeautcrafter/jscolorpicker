@@ -1,4 +1,5 @@
 import { EventEmitter } from 'events';
+import { Placement } from '@popperjs/core';
 
 declare class Color {
     private readonly color;
@@ -24,9 +25,11 @@ declare type ColorFormat = 'hex' | 'rgb' | 'hsv' | 'hsl';
 
 export declare class ColorPicker extends EventEmitter<{
     open: [];
+    opened: [];
+    close: [];
+    closed: [];
     pick: [Color | null];
     cancel: [];
-    close: [];
 }> {
     /**
      * Get whether the dialog is currently open.
@@ -44,30 +47,21 @@ export declare class ColorPicker extends EventEmitter<{
      * Get the color output format.
      */
     get format(): ColorFormat;
-    /**
-     * Get the root element for this picker.
-     */
-    get element(): HTMLElement;
-    /**
-     * Get the input the picker is bound to.
-     */
-    get input(): HTMLInputElement;
-    private _open;
     private _unset;
     private _format;
     private _color;
-    private _appliedColor;
+    private _newColor;
     private config;
     private popper?;
-    private $root;
-    private $dialog;
-    private $button;
-    private $input;
-    private hsvSlider;
-    private hueSlider;
+    private $target;
+    private $dialog?;
+    private $toggle?;
+    private $toggleText?;
+    private hsvSlider?;
+    private hueSlider?;
     private alphaSlider?;
-    private $formats;
-    private $colorInput;
+    private $formats?;
+    private $colorInput?;
     /**
      * Create a new ColorPicker instance.
      * @param $from The element or query to bind to. (leave null to create one)
@@ -85,13 +79,22 @@ export declare class ColorPicker extends EventEmitter<{
      * @param emit Emit event?
      */
     open(emit?: boolean): void;
+    /**
+     * Open the picker, returning a promise with the chosen color, optionally destroying it after.
+     */
+    openOnce(destroy?: boolean): Promise<Color | null>;
     private populateDialog;
     private bindDialog;
+    private getAnimationDuration;
     /**
      * Close the picker dialog.
      * @param emit Emit event?
      */
     close(emit?: boolean): void;
+    /**
+     * Destroy the picker and revert all HTML to what it was.
+     */
+    destroy(): void;
     /**
      * Clear the picker color value.
      * @param emit Emit event?
@@ -109,8 +112,8 @@ export declare class ColorPicker extends EventEmitter<{
      * @param update Update colors?
      */
     setFormat(format: ColorFormat, update?: boolean): void;
-    private _setColor;
-    private _setAppliedColor;
+    private _setNewColor;
+    private _setCurrentColor;
     private updateColor;
     private updateAppliedColor;
     private updateFormat;
@@ -118,18 +121,9 @@ export declare class ColorPicker extends EventEmitter<{
 
 declare interface PickerConfig {
     /**
-     * Specifies the theme for the color picker.
-     * If set to null, the theme is inferred from data attributes on the element.
+     * Determines the appearance of the toggle element, either as a button, an input field or nothing at all.
      */
-    theme: 'dark' | 'light' | null;
-    /**
-     * Determines the appearance of the toggle element, either as a button or an input field.
-     */
-    toggleStyle: 'button' | 'input';
-    /**
-     * Duration of the toggle animation in milliseconds.
-     */
-    animationDuration: number;
+    toggleStyle: 'button' | 'input' | 'hidden';
     /**
      * The default initial color.
      */
@@ -139,6 +133,10 @@ declare interface PickerConfig {
      * Pass null or false to disable swatches.
      */
     swatches: string[] | null | false;
+    /**
+     * Whether to enable the side-by-side color preview.
+     */
+    enablePreview: boolean;
     /**
      * Whether to enable the alpha (transparency) slider.
      */
@@ -178,6 +176,14 @@ declare interface PickerConfig {
      * Whether the color picker should close when escape is pressed.
      */
     dismissOnEscape: boolean;
+    /**
+     * How to place the dialog relative to the toggle.
+     */
+    dialogPlacement: Placement;
+    /**
+     * How big the gap between the toggle and dialog should be.
+     */
+    dialogOffset: number;
 }
 
 export { }

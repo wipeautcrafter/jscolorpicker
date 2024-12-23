@@ -1,21 +1,11 @@
 import type { ColorFormat } from '../lib/Color'
+import type { Placement } from '@popperjs/core'
 
 export interface PickerConfig {
   /**
-   * Specifies the theme for the color picker.
-   * If set to null, the theme is inferred from data attributes on the element.
+   * Determines the appearance of the toggle element, either as a button, an input field or nothing at all.
    */
-  theme: 'dark' | 'light' | null
-
-  /**
-   * Determines the appearance of the toggle element, either as a button or an input field.
-   */
-  toggleStyle: 'button' | 'input'
-
-  /**
-   * Duration of the toggle animation in milliseconds.
-   */
-  animationDuration: number
+  toggleStyle: 'button' | 'input' | 'hidden'
 
   /**
    * The default initial color.
@@ -27,6 +17,11 @@ export interface PickerConfig {
    * Pass null or false to disable swatches.
    */
   swatches: string[] | null | false
+
+  /**
+   * Whether to enable the side-by-side color preview.
+   */
+  enablePreview: boolean
 
   /**
    * Whether to enable the alpha (transparency) slider.
@@ -75,24 +70,23 @@ export interface PickerConfig {
    * Whether the color picker should close when escape is pressed.
    */
   dismissOnEscape: boolean
+
+  /**
+   * How to place the dialog relative to the toggle.
+   */
+  dialogPlacement: Placement
+
+  /**
+   * How big the gap between the toggle and dialog should be.
+   */
+  dialogOffset: number
 }
 
 export const defaultConfig: PickerConfig = {
-  theme: null,
   toggleStyle: 'button',
-  animationDuration: 150,
   defaultColor: null,
-  swatches: [
-    '#D95D5D',
-    '#DB8525',
-    '#E8C43C',
-    '#BED649',
-    '#9ECBDB',
-    '#6399A5',
-    '#C771A1',
-    '#FFFFFF',
-    '#000000',
-  ],
+  swatches: null,
+  enablePreview: false,
   enableAlpha: true,
   enableEyedropper: true,
   formats: ['hex', 'rgb', 'hsv', 'hsl'],
@@ -102,4 +96,6 @@ export const defaultConfig: PickerConfig = {
   showClearButton: true,
   dismissOnOutsideClick: true,
   dismissOnEscape: true,
+  dialogPlacement: 'top',
+  dialogOffset: 8,
 }

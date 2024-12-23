@@ -10,3 +10,9 @@ body {
 :root[data-cp-theme='dark'] {
   background-color: #212529;
 }
+
+.container {
+  width: 100%;
+  max-width: 16rem;
+  padding: 1rem;
+}

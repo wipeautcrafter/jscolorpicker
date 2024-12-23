@@ -4,31 +4,13 @@ Below, you can find all type declarations, including the events.
 A more verbose and in-depth documentation will be provided soon.
 
 ```ts
-declare class Color {
-  constructor(from?: Color | number[] | string)
-  string(format: ColorFormat): string
-  toString(): string
-  clone(): Color
-}
-
-declare interface Color {
-  hue(): number
-  hue(value: number): Color
-  saturation(): number
-  saturation(value: number): Color
-  value(): number
-  value(value: number): Color
-  alpha(): number
-  alpha(value: number): Color
-}
-
-declare type ColorFormat = 'hex' | 'rgb' | 'hsv' | 'hsl'
-
-export declare class ColorPicker extends EventEmitter<{
+class ColorPicker extends EventEmitter<{
   open: []
+  opened: []
+  close: []
+  closed: []
   pick: [Color | null]
   cancel: []
-  close: []
 }> {
   /**
    * Get whether the dialog is currently open.
@@ -47,15 +29,6 @@ export declare class ColorPicker extends EventEmitter<{
    */
   get format(): ColorFormat
   /**
-   * Get the root element for this picker.
-   */
-  get element(): HTMLElement
-  /**
-   * Get the input the picker is bound to.
-   */
-  get input(): HTMLInputElement
-
-  /**
    * Create a new ColorPicker instance.
    * @param $from The element or query to bind to. (leave null to create one)
    * @param config The picker configuration.
@@ -73,10 +46,18 @@ export declare class ColorPicker extends EventEmitter<{
    */
   open(emit?: boolean): void
   /**
+   * Open the picker, returning a promise with the chosen color, optionally destroying it after.
+   */
+  openOnce(destroy?: boolean): Promise<Color | null>
+  /**
    * Close the picker dialog.
    * @param emit Emit event?
    */
   close(emit?: boolean): void
+  /**
+   * Destroy the picker and revert all HTML to what it was.
+   */
+  destroy(): void
   /**
    * Clear the picker color value.
    * @param emit Emit event?
@@ -96,20 +77,11 @@ export declare class ColorPicker extends EventEmitter<{
   setFormat(format: ColorFormat, update?: boolean): void
 }
 
-declare interface PickerConfig {
+interface PickerConfig {
   /**
-   * Specifies the theme for the color picker.
-   * If set to null, the theme is inferred from data attributes on the element.
+   * Determines the appearance of the toggle element, either as a button, an input field or nothing at all.
    */
-  theme: 'dark' | 'light' | null
-  /**
-   * Determines the appearance of the toggle element, either as a button or an input field.
-   */
-  toggleStyle: 'button' | 'input'
-  /**
-   * Duration of the toggle animation in milliseconds.
-   */
-  animationDuration: number
+  toggleStyle: 'button' | 'input' | 'hidden'
   /**
    * The default initial color.
    */
@@ -119,6 +91,10 @@ declare interface PickerConfig {
    * Pass null or false to disable swatches.
    */
   swatches: string[] | null | false
+  /**
+   * Whether to enable the side-by-side color preview.
+   */
+  enablePreview: boolean
   /**
    * Whether to enable the alpha (transparency) slider.
    */
@@ -158,5 +134,29 @@ declare interface PickerConfig {
    * Whether the color picker should close when escape is pressed.
    */
   dismissOnEscape: boolean
+  /**
+   * How to place the dialog relative to the toggle.
+   */
+  dialogPlacement: Placement
+  /**
+   * How big the gap between the toggle and dialog should be.
+   */
+  dialogOffset: number
+}
+
+type ColorFormat = 'hex' | 'rgb' | 'hsv' | 'hsl'
+
+class Color {
+  string(format: ColorFormat): string
+  toString(): string
+  clone(): Color
+  hue(): number
+  hue(value: number): Color
+  saturation(): number
+  saturation(value: number): Color
+  value(): number
+  value(value: number): Color
+  alpha(): number
+  alpha(value: number): Color
 }
 ```
