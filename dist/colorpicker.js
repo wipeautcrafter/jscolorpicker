@@ -1229,6 +1229,7 @@ class je extends Xt {
 }
 const sn = {
   toggleStyle: "button",
+  container: null,
   defaultColor: null,
   swatches: null,
   enablePreview: !1,
@@ -1326,8 +1327,11 @@ class un extends yt.EventEmitter {
    * @param emit Emit event?
    */
   open(r = !0) {
-    var n;
-    this._open || (this._open = !0, ce == null || ce.close(), ce = this, document.body.insertAdjacentHTML("beforeend", ln), this.$dialog = document.body.lastElementChild, this.$colorInput = this.$dialog.querySelector(".cp_input"), this.populateDialog(), this.bindDialog(), this.setFormat(this.config.defaultFormat, !1), this.updateColor(), this.popper = Gr(this.$target, this.$dialog, {
+    var i;
+    if (this._open) return;
+    this._open = !0, ce == null || ce.close(), ce = this;
+    const n = this.config.container || document.body;
+    n.insertAdjacentHTML("beforeend", ln), this.$dialog = n.lastElementChild, this.$colorInput = this.$dialog.querySelector(".cp_input"), this.populateDialog(), this.bindDialog(), this.setFormat(this.config.defaultFormat, !1), this.updateColor(), this.popper = Gr(this.$target, this.$dialog, {
       placement: this.config.dialogPlacement,
       strategy: "absolute",
       modifiers: [
@@ -1338,7 +1342,7 @@ class un extends yt.EventEmitter {
           }
         }
       ]
-    }), (n = this.$toggle) == null || n.classList.add("cp_open"), setTimeout(() => this.$dialog.classList.add("cp_open")), r && (this.emit("open"), setTimeout(() => this.emit("opened"), this.getAnimationDuration())));
+    }), (i = this.$toggle) == null || i.classList.add("cp_open"), setTimeout(() => this.$dialog.classList.add("cp_open")), r && (this.emit("open"), setTimeout(() => this.emit("opened"), this.getAnimationDuration()));
   }
   /**
    * Open the picker, returning a promise with the chosen color, optionally destroying it after.

@@ -87,6 +87,10 @@ interface PickerConfig {
    */
   toggleStyle: 'button' | 'input' | 'hidden'
   /**
+   * Container to append the picker to. Defaults to document.body
+   */
+  container: HTMLElement | null
+  /**
    * The default initial color.
    */
   defaultColor: string | null

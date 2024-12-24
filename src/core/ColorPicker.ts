@@ -157,8 +157,9 @@ export class ColorPicker extends EventEmitter<{
     currentlyOpen = this
 
     // Create dialog
-    document.body.insertAdjacentHTML('beforeend', dialogContent)
-    this.$dialog = document.body.lastElementChild as HTMLElement
+    const container = this.config.container || document.body
+    container.insertAdjacentHTML('beforeend', dialogContent)
+    this.$dialog = container.lastElementChild as HTMLElement
     this.$colorInput = this.$dialog.querySelector('.cp_input')!
 
     this.populateDialog()
