@@ -96,6 +96,7 @@
   aspect-ratio: 1;
   position: relative;
   background: var(--cp-bg-checker);
+  border-radius: 3px;
 }
 
 .cp_toggle::before {
