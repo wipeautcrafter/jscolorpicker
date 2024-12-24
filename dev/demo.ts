@@ -4,6 +4,7 @@ const picker = new ColorPicker('#picker', {
   toggleStyle: 'input',
   commitMode: 'instant',
   defaultColor: 'red',
+  defaultFormat: 'rgb',
   enablePreview: true,
   swatches: ['#d95d5d', '#db8525', '#e8c43c', '#bed649', '#9ecbdb', '#6399a5', '#c771a1'],
 })
