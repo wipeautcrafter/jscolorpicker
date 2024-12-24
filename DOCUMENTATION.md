@@ -98,38 +98,38 @@ class ColorPicker extends EventEmitter<{
 interface PickerConfig {
   /**
    * Determines the appearance of the toggle element, either as a button, an input field or nothing at all.
-	* Default: 'button'
+   * Default: 'button'
    */
   toggleStyle: 'button' | 'input' | 'hidden'
 
   /**
    * Container to append the picker to. Defaults to document.body
-	* Default: null (which implies: document.body)
+   * Default: null (which implies: document.body)
    */
   container: HTMLElement | null
 
   /**
    * The default initial color.
-	* Default: null
+   * Default: null
    */
   defaultColor: string | null
 
   /**
    * A list of predefined color swatches available for selection.
    * Pass null or false to disable swatches.
-	* Default: null
+   * Default: null
    */
   swatches: string[] | null | false
 
   /**
    * Whether to enable the side-by-side color preview.
-	* Default: false
+   * Default: false
    */
   enablePreview: boolean
 
   /**
    * Whether to enable the alpha (transparency) slider.
-	* Default: true
+   * Default: true
    */
   enableAlpha: boolean
 
@@ -143,13 +143,13 @@ interface PickerConfig {
   /**
    * The set of color formats the user can choose from.
    * Pass null or false to disable format selection.
-	* Default: ['hex', 'rgb', 'hsv', 'hsl']
+   * Default: ['hex', 'rgb', 'hsv', 'hsl']
    */
   formats: ColorFormat[] | null | false
 
   /**
    * The default color format to use when multiple formats are enabled.
-	* Default: 'hex'
+   * Default: 'hex'
    */
   defaultFormat: ColorFormat
 
@@ -157,43 +157,43 @@ interface PickerConfig {
    * Determines how the chosen color is applied:
    * - 'instant': applies immediately as the user picks a color
    * - 'confirm': requires user confirmation (e.g., via a submit button)
-	* Default: 'confirm'
+   * Default: 'confirm'
    */
   commitMode: 'instant' | 'confirm'
 
   /**
    * Whether to show the submit button.
-	* Default: true
+   * Default: true
    */
   showSubmitButton: boolean
 
   /**
    * Whether to show the clear button for resetting the color.
-	* Default: true
+   * Default: true
    */
   showClearButton: boolean
 
   /**
    * Whether the color picker should close when clicking outside of it.
-	* Default: true
+   * Default: true
    */
   dismissOnOutsideClick: boolean
 
   /**
    * Whether the color picker should close when escape is pressed.
-	* Default: true
+   * Default: true
    */
   dismissOnEscape: boolean
 
   /**
    * How to place the dialog relative to the toggle.
-	* Default: 'top'
+   * Default: 'top'
    */
   dialogPlacement: Placement
 
   /**
    * How big the gap between the toggle and dialog should be, in pixels.
-	* Default: 8
+   * Default: 8
    */
   dialogOffset: number
 }
