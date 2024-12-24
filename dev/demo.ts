@@ -1,10 +1,11 @@
 import ColorPicker from '../src/index'
 
-const picker = new ColorPicker('button', {
+const picker = new ColorPicker('#picker', {
   toggleStyle: 'input',
-  commitMode: 'confirm',
-  defaultColor: '#000',
-  swatches: ['#D95D5D', '#DB8525', '#E8C43C', '#BED649', '#9ECBDB', '#6399A5', '#C771A1'],
+  commitMode: 'instant',
+  defaultColor: 'red',
+  enablePreview: true,
+  swatches: ['#d95d5d', '#db8525', '#e8c43c', '#bed649', '#9ecbdb', '#6399a5', '#c771a1'],
 })
 
 picker.on('open', () => console.log('open'))
@@ -15,3 +16,10 @@ picker.on('cancel', () => console.log('cancel'))
 picker.on('pick', (color) => console.log(`pick ${color}`))
 
 picker.prompt().then(console.log)
+
+document.getElementById('lightBtn').onclick = () => {
+  document.documentElement.setAttribute('data-cp-theme', 'light')
+}
+document.getElementById('darkBtn').onclick = () => {
+  document.documentElement.setAttribute('data-cp-theme', 'dark')
+}
