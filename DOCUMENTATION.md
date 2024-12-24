@@ -103,7 +103,7 @@ interface PickerConfig {
   toggleStyle: 'button' | 'input' | 'hidden'
 
   /**
-   * Container to append the picker to. Defaults to document.body
+   * HTML element to append the picker to.
    * Default: null (which implies: document.body)
    */
   container: HTMLElement | null
