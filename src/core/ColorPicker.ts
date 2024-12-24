@@ -442,7 +442,8 @@ export class ColorPicker extends EventEmitter<{
     }
 
     if (this.$toggleText) {
-      this.$toggleText.textContent = this.color?.string(this._format) ?? '-'
+      //this.$toggleText.textContent = this.color?.string(this._format) ?? '-'
+      this.$toggleText.textContent = this.color?.string(this.config.defaultFormat) ?? '-'
     }
 
     if (emit) this.emit('pick', this.color)
