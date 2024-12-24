@@ -218,6 +218,12 @@ To install dependencies:
 bun|deno|npm|pnpm|yarn install
 ```
 
+To build:
+
+```sh
+bun|deno|npm|pnpm|yarn run build
+```
+
 To run:
 
 ```sh
