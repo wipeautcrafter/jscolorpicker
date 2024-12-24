@@ -139,6 +139,7 @@
 
 /* Picker dialog */
 .cp_dialog {
+  --cp-base-color: #000;
   --cp-current-color: transparent;
   --cp-color: transparent;
   --cp-hue: 0;
@@ -172,6 +173,10 @@
 
   gap: 0.75rem;
   padding: 0.75rem;
+}
+
+.cp_dialog-inner .cp_thumb {
+  height: 1.75rem;
 }
 
 .cp_dialog.cp_open {
@@ -289,7 +294,7 @@
 
 /* Alpha Slider */
 .cp_slider-alpha::after {
-  background: linear-gradient(to right, transparent, var(--cp-body-color));
+  background: linear-gradient(to right, transparent, var(--cp-base-color));
 }
 .cp_slider-alpha {
   background: var(--cp-bg-checker);

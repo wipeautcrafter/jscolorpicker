@@ -417,10 +417,12 @@ export class ColorPicker extends EventEmitter<{
 
   private updateColor(updateInput = true) {
     const currentColor = this.color?.toString() ?? 'transparent'
+    const newColorHex = this._newColor.string('hex')
 
+    this.$dialog?.style.setProperty('--cp-base-color', newColorHex.substring(0,7))
     this.$toggle?.style.setProperty('--cp-current-color', currentColor)
     this.$dialog?.style.setProperty('--cp-current-color', currentColor)
-    this.$dialog?.style.setProperty('--cp-color', this._newColor.toString())
+    this.$dialog?.style.setProperty('--cp-color', newColorHex)
     this.$dialog?.style.setProperty('--cp-hue', this._newColor.hue().toString())
     this.$dialog?.style.setProperty('--cp-alpha', this._newColor.alpha().toString())
 
