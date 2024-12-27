@@ -36,9 +36,9 @@ const parseHSV = (input: string) => {
 export const parseColor = (input: string) => {
   let format: ColorFormat
 
-  if (/^hsva?\(/.test(input)) format = 'hsv'
-  else if (/^hsla?\(/.test(input)) format = 'hsl'
-  else if (/^rgba?\(/.test(input)) format = 'rgb'
+  if (/^hsva?\(/i.test(input)) format = 'hsv'
+  else if (/^hsla?\(/i.test(input)) format = 'hsl'
+  else if (/^rgba?\(/i.test(input)) format = 'rgb'
   else format = 'hex'
 
   const color = format === 'hsv' ? parseHSV(input) : parseCSS(input)
