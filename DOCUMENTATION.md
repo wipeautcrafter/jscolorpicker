@@ -159,7 +159,7 @@ interface PickerConfig {
    * - 'confirm': requires user confirmation (e.g., via a submit button)
    * Default: 'confirm'
    */
-  commitMode: 'instant' | 'confirm'
+  submitMode: 'instant' | 'confirm'
 
   /**
    * Whether to show the submit button.

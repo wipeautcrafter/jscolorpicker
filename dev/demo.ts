@@ -3,7 +3,7 @@ import ColorPicker from '../src/index'
 const picker = new ColorPicker('#picker', {
   showSubmitButton: false,
   toggleStyle: 'input', // 'button' | 'input' | 'hidden'
-  commitMode: 'submit', // 'instant' | 'submit'
+  submitMode: 'confirm', // 'instant' | 'confirm'
   defaultColor: 'red',
   defaultFormat: 'rgb', // 'hex' | 'rgb' | 'hsv' | 'hsl'
   enablePreview: true,

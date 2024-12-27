@@ -99,7 +99,7 @@ Next instantiate the ColorPicker, passing an element to bind to and an (optional
 
 ```js
 const picker = new ColorPicker('#picker', {
-  commitMode: 'instant',
+  submitMode: 'instant',
   showSubmitButton: 'false',
 })
 ```

@@ -111,9 +111,9 @@ export class ColorPicker extends EventEmitter<{
     this._setCurrentColor(new Color(defaultColorInput), false)
     if (!defaultColorInput) this.clear(false)
 
-    // When commitMode == 'submit', a submit button is required
-    if ('submit' == this.config.commitMode && !this.config.showSubmitButton) {
-      console.warn("jsColorPicker: When commitMode == 'submit', showSubmitButton must by true as well. I've set it to true for you.")
+    // When submitMode == 'confirm', a submit button is required
+    if ('confirm' == this.config.submitMode && !this.config.showSubmitButton) {
+      console.warn("jsColorPicker: When submitMode == 'confirm', showSubmitButton must by true as well. I've set it to true for you.")
       this.config.showSubmitButton = true
     }
 
@@ -311,7 +311,7 @@ export class ColorPicker extends EventEmitter<{
       const { color, format } = parseColor(this.$colorInput!.value)
       this.setFormat(format, false)
 
-      if ('instant' == this.config.commitMode && 'Enter' != key) {
+      if ('instant' == this.config.submitMode && 'Enter' != key) {
         return
       }
 
@@ -334,7 +334,7 @@ export class ColorPicker extends EventEmitter<{
     return parseFloat(raw) * (raw.endsWith('ms') ? 1 : 1000)
   }
 
-  private getElement(selector:string | HTMLElement | null) {
+  private getElement(selector:string | HTMLElement | null | undefined) {
     if (selector instanceof HTMLElement) {
       return selector
     }
@@ -419,7 +419,7 @@ export class ColorPicker extends EventEmitter<{
   }
 
   private _setNewColor(color: Color, updateInput = true) {
-    if (this.config.commitMode === 'instant') {
+    if (this.config.submitMode === 'instant') {
       return this._setCurrentColor(color)
     }
 

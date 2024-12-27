@@ -91,6 +91,7 @@ declare class ColorPicker extends EventEmitter<{
     private populateDialog;
     private bindDialog;
     private getAnimationDuration;
+    private getElement;
     /**
      * Close the picker dialog.
      * @param emit Emit event?
@@ -180,7 +181,7 @@ declare interface PickerConfig {
      * - 'confirm': requires user confirmation (e.g., via a submit button)
      * Default: 'confirm'
      */
-    commitMode: 'instant' | 'confirm';
+    submitMode: 'instant' | 'confirm';
     /**
      * Whether to show the submit button.
      * Default: true
