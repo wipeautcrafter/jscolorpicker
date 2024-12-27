@@ -85,13 +85,8 @@ export class ColorPicker extends EventEmitter<{
     super()
     this.config = { ...defaultConfig, ...config }
 
-    // Parse query and ensure element exists
-    if (!$from) {
-      $from = document.createElement('button')
-    } else if (typeof $from === 'string') {
-      $from = document.querySelector<HTMLElement>($from)
-    }
-    if (!$from) throw new Error('Element is null.')
+    // Determine element to bind to, or create one (a <button> element)
+    $from = this.getElement($from) || document.createElement('button')
 
     // Create toggle
     this.$target = $from
@@ -157,7 +152,7 @@ export class ColorPicker extends EventEmitter<{
     currentlyOpen = this
 
     // Create dialog
-    const container = this.config.container || document.body
+    const container = this.getElement(this.config.container) || document.body
     container.insertAdjacentHTML('beforeend', dialogContent)
     this.$dialog = container.lastElementChild as HTMLElement
     this.$colorInput = this.$dialog.querySelector('.cp_input')!
@@ -320,6 +315,15 @@ export class ColorPicker extends EventEmitter<{
     const computed = window.getComputedStyle(this.$target)
     const raw = computed.getPropertyValue('--cp-delay')
     return parseFloat(raw) * (raw.endsWith('ms') ? 1 : 1000)
+  }
+
+  private getElement(selector:string | HTMLElement | null) {
+    if (selector instanceof HTMLElement) {
+      return selector
+    }
+    if (typeof selector === 'string') {
+      return document.querySelector<HTMLElement>(selector)
+    }
   }
 
   /**
