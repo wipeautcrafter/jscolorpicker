@@ -111,6 +111,12 @@ export class ColorPicker extends EventEmitter<{
     this._setCurrentColor(new Color(defaultColorInput), false)
     if (!defaultColorInput) this.clear(false)
 
+    // When commitMode == 'submit', a submit button is required
+    if ('submit' == this.config.commitMode && !this.config.showSubmitButton) {
+      console.warn("jsColorPicker: When commitMode == 'submit', showSubmitButton must by true as well. I've set it to true for you.")
+      this.config.showSubmitButton = true
+    }
+
     // Dismissal events
     if (this.config.dismissOnOutsideClick)
       window.addEventListener('pointerdown', (event) => {
@@ -256,17 +262,6 @@ export class ColorPicker extends EventEmitter<{
       $alphaTrack.remove()
     }
 
-    // When changing the input value, update color
-    this.$colorInput!.addEventListener('input', () => {
-      try {
-        const { color, format } = parseColor(this.$colorInput!.value)
-        this.setFormat(format, false)
-        this._setNewColor(new Color(color), false)
-      } catch (error) {
-        // do nothing
-      }
-    })
-
     // Hide side-by-side preview
     if (!this.config.enablePreview) {
       this.$dialog!.querySelector('.cp_preview')?.remove()
@@ -309,6 +304,28 @@ export class ColorPicker extends EventEmitter<{
     } else {
       $clear.remove()
     }
+
+    // When changing the input value, update color
+    // Submit color when [Enter] is hit
+    this.$colorInput!.addEventListener('keyup', ({key}) => {
+      const { color, format } = parseColor(this.$colorInput!.value)
+      this.setFormat(format, false)
+
+      if ('instant' == this.config.commitMode && 'Enter' != key) {
+        return
+      }
+
+      try {
+        this._setNewColor(new Color(color), false)
+      }
+      catch(err) {
+        // Do nothing
+      }
+
+      if ('Enter' == key) {
+        $submit.click()
+      }
+    })
   }
 
   private getAnimationDuration() {
