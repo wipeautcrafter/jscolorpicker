@@ -131,12 +131,6 @@ export class ColorPicker extends EventEmitter<{
     this._setCurrentColor(new Color(defaultColor), false)
     if (!defaultColor) this.clear(false)
 
-    // When submitMode == 'confirm', a submit button is required
-    if ('confirm' == this.config.submitMode && !this.config.showSubmitButton) {
-      console.warn("jsColorPicker: When submitMode == 'confirm', showSubmitButton must by true as well. I've set it to true for you.")
-      this.config.showSubmitButton = true
-    }
-
     // Dismissal events
     if (this.config.dismissOnOutsideClick) {
       window.addEventListener('pointerdown', (event) => {
@@ -342,7 +336,7 @@ export class ColorPicker extends EventEmitter<{
 
     // When clicking submit, dismiss dialog
     const $submit = this.$dialog!.querySelector('.cp_submit') as HTMLButtonElement
-    if (this.config.showSubmitButton) {
+    if ('confirm' == this.config.submitMode) {
       $submit.addEventListener('click', () => {
         this._setCurrentColor(this._newColor)
         this.close()
@@ -356,7 +350,7 @@ export class ColorPicker extends EventEmitter<{
     if (this.config.showClearButton) {
       $clear.addEventListener('click', () => {
         this.clear()
-        //this.close() // TODO: Restore
+        this.close()
       })
     } else {
       $clear.remove()
@@ -482,7 +476,7 @@ export class ColorPicker extends EventEmitter<{
   }
 
   private _setNewColor(color: Color, updateInput = true) {
-    if (this.config.submitMode === 'instant') {
+    if ('instant' == this.config.submitMode) {
       return this._setCurrentColor(color)
     }
 
@@ -499,7 +493,7 @@ export class ColorPicker extends EventEmitter<{
   }
 
   private updateColor(updateInput = true) {
-    const noColor = !this.color
+    const noColor = !this.color && this.submitMode == 'instant'
     const currentColor = this.color?.toString() ?? 'transparent'
     const newColorHex = this._newColor.string('hex')
 
@@ -521,7 +515,7 @@ export class ColorPicker extends EventEmitter<{
 
   private updateAppliedColor(emit = true) {
     const color = this.color?.toString() ?? undefined
-    if (!color && this.$colorInput) {
+    if (!color && this.$colorInput && 'instant' == this.submitMode) {
       this.updateColor()
     }
 

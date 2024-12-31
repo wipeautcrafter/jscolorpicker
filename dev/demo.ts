@@ -4,9 +4,9 @@ const div = document.createElement('div');
 
 const picker = new ColorPicker('#picker', {
 //const picker = new ColorPicker(div, {
-  showSubmitButton: false,
+  showClearButton: true,
   //dismissOnEscape: false,
-  submitMode: 'instant', // 'instant' | 'confirm'
+  submitMode: 'confirm', // 'instant' | 'confirm'
  // defaultColor: 'red',
   defaultFormat: 'rgb', // 'hex' | 'rgb' | 'hsv' | 'hsl'
   enablePreview: true,
