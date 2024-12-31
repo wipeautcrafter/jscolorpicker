@@ -493,7 +493,7 @@ export class ColorPicker extends EventEmitter<{
   }
 
   private updateColor(updateInput = true) {
-    const noColor = !this.color && this.submitMode == 'instant'
+    const noColor = !this.color && this.config.submitMode == 'instant'
     const currentColor = this.color?.toString() ?? 'transparent'
     const newColorHex = this._newColor.string('hex')
 
@@ -515,7 +515,7 @@ export class ColorPicker extends EventEmitter<{
 
   private updateAppliedColor(emit = true) {
     const color = this.color?.toString() ?? undefined
-    if (!color && this.$colorInput && 'instant' == this.submitMode) {
+    if (!color && this.$colorInput && 'instant' == this.config.submitMode) {
       this.updateColor()
     }
 

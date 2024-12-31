@@ -180,15 +180,10 @@ declare interface PickerConfig {
     /**
      * Determines how the chosen color is applied:
      * - 'instant': applies immediately as the user picks a color
-     * - 'confirm': requires user confirmation (e.g., via a submit button)
+     * - 'confirm': requires user confirmation (via a submit button)
      * Default: 'confirm'
      */
     submitMode: 'instant' | 'confirm';
-    /**
-     * Whether to show the submit button.
-     * Default: true
-     */
-    showSubmitButton: boolean;
     /**
      * Whether to show the clear button for resetting the color.
      * Default: true

@@ -6,7 +6,7 @@ const picker = new ColorPicker('#picker', {
 //const picker = new ColorPicker(div, {
   showClearButton: true,
   //dismissOnEscape: false,
-  submitMode: 'confirm', // 'instant' | 'confirm'
+  submitMode: 'instant', // 'instant' | 'confirm'
  // defaultColor: 'red',
   defaultFormat: 'rgb', // 'hex' | 'rgb' | 'hsv' | 'hsl'
   enablePreview: true,
