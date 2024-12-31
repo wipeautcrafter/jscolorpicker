@@ -97,10 +97,13 @@ class ColorPicker extends EventEmitter<{
 
 interface PickerConfig {
   /**
-   * Determines the appearance of the toggle element, either as a button, an input field or nothing at all.
-   * Default: 'button'
+   * By default, the ColorPicker is bound to a HTML element.
+   * That element is replaced with a color picker box.
+   * If you don't want the this replacement to occur, set hidden to true
+   * If hidden === true, you can show the color picker dialog via the 
+   * prompt() method.
    */
-  toggleStyle: 'button' | 'input' | 'hidden'
+  hidden: boolean
 
   /**
    * HTML element (or query) to append the picker to.
@@ -120,12 +123,6 @@ interface PickerConfig {
    * Default: null
    */
   swatches: string[] | null | false
-
-  /**
-   * Whether to enable the side-by-side color preview.
-   * Default: false
-   */
-  enablePreview: boolean
 
   /**
    * Whether to enable the alpha (transparency) slider.

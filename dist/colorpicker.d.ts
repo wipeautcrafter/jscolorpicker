@@ -54,6 +54,7 @@ declare class ColorPicker extends EventEmitter<{
     private _open;
     private _unset;
     private _format;
+    private _isInputElement;
     private _color;
     private _newColor;
     private config;
@@ -61,12 +62,15 @@ declare class ColorPicker extends EventEmitter<{
     private $target;
     private $dialog?;
     private $toggle?;
-    private $toggleText?;
+    private $inputWrap?;
+    private $colorBox?;
     private hsvSlider?;
     private hueSlider?;
     private alphaSlider?;
     private $formats?;
     private $colorInput?;
+    private clickHandler;
+    private changeHandler;
     /**
      * Create a new ColorPicker instance.
      * @param $from The element or query to bind to. (leave null to create one)
@@ -128,10 +132,13 @@ export default ColorPicker;
 
 declare interface PickerConfig {
     /**
-     * Determines the appearance of the toggle element, either as a button, an input field or nothing at all.
-     * Default: 'button'
+     * By default, the ColorPicker is bound to a HTML element.
+     * That element is replaced with a color picker box.
+     * If you don't want the this replacement to occur, set hidden to true
+     * If hidden === true, you can show the color picker dialog via the
+     * prompt() method.
      */
-    toggleStyle: 'button' | 'input' | 'hidden';
+    hidden: boolean;
     /**
      * HTML element to append the picker to.
      * Default: null (which implies: document.body)
@@ -148,11 +155,6 @@ declare interface PickerConfig {
      * Default: null
      */
     swatches: string[] | null | false;
-    /**
-     * Whether to enable the side-by-side color preview.
-     * Default: false
-     */
-    enablePreview: boolean;
     /**
      * Whether to enable the alpha (transparency) slider.
      * Default: true

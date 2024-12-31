@@ -24,6 +24,7 @@ export class Slider extends EventEmitter<{
 
     this.$track.addEventListener('pointerup', (e) => {
       this.$track.releasePointerCapture(e.pointerId)
+      this.$thumb.focus() // Allows slider to be controlled by arrow keys on keyboard
     })
   }
 
@@ -44,5 +45,30 @@ export class Slider extends EventEmitter<{
   moveThumb(x?: number, y?: number) {
     if (x !== undefined) this.$thumb.style.left = `${x * 100}%`
     if (y !== undefined) this.$thumb.style.top = `${y * 100}%`
+  }
+
+  move(dir: string) {
+    let x = parseInt(this.$thumb.style.left, 10)
+    let y = parseInt(this.$thumb.style.top, 10)
+
+    if (
+      (x <= 0 && 'left' == dir) ||
+      (x >= 100 && 'right' == dir) ||
+      (y <= 0 && 'up' == dir) ||
+      (y >= 100 && 'down' == dir)
+    ) {
+      return
+    }
+
+    switch(dir) {
+      case 'up': y--; break;
+      case 'down': y++; break;
+      case 'left': x--; break;
+      case 'right': x++; break;
+    }
+
+    this.$thumb.style.left = `${x}%`
+    this.$thumb.style.top = `${y}%`
+    this.emit('drag', x/100, y/100)
   }
 }

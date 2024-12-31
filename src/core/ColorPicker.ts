@@ -57,6 +57,7 @@ export class ColorPicker extends EventEmitter<{
   private _open = false
   private _unset = true
   private _format: ColorFormat
+  private _isInputElement = false
 
   private _color: Color
   private _newColor: Color
@@ -67,7 +68,9 @@ export class ColorPicker extends EventEmitter<{
   private $target: HTMLElement
   private $dialog?: HTMLElement
   private $toggle?: HTMLElement
-  private $toggleText?: HTMLElement
+
+  private $inputWrap?: HTMLElement
+  private $colorBox?: HTMLElement
 
   private hsvSlider?: Slider
   private hueSlider?: Slider
@@ -75,6 +78,16 @@ export class ColorPicker extends EventEmitter<{
 
   private $formats?: HTMLElement[]
   private $colorInput?: HTMLInputElement
+
+  private clickHandler = () => {
+    this.toggle()
+  }
+
+  private changeHandler = () => {
+    // Only used when colorpicker is attached to <input> element
+    const color = (this.$target as HTMLInputElement).value
+    this._setCurrentColor(new Color(color), false)
+  }
 
   /**
    * Create a new ColorPicker instance.
@@ -91,25 +104,32 @@ export class ColorPicker extends EventEmitter<{
     // Create toggle
     this.$target = $from
 
-    if (this.config.toggleStyle !== 'hidden') {
-      this.$toggle = $from
-      this.$toggle.classList.add('color-picker')
-      this.$toggle.innerHTML = toggleContent
-      this.$toggle.addEventListener('click', () => this.toggle())
+    let defaultColor
+
+    if (!this.config.hidden) {
+      if (this.$target instanceof HTMLInputElement) {
+        this._isInputElement = true
+        this.$inputWrap = document.createElement('div')
+        this.$inputWrap.className = 'cp_wrap'
+        this.$colorBox = document.createElement('div')
+        this.$colorBox.className = 'cp_color_box'
+        this.$target.parentNode?.insertBefore(this.$inputWrap, this.$target)
+        this.$inputWrap.append(this.$colorBox, this.$target)
+        this.$target.addEventListener('click', this.clickHandler)
+        this.$target.addEventListener('change', this.changeHandler)
+        defaultColor = this.$target.value
+      }
+      else {
+        this.$toggle = $from
+        this.$toggle.classList.add('color-picker')
+        this.$toggle.innerHTML = toggleContent
+        this.$toggle.addEventListener('click', this.clickHandler)
+        defaultColor = this.config.defaultColor ?? this.$toggle?.dataset.color
+      }
     }
 
-    if (this.config.toggleStyle === 'input') {
-      this.$toggleText = document.createElement('div')
-      this.$toggleText.className = 'cp_text'
-      this.$target.prepend(this.$toggleText)
-    }
-
-    this.close()
-
-    // Apply default values
-    const defaultColorInput = this.config.defaultColor ?? this.$toggle?.dataset.color
-    this._setCurrentColor(new Color(defaultColorInput), false)
-    if (!defaultColorInput) this.clear(false)
+    this._setCurrentColor(new Color(defaultColor), false)
+    if (!defaultColor) this.clear(false)
 
     // When submitMode == 'confirm', a submit button is required
     if ('confirm' == this.config.submitMode && !this.config.showSubmitButton) {
@@ -118,19 +138,59 @@ export class ColorPicker extends EventEmitter<{
     }
 
     // Dismissal events
-    if (this.config.dismissOnOutsideClick)
+    if (this.config.dismissOnOutsideClick) {
       window.addEventListener('pointerdown', (event) => {
         if (!this._open) return
         const $toggle = event.target as HTMLElement
         if (!$toggle.closest('.cp_dialog') && !$toggle.closest('.color-picker')) this.close()
       })
+    }
 
-    if (this.config.dismissOnEscape)
-      window.addEventListener('keydown', (event) => {
-        if (!this._open || event.key !== 'Escape') return
+    window.addEventListener('keydown', (event) => {
+      if (this.config.dismissOnEscape && event.key == 'Escape') {
+        // Dismiss on Escape
         const $focus = document.querySelector(':focus')
         if (!$focus || $focus.closest('.cp_dialog')) this.close()
-      })
+        return
+      }
+
+      // If a slider is active, allow arrow keys to change slider value
+      let slider
+      const parentNode = document.activeElement?.parentNode as HTMLElement
+      const sliderMap: {[key:string]:Slider | undefined} = {
+        'cp_slider-hue': this.hueSlider,
+        'cp_slider-alpha': this.alphaSlider,
+        'cp_area-hsv': this.hsvSlider
+      }
+
+      if (parentNode) {
+        for (let m in sliderMap) {
+          if (parentNode.className.indexOf(m) != -1) {
+            slider = sliderMap[m]
+            break
+          }
+        }
+      }
+
+      if (!slider) { return }
+
+      switch(event.key) {
+        case 'ArrowLeft':
+          slider.move('left')
+          break
+        case 'ArrowRight':
+          slider.move('right')
+          break
+        case 'ArrowUp':
+          slider.move('up')
+          break
+        case 'ArrowDown':
+          slider.move('down')
+          break
+      }
+    })
+
+    this.close()
   }
 
   /**
@@ -180,8 +240,10 @@ export class ColorPicker extends EventEmitter<{
             offset: [0, this.config.dialogOffset],
           },
         },
-      ],
+      ]
     })
+
+    this.$colorInput.focus({ preventScroll: true })
 
     this.$toggle?.classList.add('cp_open')
     setTimeout(() => this.$dialog!.classList.add('cp_open'))
@@ -262,11 +324,6 @@ export class ColorPicker extends EventEmitter<{
       $alphaTrack.remove()
     }
 
-    // Hide side-by-side preview
-    if (!this.config.enablePreview) {
-      this.$dialog!.querySelector('.cp_preview')?.remove()
-    }
-
     // When clicking the eyedropper, the EyeDropper WebAPI will be invoked
     const $eyedrop = this.$dialog!.querySelector('.cp_eyedrop') as HTMLButtonElement
     if (this.config.enableEyedropper && 'EyeDropper' in window) {
@@ -299,7 +356,7 @@ export class ColorPicker extends EventEmitter<{
     if (this.config.showClearButton) {
       $clear.addEventListener('click', () => {
         this.clear()
-        this.close()
+        //this.close() // TODO: Restore
       })
     } else {
       $clear.remove()
@@ -366,9 +423,9 @@ export class ColorPicker extends EventEmitter<{
       $dialog?.remove()
       popper?.destroy()
 
-      if (emit) this.emit('closed')
+      if (emit) { this.emit('closed') }
     }, this.getAnimationDuration())
-    if (emit) this.emit('close')
+    if (emit) { this.emit('close') }
   }
 
   /**
@@ -378,10 +435,16 @@ export class ColorPicker extends EventEmitter<{
     this.close()
     this.$dialog?.remove()
     if (this.$toggle) {
+      this.$toggle.removeEventListener('click', this.clickHandler)
       this.$toggle.classList.remove('color-picker', 'cp_open', 'cp_unset')
       this.$toggle.style.removeProperty('--cp-current-color')
       this.$toggle.removeAttribute('data-color')
       this.$toggle.textContent = ''
+    }
+    if (this._isInputElement) {
+      this.$target.removeEventListener('click', this.clickHandler)
+      this.$target.removeEventListener('change', this.changeHandler)
+      this.$inputWrap && this.$inputWrap.replaceWith(this.$target) // Unwrap
     }
   }
 
@@ -429,45 +492,51 @@ export class ColorPicker extends EventEmitter<{
 
   private _setCurrentColor(color: Color, emit = true) {
     this._unset = false
-    this._newColor = color
-    this._color = color
+    this._newColor = this._color = color
 
     this.updateColor(true)
     this.updateAppliedColor(emit)
   }
 
   private updateColor(updateInput = true) {
+    const noColor = !this.color
     const currentColor = this.color?.toString() ?? 'transparent'
     const newColorHex = this._newColor.string('hex')
 
-    this.$dialog?.style.setProperty('--cp-base-color', newColorHex.substring(0,7))
-    this.$toggle?.style.setProperty('--cp-current-color', currentColor)
-    this.$dialog?.style.setProperty('--cp-current-color', currentColor)
-    this.$dialog?.style.setProperty('--cp-color', newColorHex)
-    this.$dialog?.style.setProperty('--cp-hue', this._newColor.hue().toString())
-    this.$dialog?.style.setProperty('--cp-alpha', this._newColor.alpha().toString())
+    this.$dialog?.style.setProperty('--cp-base-color', noColor ? '' : newColorHex.substring(0,7))
+    this.$toggle?.style.setProperty('--cp-current-color', noColor ? '' : currentColor)
+    this.$dialog?.style.setProperty('--cp-current-color', noColor ? '' : currentColor)
+    this.$dialog?.style.setProperty('--cp-color', noColor ? '' : newColorHex)
+    this.$dialog?.style.setProperty('--cp-hue', noColor ? '' : this._newColor.hue().toString())
+    this.$dialog?.style.setProperty('--cp-alpha', noColor ? '' : this._newColor.alpha().toString())
 
-    this.hsvSlider?.moveThumb(this._newColor.saturation(), 1 - this._newColor.value())
-    this.hueSlider?.moveThumb(this._newColor.hue() / 360)
-    this.alphaSlider?.moveThumb(this._newColor.alpha())
+    this.hsvSlider?.moveThumb(noColor ? 0 : this._newColor.saturation(), 1 - this._newColor.value())
+    this.hueSlider?.moveThumb(noColor ? 0 : this._newColor.hue() / 360)
+    this.alphaSlider?.moveThumb(noColor ? 0 : this._newColor.alpha())
 
     if (updateInput && this.$colorInput) {
-      this.$colorInput.value = this._newColor.string(this._format)
+      this.$colorInput.value = noColor ? '' : this._newColor.string(this._format)
     }
   }
 
   private updateAppliedColor(emit = true) {
+    const color = this.color?.toString() ?? undefined
+    if (!color && this.$colorInput) {
+      this.updateColor()
+    }
+
     if (this.$toggle) {
+      this.$toggle.dataset.color = color
       this.$toggle.classList.toggle('cp_unset', this._unset)
-      this.$toggle.dataset.color = this.color?.toString() ?? ''
     }
 
-    if (this.$toggleText) {
-      //this.$toggleText.textContent = this.color?.string(this._format) ?? '-'
-      this.$toggleText.textContent = this.color?.string(this.config.defaultFormat) ?? '-'
+    if (this._isInputElement) {
+      const colorValue = this.color?.string(this.config.defaultFormat) ?? '';
+      (this.$target as HTMLInputElement).value = colorValue || ''
+      if (this.$colorBox) this.$colorBox.style.backgroundColor = colorValue
     }
 
-    if (emit) this.emit('pick', this.color)
+    if (emit) { this.emit('pick', this.color) }
   }
 
   private updateFormat() {
@@ -475,6 +544,6 @@ export class ColorPicker extends EventEmitter<{
     this.$formats.forEach(($fmt) => $fmt.removeAttribute('aria-checked'))
 
     const $checked = this.$formats.find(($fmt) => $fmt.dataset.format === this._format)
-    if ($checked) $checked.ariaChecked = 'true'
+    if ($checked) { $checked.ariaChecked = 'true' }
   }
 }

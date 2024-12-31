@@ -28,7 +28,8 @@ export class Color {
 
   constructor(from?: Color | number[] | string) {
     if (!from) {
-      this.color = [0, 0, 0, 1]
+      //this.color = [0, 0, 0, 1]
+      this.color = [0, 0, 0, 0]
     } else if (from instanceof Color) {
       this.color = [...from.color]
     } else if (Array.isArray(from)) {

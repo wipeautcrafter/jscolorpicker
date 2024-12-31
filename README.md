@@ -145,11 +145,11 @@ picker.on('cancel', () => console.log('cancel'))
 
 ### Dialog Only
 
-If you want to open a picker dialog without a toggle, (optionally) destroying it after, you can use the `toggleStyle` option with the `prompt()` method:
+If you want to open a picker dialog without a toggle, (optionally) destroying it after, you can use the `hidden` option with the `prompt()` method:
 
 ```js
 const picker = new ColorPicker(target, {
-  toggleStyle: 'hidden',
+  hidden: true
 })
 
 const color = await picker.prompt(true)
