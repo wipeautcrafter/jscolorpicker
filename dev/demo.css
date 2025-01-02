@@ -12,16 +12,23 @@ body {
   flex-direction: column;
 }
 
+.container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  flex: 1;
+  gap: 1em;
+}
+
+.container > div {
+  align-content: center;
+  text-align: center;
+  background-color: var(--bs-secondary-bg);
+  padding: 1rem;
+  border-radius: .5rem;
+}
+
 .menu {
   text-align: center;
   padding: 1rem;
-}
-
-.container {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 280px;
-  margin: auto;
 }

@@ -104,7 +104,7 @@ export class ColorPicker extends EventEmitter<{
     // Create toggle
     this.$target = $from
 
-    let defaultColor
+    let defaultColor = this.config.defaultColor || undefined
 
     if (!this.config.hidden) {
       if (this.$target instanceof HTMLInputElement) {
@@ -493,41 +493,35 @@ export class ColorPicker extends EventEmitter<{
   }
 
   private updateColor(updateInput = true) {
-    const noColor = !this.color && this.config.submitMode == 'instant'
     const currentColor = this.color?.toString() ?? 'transparent'
     const newColorHex = this._newColor.string('hex')
 
-    this.$dialog?.style.setProperty('--cp-base-color', noColor ? '' : newColorHex.substring(0,7))
-    this.$toggle?.style.setProperty('--cp-current-color', noColor ? '' : currentColor)
-    this.$dialog?.style.setProperty('--cp-current-color', noColor ? '' : currentColor)
-    this.$dialog?.style.setProperty('--cp-color', noColor ? '' : newColorHex)
-    this.$dialog?.style.setProperty('--cp-hue', noColor ? '' : this._newColor.hue().toString())
-    this.$dialog?.style.setProperty('--cp-alpha', noColor ? '' : this._newColor.alpha().toString())
+    this.$dialog?.style.setProperty('--cp-base-color', newColorHex.substring(0,7))
+    this.$toggle?.style.setProperty('--cp-current-color', currentColor)
+    this.$dialog?.style.setProperty('--cp-current-color', currentColor)
+    this.$dialog?.style.setProperty('--cp-color', newColorHex)
+    this.$dialog?.style.setProperty('--cp-hue', this._newColor.hue().toString())
+    this.$dialog?.style.setProperty('--cp-alpha', this._newColor.alpha().toString())
 
-    this.hsvSlider?.moveThumb(noColor ? 0 : this._newColor.saturation(), 1 - this._newColor.value())
-    this.hueSlider?.moveThumb(noColor ? 0 : this._newColor.hue() / 360)
-    this.alphaSlider?.moveThumb(noColor ? 0 : this._newColor.alpha())
+    this.hsvSlider?.moveThumb(this._newColor.saturation(), 1 - this._newColor.value())
+    this.hueSlider?.moveThumb(this._newColor.hue() / 360)
+    this.alphaSlider?.moveThumb(this._newColor.alpha())
 
     if (updateInput && this.$colorInput) {
-      this.$colorInput.value = noColor ? '' : this._newColor.string(this._format)
+      this.$colorInput.value = this._newColor.string(this._format)
     }
   }
 
   private updateAppliedColor(emit = true) {
-    const color = this.color?.toString() ?? undefined
-    if (!color && this.$colorInput && 'instant' == this.config.submitMode) {
-      this.updateColor()
-    }
-
     if (this.$toggle) {
-      this.$toggle.dataset.color = color
       this.$toggle.classList.toggle('cp_unset', this._unset)
+      this.$toggle.dataset.color = this.color?.toString() ?? ''
     }
 
     if (this._isInputElement) {
       const colorValue = this.color?.string(this.config.defaultFormat) ?? '';
       (this.$target as HTMLInputElement).value = colorValue || ''
-      if (this.$colorBox) this.$colorBox.style.backgroundColor = colorValue
+      if (this.$colorBox) { this.$colorBox.style.backgroundColor = colorValue }
     }
 
     if (emit) { this.emit('pick', this.color) }

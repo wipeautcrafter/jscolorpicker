@@ -9,21 +9,47 @@
     <link rel="stylesheet" href="demo.css" />
   </head>
   <body>
+
     <div class="menu">
-      <button id="darkBtn">Dark</button>
-      <button id="lightBtn">Light</button>
-      <button id="destroyBtn">Destroy</button>
-      <button id="changeBtn">Change</button>
+      <button class="btn btn-primary" id="promptBtn">Prompt</button>
+      <button class="btn btn-primary" id="darkBtn">Dark</button>
+      <button class="btn btn-primary" id="lightBtn">Light</button>
+      <button class="btn btn-primary" id="destroyBtn">Destroy</button>
     </div>
 
-    <form class="container" method="post" action="submit.php">
-      <input type="text" class="form-control" id="picker" oldvalue="rgba(255,0,0,0.4)">
-    </form>
-    <!--
     <div class="container">
-      <button id="picker"></button>
+      <div>
+        <b>Input element, instant, swatches</b>
+        <form>
+        <input type="text" class="form-control" id="picker1">
+        </form>
+        <button class="btn btn-secondary changeBtn" data-picker="picker1">Change</button>
+        <button class="btn btn-secondary setBtn" data-picker="1">Set</button>
+      </div>
+      <div>
+        <b>Input element, confirm, <strike>swatches</strike></b>
+        <form>
+        <input type="text" class="form-control" id="picker2" oldvalue="purple">
+        </form>
+        <button class="btn btn-secondary changeBtn" data-picker="picker2">Change</button>
+        <button class="btn btn-secondary setBtn" data-picker="2">Set</button>
+      </div>
+      <div>
+        <b>Button element, instant, swatches</b>
+        <div>
+          <button style="display:inline-block" id="picker3"></button>
+        </div>
+        <button class="btn btn-secondary setBtn" data-picker="3">Set</button>
+      </div>
+      <div>
+        <b>Button element, confirm, <strike>swatches</strike></b>
+        <div>
+          <button style="display:inline-block" id="picker4"></button>
+        </div>
+        <button class="btn btn-secondary setBtn" data-picker="4">Set</button>
+      </div>
     </div>
-    -->
+
     <script src="demo.ts" type="module"></script>
   </body>
 </html>

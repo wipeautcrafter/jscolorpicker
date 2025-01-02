@@ -437,7 +437,7 @@ var ur = function(e, r) {
 function fr(t) {
   var e, r = t.state, n = t.name, i = t.options, o = r.elements.arrow, s = r.modifiersData.popperOffsets, l = F(r.placement), a = He(l), u = [M, T].indexOf(l) >= 0, c = u ? "height" : "width";
   if (!(!o || !s)) {
-    var p = ur(i.padding, r), h = Ne(o), f = a === "y" ? P : M, b = a === "y" ? B : T, v = r.rects.reference[c] + r.rects.reference[a] - s[a] - r.rects.popper[c], g = s[a] - r.rects.reference[a], x = ve(o), _ = x ? a === "y" ? x.clientHeight || 0 : x.clientWidth || 0 : 0, L = v / 2 - g / 2, d = p[f], m = _ - h[c] - p[b], y = _ / 2 - h[c] / 2 + L, O = ue(d, y, m), A = a;
+    var p = ur(i.padding, r), h = Ne(o), f = a === "y" ? P : M, b = a === "y" ? B : T, g = r.rects.reference[c] + r.rects.reference[a] - s[a] - r.rects.popper[c], v = s[a] - r.rects.reference[a], x = ve(o), _ = x ? a === "y" ? x.clientHeight || 0 : x.clientWidth || 0 : 0, L = g / 2 - v / 2, d = p[f], m = _ - h[c] - p[b], y = _ / 2 - h[c] / 2 + L, O = ue(d, y, m), A = a;
     r.modifiersData[n] = (e = {}, e[A] = O, e.centerOffset = O - y, e);
   }
 }
@@ -471,14 +471,14 @@ function vr(t, e) {
   };
 }
 function rt(t) {
-  var e, r = t.popper, n = t.popperRect, i = t.placement, o = t.variation, s = t.offsets, l = t.position, a = t.gpuAcceleration, u = t.adaptive, c = t.roundOffsets, p = t.isFixed, h = s.x, f = h === void 0 ? 0 : h, b = s.y, v = b === void 0 ? 0 : b, g = typeof c == "function" ? c({
+  var e, r = t.popper, n = t.popperRect, i = t.placement, o = t.variation, s = t.offsets, l = t.position, a = t.gpuAcceleration, u = t.adaptive, c = t.roundOffsets, p = t.isFixed, h = s.x, f = h === void 0 ? 0 : h, b = s.y, g = b === void 0 ? 0 : b, v = typeof c == "function" ? c({
     x: f,
-    y: v
+    y: g
   }) : {
     x: f,
-    y: v
+    y: g
   };
-  f = g.x, v = g.y;
+  f = v.x, g = v.y;
   var x = s.hasOwnProperty("x"), _ = s.hasOwnProperty("y"), L = M, d = P, m = window;
   if (u) {
     var y = ve(r), O = "clientHeight", A = "clientWidth";
@@ -488,7 +488,7 @@ function rt(t) {
         // $FlowFixMe[prop-missing]
         y[O]
       );
-      v -= E - n.height, v *= a ? 1 : -1;
+      g -= E - n.height, g *= a ? 1 : -1;
     }
     if (i === M || (i === P || i === B) && o === pe) {
       L = T;
@@ -503,16 +503,16 @@ function rt(t) {
     position: l
   }, u && hr), N = c === !0 ? vr({
     x: f,
-    y: v
+    y: g
   }, D(r)) : {
     x: f,
-    y: v
+    y: g
   };
-  if (f = N.x, v = N.y, a) {
+  if (f = N.x, g = N.y, a) {
     var S;
-    return Object.assign({}, k, (S = {}, S[d] = _ ? "0" : "", S[L] = x ? "0" : "", S.transform = (m.devicePixelRatio || 1) <= 1 ? "translate(" + f + "px, " + v + "px)" : "translate3d(" + f + "px, " + v + "px, 0)", S));
+    return Object.assign({}, k, (S = {}, S[d] = _ ? "0" : "", S[L] = x ? "0" : "", S.transform = (m.devicePixelRatio || 1) <= 1 ? "translate(" + f + "px, " + g + "px)" : "translate3d(" + f + "px, " + g + "px, 0)", S));
   }
-  return Object.assign({}, k, (e = {}, e[d] = _ ? v + "px" : "", e[L] = x ? f + "px" : "", e.transform = "", e));
+  return Object.assign({}, k, (e = {}, e[d] = _ ? g + "px" : "", e[L] = x ? f + "px" : "", e.transform = "", e));
 }
 function gr(t) {
   var e = t.state, r = t.options, n = r.gpuAcceleration, i = n === void 0 ? !0 : n, o = r.adaptive, s = o === void 0 ? !0 : o, l = r.roundOffsets, a = l === void 0 ? !0 : l, u = {
@@ -712,7 +712,7 @@ function Et(t) {
 }
 function de(t, e) {
   e === void 0 && (e = {});
-  var r = e, n = r.placement, i = n === void 0 ? t.placement : n, o = r.strategy, s = o === void 0 ? t.strategy : o, l = r.boundary, a = l === void 0 ? Xt : l, u = r.rootBoundary, c = u === void 0 ? wt : u, p = r.elementContext, h = p === void 0 ? le : p, f = r.altBoundary, b = f === void 0 ? !1 : f, v = r.padding, g = v === void 0 ? 0 : v, x = _t(typeof g != "number" ? g : Lt(g, he)), _ = h === le ? Yt : le, L = t.rects.popper, d = t.elements[b ? _ : h], m = Cr(J(d) ? d : d.contextElement || U(t.elements.popper), a, c, s), y = ie(t.elements.reference), O = Et({
+  var r = e, n = r.placement, i = n === void 0 ? t.placement : n, o = r.strategy, s = o === void 0 ? t.strategy : o, l = r.boundary, a = l === void 0 ? Xt : l, u = r.rootBoundary, c = u === void 0 ? wt : u, p = r.elementContext, h = p === void 0 ? le : p, f = r.altBoundary, b = f === void 0 ? !1 : f, g = r.padding, v = g === void 0 ? 0 : g, x = _t(typeof v != "number" ? v : Lt(v, he)), _ = h === le ? Yt : le, L = t.rects.popper, d = t.elements[b ? _ : h], m = Cr(J(d) ? d : d.contextElement || U(t.elements.popper), a, c, s), y = ie(t.elements.reference), O = Et({
     reference: y,
     element: L,
     strategy: "absolute",
@@ -740,16 +740,16 @@ function Er(t, e) {
     return u.indexOf(b) >= 0;
   });
   h.length === 0 && (h = p);
-  var f = h.reduce(function(b, v) {
-    return b[v] = de(t, {
-      placement: v,
+  var f = h.reduce(function(b, g) {
+    return b[g] = de(t, {
+      placement: g,
       boundary: i,
       rootBoundary: o,
       padding: s
-    })[F(v)], b;
+    })[F(g)], b;
   }, {});
-  return Object.keys(f).sort(function(b, v) {
-    return f[b] - f[v];
+  return Object.keys(f).sort(function(b, g) {
+    return f[b] - f[g];
   });
 }
 function Ar(t) {
@@ -761,14 +761,14 @@ function Ar(t) {
 function kr(t) {
   var e = t.state, r = t.options, n = t.name;
   if (!e.modifiersData[n]._skip) {
-    for (var i = r.mainAxis, o = i === void 0 ? !0 : i, s = r.altAxis, l = s === void 0 ? !0 : s, a = r.fallbackPlacements, u = r.padding, c = r.boundary, p = r.rootBoundary, h = r.altBoundary, f = r.flipVariations, b = f === void 0 ? !0 : f, v = r.allowedAutoPlacements, g = e.options.placement, x = F(g), _ = x === g, L = a || (_ || !b ? [Oe(g)] : Ar(g)), d = [g].concat(L).reduce(function(Q, V) {
+    for (var i = r.mainAxis, o = i === void 0 ? !0 : i, s = r.altAxis, l = s === void 0 ? !0 : s, a = r.fallbackPlacements, u = r.padding, c = r.boundary, p = r.rootBoundary, h = r.altBoundary, f = r.flipVariations, b = f === void 0 ? !0 : f, g = r.allowedAutoPlacements, v = e.options.placement, x = F(v), _ = x === v, L = a || (_ || !b ? [Oe(v)] : Ar(v)), d = [v].concat(L).reduce(function(Q, V) {
       return Q.concat(F(V) === Be ? Er(e, {
         placement: V,
         boundary: c,
         rootBoundary: p,
         padding: u,
         flipVariations: b,
-        allowedAutoPlacements: v
+        allowedAutoPlacements: g
       }) : V);
     }, []), m = e.rects.reference, y = e.rects.popper, O = /* @__PURE__ */ new Map(), A = !0, E = d[0], C = 0; C < d.length; C++) {
       var k = d[C], N = F(k), S = oe(k) === re, X = [P, B].indexOf(N) >= 0, Y = X ? "width" : "height", j = de(e, {
@@ -900,14 +900,14 @@ function Nr(t) {
   return t === "x" ? "y" : "x";
 }
 function Hr(t) {
-  var e = t.state, r = t.options, n = t.name, i = r.mainAxis, o = i === void 0 ? !0 : i, s = r.altAxis, l = s === void 0 ? !1 : s, a = r.boundary, u = r.rootBoundary, c = r.altBoundary, p = r.padding, h = r.tether, f = h === void 0 ? !0 : h, b = r.tetherOffset, v = b === void 0 ? 0 : b, g = de(e, {
+  var e = t.state, r = t.options, n = t.name, i = r.mainAxis, o = i === void 0 ? !0 : i, s = r.altAxis, l = s === void 0 ? !1 : s, a = r.boundary, u = r.rootBoundary, c = r.altBoundary, p = r.padding, h = r.tether, f = h === void 0 ? !0 : h, b = r.tetherOffset, g = b === void 0 ? 0 : b, v = de(e, {
     boundary: a,
     rootBoundary: u,
     padding: p,
     altBoundary: c
-  }), x = F(e.placement), _ = oe(e.placement), L = !_, d = He(x), m = Nr(d), y = e.modifiersData.popperOffsets, O = e.rects.reference, A = e.rects.popper, E = typeof v == "function" ? v(Object.assign({}, e.rects, {
+  }), x = F(e.placement), _ = oe(e.placement), L = !_, d = He(x), m = Nr(d), y = e.modifiersData.popperOffsets, O = e.rects.reference, A = e.rects.popper, E = typeof g == "function" ? g(Object.assign({}, e.rects, {
     placement: e.placement
-  })) : v, C = typeof E == "number" ? {
+  })) : g, C = typeof E == "number" ? {
     mainAxis: E,
     altAxis: E
   } : Object.assign({
@@ -919,14 +919,14 @@ function Hr(t) {
   };
   if (y) {
     if (o) {
-      var S, X = d === "y" ? P : M, Y = d === "y" ? B : T, j = d === "y" ? "height" : "width", H = y[d], ge = H + g[X], z = H - g[Y], me = f ? -A[j] / 2 : 0, Ee = _ === re ? O[j] : A[j], se = _ === re ? -A[j] : -O[j], ye = e.elements.arrow, Q = f && ye ? Ne(ye) : {
+      var S, X = d === "y" ? P : M, Y = d === "y" ? B : T, j = d === "y" ? "height" : "width", H = y[d], ge = H + v[X], z = H - v[Y], me = f ? -A[j] / 2 : 0, Ee = _ === re ? O[j] : A[j], se = _ === re ? -A[j] : -O[j], ye = e.elements.arrow, Q = f && ye ? Ne(ye) : {
         width: 0,
         height: 0
       }, V = e.modifiersData["arrow#persistent"] ? e.modifiersData["arrow#persistent"].padding : Ot(), ae = V[X], we = V[Y], K = ue(0, O[j], Q[j]), Ae = L ? O[j] / 2 - me - K - ae - C.mainAxis : Ee - K - ae - C.mainAxis, St = L ? -O[j] / 2 + me + K + we + C.mainAxis : se + K + we + C.mainAxis, ke = e.elements.arrow && ve(e.elements.arrow), Pt = ke ? d === "y" ? ke.clientTop || 0 : ke.clientLeft || 0 : 0, qe = (S = k == null ? void 0 : k[d]) != null ? S : 0, Mt = H + Ae - qe - Pt, jt = H + St - qe, Ve = ue(f ? _e(ge, Mt) : ge, H, f ? G(z, jt) : z);
       y[d] = Ve, N[d] = Ve - H;
     }
     if (l) {
-      var Ue, Dt = d === "x" ? P : M, Rt = d === "x" ? B : T, Z = y[m], be = m === "y" ? "height" : "width", Xe = Z + g[Dt], Ye = Z - g[Rt], Se = [P, M].indexOf(x) !== -1, ze = (Ue = k == null ? void 0 : k[m]) != null ? Ue : 0, Ke = Se ? Xe : Z - O[be] - A[be] - ze + C.altAxis, Ze = Se ? Z + O[be] + A[be] - ze - C.altAxis : Ye, Ge = f && Se ? cr(Ke, Z, Ze) : ue(f ? Ke : Xe, Z, f ? Ze : Ye);
+      var Ue, Dt = d === "x" ? P : M, Rt = d === "x" ? B : T, Z = y[m], be = m === "y" ? "height" : "width", Xe = Z + v[Dt], Ye = Z - v[Rt], Se = [P, M].indexOf(x) !== -1, ze = (Ue = k == null ? void 0 : k[m]) != null ? Ue : 0, Ke = Se ? Xe : Z - O[be] - A[be] - ze + C.altAxis, Ze = Se ? Z + O[be] + A[be] - ze - C.altAxis : Ye, Ge = f && Se ? cr(Ke, Z, Ze) : ue(f ? Ke : Xe, Z, f ? Ze : Ye);
       y[m] = Ge, N[m] = Ge - Z;
     }
     e.modifiersData[n] = N;
@@ -1050,7 +1050,7 @@ function Kr(t) {
       state: c,
       setOptions: function(x) {
         var _ = typeof x == "function" ? x(c.options) : x;
-        v(), c.options = Object.assign({}, o, c.options, _), c.scrollParents = {
+        g(), c.options = Object.assign({}, o, c.options, _), c.scrollParents = {
           reference: J(l) ? fe(l) : l.contextElement ? fe(l.contextElement) : [],
           popper: fe(a)
         };
@@ -1093,22 +1093,22 @@ function Kr(t) {
       // Async and optimistically optimized update – it will not be executed if
       // not necessary (debounced to run at most once-per-tick)
       update: Yr(function() {
-        return new Promise(function(g) {
-          f.forceUpdate(), g(c);
+        return new Promise(function(v) {
+          f.forceUpdate(), v(c);
         });
       }),
       destroy: function() {
-        v(), h = !0;
+        g(), h = !0;
       }
     };
     if (!lt(l, a))
       return f;
-    f.setOptions(u).then(function(g) {
-      !h && u.onFirstUpdate && u.onFirstUpdate(g);
+    f.setOptions(u).then(function(v) {
+      !h && u.onFirstUpdate && u.onFirstUpdate(v);
     });
     function b() {
-      c.orderedModifiers.forEach(function(g) {
-        var x = g.name, _ = g.options, L = _ === void 0 ? {} : _, d = g.effect;
+      c.orderedModifiers.forEach(function(v) {
+        var x = v.name, _ = v.options, L = _ === void 0 ? {} : _, d = v.effect;
         if (typeof d == "function") {
           var m = d({
             state: c,
@@ -1121,9 +1121,9 @@ function Kr(t) {
         }
       });
     }
-    function v() {
-      p.forEach(function(g) {
-        return g();
+    function g() {
+      p.forEach(function(v) {
+        return v();
       }), p = [];
     }
     return f;
@@ -1300,7 +1300,7 @@ class un extends yt.EventEmitter {
       this._setCurrentColor(new W(r), !1);
     });
     this.config = { ...sn, ...n }, r = this.getElement(r) || document.createElement("button"), this.$target = r;
-    let i;
+    let i = this.config.defaultColor || void 0;
     this.config.hidden || (this.$target instanceof HTMLInputElement ? (this._isInputElement = !0, this.$inputWrap = document.createElement("div"), this.$inputWrap.className = "cp_wrap", this.$colorBox = document.createElement("div"), this.$colorBox.className = "cp_color_box", (o = this.$target.parentNode) == null || o.insertBefore(this.$inputWrap, this.$target), this.$inputWrap.append(this.$colorBox, this.$target), this.$target.addEventListener("click", this.clickHandler), this.$target.addEventListener("change", this.changeHandler), i = this.$target.value) : (this.$toggle = r, this.$toggle.classList.add("color-picker"), this.$toggle.innerHTML = an, this.$toggle.addEventListener("click", this.clickHandler), i = this.config.defaultColor ?? ((s = this.$toggle) == null ? void 0 : s.dataset.color))), this._setCurrentColor(new W(i), !1), i || this.clear(!1), this.config.dismissOnOutsideClick && window.addEventListener("pointerdown", (l) => {
       if (!this._open) return;
       const a = l.target;
@@ -1528,16 +1528,15 @@ class un extends yt.EventEmitter {
     this._unset = !1, this._newColor = this._color = r, this.updateColor(!0), this.updateAppliedColor(n);
   }
   updateColor(r = !0) {
-    var s, l, a, u, c, p, h, f, b, v;
-    const n = !this.color && this.config.submitMode == "instant", i = ((s = this.color) == null ? void 0 : s.toString()) ?? "transparent", o = this._newColor.string("hex");
-    (l = this.$dialog) == null || l.style.setProperty("--cp-base-color", n ? "" : o.substring(0, 7)), (a = this.$toggle) == null || a.style.setProperty("--cp-current-color", n ? "" : i), (u = this.$dialog) == null || u.style.setProperty("--cp-current-color", n ? "" : i), (c = this.$dialog) == null || c.style.setProperty("--cp-color", n ? "" : o), (p = this.$dialog) == null || p.style.setProperty("--cp-hue", n ? "" : this._newColor.hue().toString()), (h = this.$dialog) == null || h.style.setProperty("--cp-alpha", n ? "" : this._newColor.alpha().toString()), (f = this.hsvSlider) == null || f.moveThumb(n ? 0 : this._newColor.saturation(), 1 - this._newColor.value()), (b = this.hueSlider) == null || b.moveThumb(n ? 0 : this._newColor.hue() / 360), (v = this.alphaSlider) == null || v.moveThumb(n ? 0 : this._newColor.alpha()), r && this.$colorInput && (this.$colorInput.value = n ? "" : this._newColor.string(this._format));
+    var o, s, l, a, u, c, p, h, f, b;
+    const n = ((o = this.color) == null ? void 0 : o.toString()) ?? "transparent", i = this._newColor.string("hex");
+    (s = this.$dialog) == null || s.style.setProperty("--cp-base-color", i.substring(0, 7)), (l = this.$toggle) == null || l.style.setProperty("--cp-current-color", n), (a = this.$dialog) == null || a.style.setProperty("--cp-current-color", n), (u = this.$dialog) == null || u.style.setProperty("--cp-color", i), (c = this.$dialog) == null || c.style.setProperty("--cp-hue", this._newColor.hue().toString()), (p = this.$dialog) == null || p.style.setProperty("--cp-alpha", this._newColor.alpha().toString()), (h = this.hsvSlider) == null || h.moveThumb(this._newColor.saturation(), 1 - this._newColor.value()), (f = this.hueSlider) == null || f.moveThumb(this._newColor.hue() / 360), (b = this.alphaSlider) == null || b.moveThumb(this._newColor.alpha()), r && this.$colorInput && (this.$colorInput.value = this._newColor.string(this._format));
   }
   updateAppliedColor(r = !0) {
-    var i, o;
-    const n = ((i = this.color) == null ? void 0 : i.toString()) ?? void 0;
-    if (!n && this.$colorInput && this.config.submitMode == "instant" && this.updateColor(), this.$toggle && (this.$toggle.dataset.color = n, this.$toggle.classList.toggle("cp_unset", this._unset)), this._isInputElement) {
-      const s = ((o = this.color) == null ? void 0 : o.string(this.config.defaultFormat)) ?? "";
-      this.$target.value = s || "", this.$colorBox && (this.$colorBox.style.backgroundColor = s);
+    var n, i;
+    if (this.$toggle && (this.$toggle.classList.toggle("cp_unset", this._unset), this.$toggle.dataset.color = ((n = this.color) == null ? void 0 : n.toString()) ?? ""), this._isInputElement) {
+      const o = ((i = this.color) == null ? void 0 : i.string(this.config.defaultFormat)) ?? "";
+      this.$target.value = o || "", this.$colorBox && (this.$colorBox.style.backgroundColor = o);
     }
     r && this.emit("pick", this.color);
   }
