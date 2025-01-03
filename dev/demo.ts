@@ -41,6 +41,10 @@ pickers.push(
     submitMode: 'confirm', // 'instant' | 'confirm'
     defaultColor: 'blue',
     defaultFormat: 'rgb', // 'hex' | 'rgb' | 'hsv' | 'hsl'
+  }),
+
+  new ColorPicker('#inline', {
+    hidden: false
   })
 )
 

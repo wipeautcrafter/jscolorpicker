@@ -384,6 +384,11 @@ export class ColorPicker extends EventEmitter<{
         $submit.click()
       }
     })
+
+    // Dblclick input to copy color to clipboard
+    this.$colorInput!.addEventListener('dblclick', () => {
+      navigator.clipboard && navigator.clipboard.writeText(this.$colorInput!.value)
+    })
   }
 
   private getAnimationDuration() {
