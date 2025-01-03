@@ -127,6 +127,13 @@ export class ColorPicker extends EventEmitter<{
         defaultColor = this.config.defaultColor ?? this.$toggle?.dataset.color
       }
     }
+    else {
+      // When hidden, submitMode MUST be 'confirm'
+      if (this.config.submitMode != 'confirm') {
+        this.config.submitMode = 'confirm'
+        console.warn("JScolorpicker: I've set submitMode to 'confirm', as this is required when hidden == true.")
+      }
+    }
 
     this._setCurrentColor(new Color(defaultColor), false)
     if (!defaultColor) this.clear(false)
@@ -256,7 +263,7 @@ export class ColorPicker extends EventEmitter<{
 
       this.on('pick', (newColor) => (color = newColor))
       this.once('close', () => resolve(color))
-      if (destroy) this.once('closed', () => this.destroy())
+      if (destroy) { this.once('closed', () => this.destroy()) }
 
       this.open()
     })

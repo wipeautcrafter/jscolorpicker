@@ -57,11 +57,11 @@ for (let picker of pickers) {
 document.getElementById('promptBtn').onclick = async (e) => {
   const picker = new ColorPicker(e.target, {
     hidden: true,
-    submitMode: 'confirm',
     defaultColor: '#f00',
     swatches: ['#000','#fff']
   })
   const color = await picker.prompt()
+  console.log('Selected color via prompt', color)
   e.target.style.backgroundColor = color ? color.toString() : null
 }
 
