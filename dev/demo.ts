@@ -1,12 +1,13 @@
 import ColorPicker from '../src/index'
 
 const getRandomColor = () => {
-  return '#' + ((1 << 24) * Math.random() | 0).toString(16).padStart(6, '0')
+  return '#' + (((1 << 24) * Math.random()) | 0).toString(16).padStart(6, '0')
 }
 
 //const div = document.createElement('div');
 
-const pickers = []
+const pickers: ColorPicker[] = []
+
 pickers.push(
   new ColorPicker('#picker1', {
     showClearButton: true,
@@ -44,7 +45,7 @@ pickers.push(
   }),
 
   new ColorPicker('#inline', {
-    hidden: false
+    hidden: false,
   })
 )
 
@@ -58,45 +59,46 @@ for (let picker of pickers) {
   picker.on('pick', (color) => console.log(`pick ${color}`))
 }
 
-document.getElementById('promptBtn').onclick = async (e) => {
-  const picker = new ColorPicker(e.target, {
+document.getElementById('promptBtn')!.onclick = async (e) => {
+  const $target = e.target as HTMLElement
+  const picker = new ColorPicker($target, {
     hidden: true,
     defaultColor: '#f00',
-    swatches: ['#000','#fff']
+    swatches: ['#000', '#fff'],
   })
   const color = await picker.prompt()
   console.log('Selected color via prompt', color)
-  e.target.style.backgroundColor = color ? color.toString() : null
+  $target.style.backgroundColor = color ? color.toString() : 'none'
 }
 
-document.getElementById('lightBtn').onclick = () => {
+document.getElementById('lightBtn')!.onclick = () => {
   document.documentElement.setAttribute('data-bs-theme', 'light')
 }
-document.getElementById('darkBtn').onclick = () => {
+document.getElementById('darkBtn')!.onclick = () => {
   document.documentElement.setAttribute('data-bs-theme', 'dark')
 }
-document.getElementById('destroyBtn').onclick = () => {
+document.getElementById('destroyBtn')!.onclick = () => {
   for (let picker of pickers) {
-	  picker.destroy()
+    picker.destroy()
   }
 }
 
-for (const btn of document.querySelectorAll('.changeBtn')) {
-  const pickerEl = document.getElementById(btn.dataset.picker)
+for (const btn of document.querySelectorAll<HTMLElement>('.changeBtn')) {
+  const $pickerEl = document.getElementById(btn.dataset.picker!) as HTMLInputElement
   btn.onclick = () => {
-    pickerEl.value = getRandomColor()
-    const event = document.createEvent('Event');
-    event.initEvent('change', false, true);
-    pickerEl.dispatchEvent(event);
+    $pickerEl.value = getRandomColor()
+    $pickerEl.dispatchEvent(
+      new Event('change', {
+        bubbles: true,
+        cancelable: false,
+      })
+    )
   }
 }
 
-for (const btn of document.querySelectorAll('.setBtn')) {
+for (const btn of document.querySelectorAll<HTMLElement>('.setBtn')) {
   btn.onclick = () => {
-    const idx = +btn.dataset.picker
-    pickers[idx-1].setColor(getRandomColor())
+    const idx = +btn.dataset.picker!
+    pickers[idx - 1].setColor(getRandomColor())
   }
 }
-
-
-

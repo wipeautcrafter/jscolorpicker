@@ -102,6 +102,12 @@ declare class ColorPicker extends EventEmitter<{
      */
     close(emit?: boolean): void;
     /**
+     * Submit the current color and close.
+     * @param color The picked color value.
+     * @param emit Emit event?
+     */
+    submit(color?: Color, emit?: boolean): void;
+    /**
      * Destroy the picker and revert all HTML to what it was.
      */
     destroy(): void;

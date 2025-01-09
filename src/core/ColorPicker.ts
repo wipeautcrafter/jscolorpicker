@@ -114,24 +114,24 @@ export class ColorPicker extends EventEmitter<{
         this.$colorBox = document.createElement('div')
         this.$colorBox.className = 'cp_color_box'
         this.$target.parentNode?.insertBefore(this.$inputWrap, this.$target)
-        this.$inputWrap.append(this.$colorBox, this.$target)
-        this.$target.addEventListener('click', this.clickHandler)
+        this.$inputWrap.append(this.$target, this.$colorBox)
+        this.$inputWrap.addEventListener('click', this.clickHandler)
         this.$target.addEventListener('change', this.changeHandler)
         defaultColor = this.$target.value
-      }
-      else {
+      } else {
         this.$toggle = $from
         this.$toggle.classList.add('color-picker')
         this.$toggle.innerHTML = toggleContent
         this.$toggle.addEventListener('click', this.clickHandler)
         defaultColor = this.config.defaultColor ?? this.$toggle?.dataset.color
       }
-    }
-    else {
+    } else {
       // When hidden, submitMode MUST be 'confirm'
-      if (this.config.submitMode != 'confirm') {
+      if (this.config.submitMode !== 'confirm') {
         this.config.submitMode = 'confirm'
-        console.warn("JScolorpicker: I've set submitMode to 'confirm', as this is required when hidden == true.")
+        console.warn(
+          "JScolorpicker: I've set submitMode to 'confirm', as this is required when hidden === true."
+        )
       }
     }
 
@@ -147,49 +147,16 @@ export class ColorPicker extends EventEmitter<{
       })
     }
 
-    window.addEventListener('keydown', (event) => {
-      if (this.config.dismissOnEscape && event.key == 'Escape') {
-        // Dismiss on Escape
-        const $focus = document.querySelector(':focus')
-        if (!$focus || $focus.closest('.cp_dialog')) this.close()
-        return
-      }
-
-      // If a slider is active, allow arrow keys to change slider value
-      let slider
-      const parentNode = document.activeElement?.parentNode as HTMLElement
-      const sliderMap: {[key:string]:Slider | undefined} = {
-        'cp_slider-hue': this.hueSlider,
-        'cp_slider-alpha': this.alphaSlider,
-        'cp_area-hsv': this.hsvSlider
-      }
-
-      if (parentNode) {
-        for (let m in sliderMap) {
-          if (parentNode.className.indexOf(m) != -1) {
-            slider = sliderMap[m]
-            break
-          }
+    // Dismiss on Escape
+    if (this.config.dismissOnEscape) {
+      window.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+          const $focus = document.querySelector(':focus')
+          if (!$focus || $focus.closest('.cp_dialog')) this.close()
+          return
         }
-      }
-
-      if (!slider) { return }
-
-      switch(event.key) {
-        case 'ArrowLeft':
-          slider.move('left')
-          break
-        case 'ArrowRight':
-          slider.move('right')
-          break
-        case 'ArrowUp':
-          slider.move('up')
-          break
-        case 'ArrowDown':
-          slider.move('down')
-          break
-      }
-    })
+      })
+    }
 
     this.close()
   }
@@ -241,7 +208,7 @@ export class ColorPicker extends EventEmitter<{
             offset: [0, this.config.dialogOffset],
           },
         },
-      ]
+      ],
     })
 
     this.$colorInput.focus({ preventScroll: true })
@@ -263,7 +230,9 @@ export class ColorPicker extends EventEmitter<{
 
       this.on('pick', (newColor) => (color = newColor))
       this.once('close', () => resolve(color))
-      if (destroy) { this.once('closed', () => this.destroy()) }
+      if (destroy) {
+        this.once('closed', () => this.destroy())
+      }
 
       this.open()
     })
@@ -343,11 +312,8 @@ export class ColorPicker extends EventEmitter<{
 
     // When clicking submit, dismiss dialog
     const $submit = this.$dialog!.querySelector('.cp_submit') as HTMLButtonElement
-    if ('confirm' == this.config.submitMode) {
-      $submit.addEventListener('click', () => {
-        this._setCurrentColor(this._newColor)
-        this.close()
-      })
+    if ('confirm' === this.config.submitMode) {
+      $submit.addEventListener('click', () => this.submit())
     } else {
       $submit.remove()
     }
@@ -364,25 +330,19 @@ export class ColorPicker extends EventEmitter<{
     }
 
     // When changing the input value, update color
-    // Submit color when [Enter] is hit
-    this.$colorInput!.addEventListener('keyup', ({key}) => {
-      const { color, format } = parseColor(this.$colorInput!.value)
-      this.setFormat(format, false)
-
-      if ('instant' == this.config.submitMode && 'Enter' != key) {
-        return
-      }
-
+    this.$colorInput!.addEventListener('input', () => {
       try {
+        const { color, format } = parseColor(this.$colorInput!.value)
+        this.setFormat(format, false)
         this._setNewColor(new Color(color), false)
+      } catch (error) {
+        // do nothing
       }
-      catch(err) {
-        // Do nothing
-      }
+    })
 
-      if ('Enter' == key) {
-        $submit.click()
-      }
+    // When pressing enter in the input, submit
+    this.$colorInput!.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') this.submit()
     })
 
     // Dblclick input to copy color to clipboard
@@ -397,7 +357,7 @@ export class ColorPicker extends EventEmitter<{
     return parseFloat(raw) * (raw.endsWith('ms') ? 1 : 1000)
   }
 
-  private getElement(selector:string | HTMLElement | null | undefined) {
+  private getElement(selector: string | HTMLElement | null | undefined) {
     if (selector instanceof HTMLElement) {
       return selector
     }
@@ -429,9 +389,23 @@ export class ColorPicker extends EventEmitter<{
       $dialog?.remove()
       popper?.destroy()
 
-      if (emit) { this.emit('closed') }
+      if (emit) {
+        this.emit('closed')
+      }
     }, this.getAnimationDuration())
-    if (emit) { this.emit('close') }
+    if (emit) {
+      this.emit('close')
+    }
+  }
+
+  /**
+   * Submit the current color and close.
+   * @param color The picked color value.
+   * @param emit Emit event?
+   */
+  submit(color = this._newColor, emit = true) {
+    this._setCurrentColor(color)
+    this.close(emit)
   }
 
   /**
@@ -488,19 +462,19 @@ export class ColorPicker extends EventEmitter<{
   }
 
   private _setNewColor(color: Color, updateInput = true) {
-    if ('instant' == this.config.submitMode) {
-      return this._setCurrentColor(color)
+    if (this.config.submitMode === 'instant') {
+      return this._setCurrentColor(color, true, updateInput)
     }
 
     this._newColor = color
     this.updateColor(updateInput)
   }
 
-  private _setCurrentColor(color: Color, emit = true) {
+  private _setCurrentColor(color: Color, emit = true, updateInput = true) {
     this._unset = false
     this._newColor = this._color = color
 
-    this.updateColor(true)
+    this.updateColor(updateInput)
     this.updateAppliedColor(emit)
   }
 
@@ -508,16 +482,16 @@ export class ColorPicker extends EventEmitter<{
     const currentColor = this.color?.toString() ?? 'transparent'
     const newColorHex = this._newColor.string('hex')
 
-    this.$dialog?.style.setProperty('--cp-base-color', newColorHex.substring(0,7))
+    this.$dialog?.style.setProperty('--cp-base-color', newColorHex.substring(0, 7))
     this.$toggle?.style.setProperty('--cp-current-color', currentColor)
     this.$dialog?.style.setProperty('--cp-current-color', currentColor)
     this.$dialog?.style.setProperty('--cp-color', newColorHex)
     this.$dialog?.style.setProperty('--cp-hue', this._newColor.hue().toString())
     this.$dialog?.style.setProperty('--cp-alpha', this._newColor.alpha().toString())
 
-    this.hsvSlider?.moveThumb(this._newColor.saturation(), 1 - this._newColor.value())
-    this.hueSlider?.moveThumb(this._newColor.hue() / 360)
-    this.alphaSlider?.moveThumb(this._newColor.alpha())
+    this.hsvSlider?.move(this._newColor.saturation(), 1 - this._newColor.value())
+    this.hueSlider?.move(this._newColor.hue() / 360)
+    this.alphaSlider?.move(this._newColor.alpha())
 
     if (updateInput && this.$colorInput) {
       this.$colorInput.value = this._newColor.string(this._format)
@@ -531,12 +505,16 @@ export class ColorPicker extends EventEmitter<{
     }
 
     if (this._isInputElement) {
-      const colorValue = this.color?.string(this.config.defaultFormat) ?? '';
-      (this.$target as HTMLInputElement).value = colorValue || ''
-      if (this.$colorBox) { this.$colorBox.style.backgroundColor = colorValue }
+      const colorValue = this.color?.string(this.config.defaultFormat) ?? ''
+      ;(this.$target as HTMLInputElement).value = colorValue || ''
+      if (this.$colorBox) {
+        this.$colorBox.style.backgroundColor = colorValue
+      }
     }
 
-    if (emit) { this.emit('pick', this.color) }
+    if (emit) {
+      this.emit('pick', this.color)
+    }
   }
 
   private updateFormat() {
@@ -544,6 +522,8 @@ export class ColorPicker extends EventEmitter<{
     this.$formats.forEach(($fmt) => $fmt.removeAttribute('aria-checked'))
 
     const $checked = this.$formats.find(($fmt) => $fmt.dataset.format === this._format)
-    if ($checked) { $checked.ariaChecked = 'true' }
+    if ($checked) {
+      $checked.ariaChecked = 'true'
+    }
   }
 }
