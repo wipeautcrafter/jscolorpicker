@@ -34,8 +34,6 @@
   --cp-box-shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
 
   --cp-bg-checker: repeating-conic-gradient(#808080 0% 25%, transparent 0% 50%) 50% / 0.5rem 0.5rem;
-
-  /* Scripted */
 }
 
 /* Picker toggle button */
@@ -75,18 +73,10 @@
 .cp_wrap > .cp_color_box {
   position: relative;
   width: 2.375rem;
-  background: var(--cp-bg-checker);
+  background: linear-gradient(var(--cp-current-color), var(--cp-current-color)),
+    var(--cp-bg-checker);
   border-top-right-radius: 0.375rem;
   border-bottom-right-radius: 0.375rem;
-}
-
-.cp_wrap > .cp_color_box::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-color: inherit;
-  border-radius: inherit;
-  box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.5);
 }
 
 .cp_dialog input {
@@ -95,34 +85,24 @@
 }
 
 .cp_toggle {
+  display: flex;
+  justify-content: end;
+  align-items: end;
+
   height: 100%;
   aspect-ratio: 1;
-  position: relative;
-  background: var(--cp-bg-checker);
-  border-radius: 3px;
+
+  background: linear-gradient(var(--cp-current-color), var(--cp-current-color)),
+    var(--cp-bg-checker);
 }
 
-.cp_toggle::before {
-  content: '';
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  inset: 0;
-  border-radius: 3px;
-  background-color: var(--cp-current-color);
-}
-.cp_unset .cp_toggle::before {
-  /* TODO: use variable */
+.cp_unset .cp_toggle {
   background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjU2IDI1NiI+PHBhdGggZmlsbD0iIzM4M2E0YyIgZD0iTTIwOC40OSAxOTEuNTFhMTIgMTIgMCAwIDEtMTcgMTdMMTI4IDE0NWwtNjMuNTEgNjMuNDlhMTIgMTIgMCAwIDEtMTctMTdMMTExIDEyOEw0Ny41MSA2NC40OWExMiAxMiAwIDAgMSAxNy0xN0wxMjggMTExbDYzLjUxLTYzLjUyYTEyIDEyIDAgMCAxIDE3IDE3TDE0NSAxMjhaIi8+PC9zdmc+),
-    #ccc;
+    var(--cp-border-color);
   background-size: 100% 100%;
 }
 
 .cp_caret {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-
   background-color: var(--cp-tertiary-color);
   color: var(--cp-body-bg);
   font-size: 0.85rem;
@@ -130,9 +110,8 @@
   padding: 0.1rem 0 0 0.1rem;
   border-top-left-radius: var(--cp-border-radius-sm);
 
-  display: flex;
+  display: grid;
   place-items: center;
-  z-index: 1;
 }
 .cp_caret > svg {
   transition: transform var(--cp-delay) ease-in-out;
@@ -187,28 +166,8 @@
 /* Preview */
 .cp_sample {
   width: 2rem;
-  background: var(--cp-bg-checker);
   position: relative;
-}
-
-.cp_sample::after {
-  background-color: var(--cp-color);
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.5);
-}
-
-/* Color Inners */
-.cp_area::after,
-.cp_slider::after,
-.cp_swatch::after {
-  content: '';
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  display: block;
+  background: linear-gradient(var(--cp-color), var(--cp-color)), var(--cp-bg-checker);
 }
 
 /* Areas & Sliders */
@@ -222,6 +181,7 @@
 
   border: 2px solid var(--cp-body-color);
   border-radius: 9999px;
+
   box-shadow: var(--cp-box-shadow-sm);
   z-index: 1;
 }
@@ -234,10 +194,7 @@
 .cp_slider {
   position: relative;
   height: 1.25rem;
-}
-.cp_slider,
-.cp_slider::after {
-  border-radius: 999px;
+  border-radius: 9999px;
 }
 .cp_slider > .cp_thumb {
   top: 50%;
@@ -257,17 +214,15 @@
 }
 
 /* HSV Area */
-.cp_area-hsv,
-.cp_area-hsv::after {
-  border-radius: var(--cp-border-radius-lg) var(--cp-border-radius-lg) 0px 0px;
-}
 .cp_area-hsv {
-  background: var(--cp-bg-checker);
-}
-.cp_area-hsv::after {
-  opacity: var(--cp-alpha);
-  background: linear-gradient(to top, black, transparent),
-    linear-gradient(to left, hsl(var(--cp-hue), 100%, 50%), rgb(255, 255, 255));
+  border-radius: var(--cp-border-radius-lg) var(--cp-border-radius-lg) 0px 0px;
+  background: linear-gradient(to top, rgba(0, 0, 0, var(--cp-alpha)), transparent),
+    linear-gradient(
+      to left,
+      hsla(var(--cp-hue), 100%, 50%, var(--cp-alpha)),
+      rgba(255, 255, 255, var(--cp-alpha))
+    ),
+    var(--cp-bg-checker);
 }
 .cp_area-hsv > .cp_thumb {
   background-color: var(--cp-color);
@@ -291,11 +246,8 @@
 }
 
 /* Alpha Slider */
-.cp_slider-alpha::after {
-  background: linear-gradient(to right, transparent, var(--cp-base-color));
-}
 .cp_slider-alpha {
-  background: var(--cp-bg-checker);
+  background: linear-gradient(to right, transparent, var(--cp-base-color)), var(--cp-bg-checker);
 }
 .cp_slider-alpha > .cp_thumb {
   background-color: var(--cp-color);
@@ -315,7 +267,6 @@
   gap: 0.25rem;
   justify-content: center;
 }
-
 .cp_swatches:empty {
   display: none;
 }
@@ -329,14 +280,11 @@
   padding: 0;
   border: 1px solid var(--cp-border-color);
 
-  background: var(--cp-bg-checker);
   border-radius: var(--cp-border-radius-sm);
   overflow: hidden;
-
   cursor: pointer;
-}
-.cp_swatch::after {
-  background-color: var(--cp-color);
+
+  background: linear-gradient(var(--cp-color), var(--cp-color)), var(--cp-bg-checker);
 }
 
 /* Formats */
