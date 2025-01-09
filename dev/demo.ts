@@ -88,10 +88,7 @@ for (const btn of document.querySelectorAll<HTMLElement>('.changeBtn')) {
   btn.onclick = () => {
     $pickerEl.value = getRandomColor()
     $pickerEl.dispatchEvent(
-      new Event('change', {
-        bubbles: true,
-        cancelable: false,
-      })
+      new Event('change')
     )
   }
 }
