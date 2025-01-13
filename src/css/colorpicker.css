@@ -50,6 +50,11 @@
   box-shadow: var(--cp-box-shadow-sm);
 }
 
+.color-picker:not(.cp_wide) {
+  border: 2px solid var(--cp-border-color);
+  padding: 1px;
+}
+
 .cp_wide {
   display: flex;
   width: 100%;
