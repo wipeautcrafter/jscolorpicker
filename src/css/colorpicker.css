@@ -47,7 +47,7 @@
 
   overflow: hidden;
   border-radius: var(--cp-border-radius-sm);
-  box-shadow: var(--cp-box-shadow-sm);
+  /*box-shadow: var(--cp-box-shadow-sm);*/
 }
 
 .color-picker:not(.cp_wide) {
