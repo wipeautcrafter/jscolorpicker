@@ -54,29 +54,29 @@ declare class ColorPicker extends EventEmitter<{
     private _open;
     private _unset;
     private _format;
-    private _isInputElement;
     private _color;
     private _newColor;
     private config;
     private popper?;
-    private $target;
+    private isInput;
+    private $toggle;
     private $dialog?;
-    private $toggle?;
-    private $inputWrap?;
-    private $colorBox?;
+    private $button?;
+    private $input?;
+    private changeHandler?;
+    private clickHandler?;
     private hsvSlider?;
     private hueSlider?;
     private alphaSlider?;
     private $formats?;
     private $colorInput?;
-    private clickHandler;
-    private changeHandler;
+    private createToggle;
     /**
      * Create a new ColorPicker instance.
      * @param $from The element or query to bind to. (leave null to create one)
      * @param config The picker configuration.
      */
-    constructor($from?: HTMLElement | string | null, config?: Partial<PickerConfig>);
+    constructor($from?: HTMLInputElement | HTMLButtonElement | string | null, config?: Partial<PickerConfig>);
     /**
      * Toggle whether the picker dialog is opened.
      * @param value Force open or closed?
@@ -95,7 +95,6 @@ declare class ColorPicker extends EventEmitter<{
     private populateDialog;
     private bindDialog;
     private getAnimationDuration;
-    private getElement;
     /**
      * Close the picker dialog.
      * @param emit Emit event?
@@ -138,26 +137,31 @@ export default ColorPicker;
 
 declare interface PickerConfig {
     /**
-     * By default, the ColorPicker is bound to a HTML element.
-     * That element is replaced with a color picker box.
-     * If you don't want the this replacement to occur, set hidden to true
-     * If hidden === true, you can show the color picker dialog via the
-     * prompt() method.
+     * When enabled, run the picker in headless mode:
+     * - leaves the target element untouched, and does not render a toggle
+     * - requires manually calling the prompt() method to show the dialog
+     * - still positions the dialog relative to the target element
+     * Default: false
      */
-    hidden: boolean;
+    headless: boolean;
     /**
-     * HTML element to append the picker to.
-     * Default: null (which implies: document.body)
+     * Should the toggle be rendered as an input element or a button?
+     * Default: 'button'
+     */
+    toggleStyle: 'button' | 'input';
+    /**
+     * The HTML element the picker dialog will be appended to.
+     * By default, this is the body.
      */
     container: HTMLElement | null;
     /**
-     * The default initial color.
+     * The initial color.
      * Default: null
      */
     defaultColor: string | null;
     /**
      * A list of predefined color swatches available for selection.
-     * Pass null or false to disable swatches.
+     * Pass null, false or an empty array to disable them altogether.
      * Default: null
      */
     swatches: string[] | null | false;
@@ -168,7 +172,7 @@ declare interface PickerConfig {
     enableAlpha: boolean;
     /**
      * Whether to enable the built-in eyedropper tool for selecting colors from the screen.
-     * Currently (Dec 2024) only supported on Chromium based browsers.
+     * As of January 2025, this is only supported on Chromium based browsers: https://caniuse.com/mdn-api_eyedropper
      * Default: true
      */
     enableEyedropper: boolean;

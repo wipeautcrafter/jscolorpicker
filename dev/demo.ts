@@ -10,6 +10,7 @@ const pickers: ColorPicker[] = []
 
 pickers.push(
   new ColorPicker('#picker1', {
+    toggleStyle: 'input',
     showClearButton: true,
     //dismissOnEscape: false,
     submitMode: 'instant', // 'instant' | 'confirm'
@@ -19,6 +20,7 @@ pickers.push(
   }),
 
   new ColorPicker('#picker2', {
+    toggleStyle: 'input',
     showClearButton: true,
     //dismissOnEscape: false,
     submitMode: 'confirm', // 'instant' | 'confirm'
@@ -45,7 +47,7 @@ pickers.push(
   }),
 
   new ColorPicker('#inline', {
-    hidden: false,
+    headless: false,
   })
 )
 
@@ -60,9 +62,9 @@ for (let picker of pickers) {
 }
 
 document.getElementById('promptBtn')!.onclick = async (e) => {
-  const $target = e.target as HTMLElement
+  const $target = e.target as HTMLButtonElement | HTMLInputElement
   const picker = new ColorPicker($target, {
-    hidden: true,
+    headless: true,
     defaultColor: '#f00',
     swatches: ['#000', '#fff'],
   })
@@ -87,9 +89,7 @@ for (const btn of document.querySelectorAll<HTMLElement>('.changeBtn')) {
   const $pickerEl = document.getElementById(btn.dataset.picker!) as HTMLInputElement
   btn.onclick = () => {
     $pickerEl.value = getRandomColor()
-    $pickerEl.dispatchEvent(
-      new Event('change')
-    )
+    $pickerEl.dispatchEvent(new Event('change'))
   }
 }
 

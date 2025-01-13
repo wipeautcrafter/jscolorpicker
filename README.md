@@ -89,10 +89,12 @@ This allows you to use `ColorPicker` directly.
 
 ### Creation
 
-To create a color picker, first create a button:
+To create a color picker, first create a button or input:
 
 ```html
 <button id="picker"></button>
+<!-- or -->
+<input id="picker" />
 ```
 
 Next instantiate the ColorPicker, passing an element to bind to and an (optional) configuration:
@@ -145,11 +147,11 @@ picker.on('cancel', () => console.log('cancel'))
 
 ### Dialog Only
 
-If you want to open a picker dialog without a toggle, (optionally) destroying it after, you can use the `hidden` option with the `prompt()` method:
+If you want to open a picker dialog without a toggle, (optionally) destroying it after, you can use the `headless` option with the `prompt()` method:
 
 ```js
 const picker = new ColorPicker(target, {
-  hidden: true
+  headless: true,
 })
 
 const color = await picker.prompt(true)
