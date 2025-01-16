@@ -24,6 +24,7 @@
 :root {
   box-sizing: border-box;
 
+  --cp-size: 38px;
   --cp-delay: 150ms;
 
   --cp-border-radius-sm: 0.25rem;
@@ -42,40 +43,55 @@
   cursor: pointer;
   padding: 0;
 
-  height: 2.375rem;
   border: 1px solid var(--cp-border-color);
 
   overflow: hidden;
   border-radius: var(--cp-border-radius-sm);
-  /*box-shadow: var(--cp-box-shadow-sm);*/
+  background-color: transparent !important; /* CSS reset */
 }
 
 .color-picker:not(.cp_wide) {
+  height: var(--cp-size);
   border: 2px solid var(--cp-border-color);
   padding: 1px;
+}
+
+.color-picker:not(.cp_wide):hover {
+  border-color: var(--cp-tertiary-color);
 }
 
 .cp_wide {
   display: flex;
   width: 100%;
+  border: 1px solid var(--cp-border-color);
+}
+
+.cp_wide .cp_button {
+  height: var(--cp-size);
+}
+
+.cp_dialog input, .cp_dialog button {
+  margin: 0; /* CSS reset */
 }
 
 .cp_input {
   display: none;
   pointer-events: none;
+  margin: 0;
+  border: 0;
 }
 
 .cp_wide .cp_input {
   font-family: inherit;
   display: block;
   flex-grow: 1;
-
-  border: none;
   padding-left: 0.75rem;
 }
 
 .cp_wide .cp_input + .cp_button {
   border-left: 1px solid var(--cp-border-color);
+  height: inherit;
+  width: var(--cp-size);
 }
 
 .cp_wrap {
@@ -292,6 +308,10 @@
   background: linear-gradient(var(--cp-color), var(--cp-color)), var(--cp-bg-checker);
 }
 
+.cp_swatch:hover {
+  border: 1px solid var(--cp-border-color) !important;
+}
+
 /* Formats */
 .cp_formats {
   display: flex;
@@ -316,7 +336,7 @@
   transition: color 100ms ease-out, background-color 100ms ease-out;
 }
 .cp_format:hover {
-  background-color: var(--cp-border-color-translucent);
+  background-color: var(--cp-border-color-translucent) !important;
 }
 .cp_format[aria-checked='true'] {
   color: var(--cp-body-color);
