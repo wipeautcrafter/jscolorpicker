@@ -15,7 +15,7 @@ pickers.push(
     //dismissOnEscape: false,
     submitMode: 'instant', // 'instant' | 'confirm'
     // defaultColor: 'red',
-    defaultFormat: 'rgb', // 'hex' | 'rgb' | 'hsv' | 'hsl'
+    defaultFormat: 'hex', // 'hex' | 'rgb' | 'hsv' | 'hsl'
     swatches: ['#d95d5d', '#db8525', '#e8c43c', '#bed649', '#9ecbdb', '#6399a5', '#c771a1'],
   }),
 
@@ -34,7 +34,7 @@ pickers.push(
     //dismissOnEscape: false,
     submitMode: 'instant', // 'instant' | 'confirm'
     // defaultColor: 'red',
-    defaultFormat: 'rgb', // 'hex' | 'rgb' | 'hsv' | 'hsl'
+    defaultFormat: 'hex', // 'hex' | 'rgb' | 'hsv' | 'hsl'
     swatches: ['#d95d5d', '#db8525', '#e8c43c', '#bed649', '#9ecbdb', '#6399a5', '#c771a1'],
   }),
 
