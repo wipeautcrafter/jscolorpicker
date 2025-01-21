@@ -103,12 +103,12 @@ w.prototype.on = w.prototype.addListener;
 w.prototype.prependListener = function(e, r) {
   return dt(this, e, r, !0);
 };
-function Ft() {
+function It() {
   if (!this.fired)
     return this.target.removeListener(this.type, this.wrapFn), this.fired = !0, arguments.length === 0 ? this.listener.call(this.target) : this.listener.apply(this.target, arguments);
 }
 function ht(t, e, r) {
-  var n = { fired: !1, wrapFn: void 0, target: t, type: e, listener: r }, i = Ft.bind(n);
+  var n = { fired: !1, wrapFn: void 0, target: t, type: e, listener: r }, i = It.bind(n);
   return i.listener = r, n.wrapFn = i, i;
 }
 w.prototype.once = function(e, r) {
@@ -133,7 +133,7 @@ w.prototype.removeListener = function(e, r) {
       }
     if (o < 0)
       return this;
-    o === 0 ? n.shift() : It(n, o), n.length === 1 && (i[e] = n[0]), i.removeListener !== void 0 && this.emit("removeListener", e, l || r);
+    o === 0 ? n.shift() : Ft(n, o), n.length === 1 && (i[e] = n[0]), i.removeListener !== void 0 && this.emit("removeListener", e, l || r);
   }
   return this;
 };
@@ -193,7 +193,7 @@ function mt(t, e) {
     r[n] = t[n];
   return r;
 }
-function It(t, e) {
+function Ft(t, e) {
   for (; e + 1 < t.length; e++)
     t[e] = t[e + 1];
   t.pop();
@@ -234,7 +234,7 @@ var P = "top", T = "bottom", H = "right", D = "left", Te = "auto", he = [P, T, H
 }, []), xt = /* @__PURE__ */ [].concat(he, [Te]).reduce(function(t, e) {
   return t.concat([e, e + "-" + re, e + "-" + pe]);
 }, []), zt = "beforeRead", Zt = "read", Gt = "afterRead", Jt = "beforeMain", Qt = "main", er = "afterMain", tr = "beforeWrite", rr = "write", nr = "afterWrite", ir = [zt, Zt, Gt, Jt, Qt, er, tr, rr, nr];
-function F(t) {
+function I(t) {
   return t ? (t.nodeName || "").toLowerCase() : null;
 }
 function j(t) {
@@ -264,7 +264,7 @@ function or(t) {
   var e = t.state;
   Object.keys(e.elements).forEach(function(r) {
     var n = e.styles[r] || {}, i = e.attributes[r] || {}, o = e.elements[r];
-    !R(o) || !F(o) || (Object.assign(o.style, n), Object.keys(i).forEach(function(s) {
+    !R(o) || !I(o) || (Object.assign(o.style, n), Object.keys(i).forEach(function(s) {
       var l = i[s];
       l === !1 ? o.removeAttribute(s) : o.setAttribute(s, l === !0 ? "" : l);
     }));
@@ -288,7 +288,7 @@ function sr(t) {
       var i = e.elements[n], o = e.attributes[n] || {}, s = Object.keys(e.styles.hasOwnProperty(n) ? e.styles[n] : r[n]), l = s.reduce(function(a, u) {
         return a[u] = "", a;
       }, {});
-      !R(i) || !F(i) || (Object.assign(i.style, l), Object.keys(o).forEach(function(a) {
+      !R(i) || !I(i) || (Object.assign(i.style, l), Object.keys(o).forEach(function(a) {
         i.removeAttribute(a);
       }));
     });
@@ -358,7 +358,7 @@ function q(t) {
   return j(t).getComputedStyle(t);
 }
 function lr(t) {
-  return ["table", "td", "th"].indexOf(F(t)) >= 0;
+  return ["table", "td", "th"].indexOf(I(t)) >= 0;
 }
 function U(t) {
   return ((J(t) ? t.ownerDocument : (
@@ -367,7 +367,7 @@ function U(t) {
   )) || window.document).documentElement;
 }
 function _e(t) {
-  return F(t) === "html" ? t : (
+  return I(t) === "html" ? t : (
     // this is a quicker (but less type safe) way to save quite some bytes from the bundle
     // $FlowFixMe[incompatible-return]
     // $FlowFixMe[prop-missing]
@@ -390,7 +390,7 @@ function cr(t) {
       return null;
   }
   var i = _e(t);
-  for (He(i) && (i = i.host); R(i) && ["html", "body"].indexOf(F(i)) < 0; ) {
+  for (He(i) && (i = i.host); R(i) && ["html", "body"].indexOf(I(i)) < 0; ) {
     var o = q(i);
     if (o.transform !== "none" || o.perspective !== "none" || o.contain === "paint" || ["transform", "perspective"].indexOf(o.willChange) !== -1 || e && o.willChange === "filter" || e && o.filter && o.filter !== "none")
       return i;
@@ -401,7 +401,7 @@ function cr(t) {
 function ve(t) {
   for (var e = j(t), r = tt(t); r && lr(r) && q(r).position === "static"; )
     r = tt(r);
-  return r && (F(r) === "html" || F(r) === "body" && q(r).position === "static") ? e : r || cr(t) || e;
+  return r && (I(r) === "html" || I(r) === "body" && q(r).position === "static") ? e : r || cr(t) || e;
 }
 function Ne(t) {
   return ["top", "bottom"].indexOf(t) >= 0 ? "x" : "y";
@@ -593,7 +593,7 @@ function We(t) {
     scrollTop: n
   };
 }
-function Fe(t) {
+function Ie(t) {
   return ie(U(t)).left + We(t).scrollLeft;
 }
 function Or(t, e) {
@@ -606,12 +606,12 @@ function Or(t, e) {
   return {
     width: o,
     height: s,
-    x: l + Fe(t),
+    x: l + Ie(t),
     y: a
   };
 }
 function Lr(t) {
-  var e, r = U(t), n = We(t), i = (e = t.ownerDocument) == null ? void 0 : e.body, o = G(r.scrollWidth, r.clientWidth, i ? i.scrollWidth : 0, i ? i.clientWidth : 0), s = G(r.scrollHeight, r.clientHeight, i ? i.scrollHeight : 0, i ? i.clientHeight : 0), l = -n.scrollLeft + Fe(t), a = -n.scrollTop;
+  var e, r = U(t), n = We(t), i = (e = t.ownerDocument) == null ? void 0 : e.body, o = G(r.scrollWidth, r.clientWidth, i ? i.scrollWidth : 0, i ? i.clientWidth : 0), s = G(r.scrollHeight, r.clientHeight, i ? i.scrollHeight : 0, i ? i.clientHeight : 0), l = -n.scrollLeft + Ie(t), a = -n.scrollTop;
   return q(i || r).direction === "rtl" && (l += G(r.clientWidth, i ? i.clientWidth : 0) - o), {
     width: o,
     height: s,
@@ -619,17 +619,17 @@ function Lr(t) {
     y: a
   };
 }
-function Ie(t) {
+function Fe(t) {
   var e = q(t), r = e.overflow, n = e.overflowX, i = e.overflowY;
   return /auto|scroll|overlay|hidden/.test(r + i + n);
 }
 function Et(t) {
-  return ["html", "body", "#document"].indexOf(F(t)) >= 0 ? t.ownerDocument.body : R(t) && Ie(t) ? t : Et(_e(t));
+  return ["html", "body", "#document"].indexOf(I(t)) >= 0 ? t.ownerDocument.body : R(t) && Fe(t) ? t : Et(_e(t));
 }
 function fe(t, e) {
   var r;
   e === void 0 && (e = []);
-  var n = Et(t), i = n === ((r = t.ownerDocument) == null ? void 0 : r.body), o = j(n), s = i ? [o].concat(o.visualViewport || [], Ie(n) ? n : []) : n, l = e.concat(s);
+  var n = Et(t), i = n === ((r = t.ownerDocument) == null ? void 0 : r.body), o = j(n), s = i ? [o].concat(o.visualViewport || [], Fe(n) ? n : []) : n, l = e.concat(s);
   return i ? l : (
     // $FlowFixMe[incompatible-call]: isBody tells us target will be an HTMLElement here
     l.concat(fe(_e(s)))
@@ -653,7 +653,7 @@ function it(t, e, r) {
 function _r(t) {
   var e = fe(_e(t)), r = ["absolute", "fixed"].indexOf(q(t).position) >= 0, n = r && R(t) ? ve(t) : t;
   return J(n) ? e.filter(function(i) {
-    return J(i) && Ot(i, n) && F(i) !== "body";
+    return J(i) && Ot(i, n) && I(i) !== "body";
   }) : [];
 }
 function Er(t, e, r, n) {
@@ -932,21 +932,21 @@ function Wr(t) {
     e.modifiersData[n] = B;
   }
 }
-const Fr = {
+const Ir = {
   name: "preventOverflow",
   enabled: !0,
   phase: "main",
   fn: Wr,
   requiresIfExists: ["offset"]
 };
-function Ir(t) {
+function Fr(t) {
   return {
     scrollLeft: t.scrollLeft,
     scrollTop: t.scrollTop
   };
 }
 function qr(t) {
-  return t === j(t) || !R(t) ? We(t) : Ir(t);
+  return t === j(t) || !R(t) ? We(t) : Fr(t);
 }
 function Vr(t) {
   var e = t.getBoundingClientRect(), r = ne(e.width) / t.offsetWidth || 1, n = ne(e.height) / t.offsetHeight || 1;
@@ -961,8 +961,8 @@ function Ur(t, e, r) {
     x: 0,
     y: 0
   };
-  return (n || !n && !r) && ((F(e) !== "body" || // https://github.com/popperjs/popper-core/issues/1078
-  Ie(o)) && (l = qr(e)), R(e) ? (a = ie(e, !0), a.x += e.clientLeft, a.y += e.clientTop) : o && (a.x = Fe(o))), {
+  return (n || !n && !r) && ((I(e) !== "body" || // https://github.com/popperjs/popper-core/issues/1078
+  Fe(o)) && (l = qr(e)), R(e) ? (a = ie(e, !0), a.x += e.clientLeft, a.y += e.clientTop) : o && (a.x = Ie(o))), {
     x: s.left + l.scrollLeft - a.x,
     y: s.top + l.scrollTop - a.y,
     width: s.width,
@@ -1129,7 +1129,7 @@ function Zr(t) {
     return f;
   };
 }
-var Gr = [br, Br, yr, ar, Tr, Pr, Fr, hr, Mr], Jr = /* @__PURE__ */ Zr({
+var Gr = [br, Br, yr, ar, Tr, Pr, Ir, hr, Mr], Jr = /* @__PURE__ */ Zr({
   defaultModifiers: Gr
 });
 const Qr = ([t, e, r, n]) => {
@@ -1163,12 +1163,12 @@ const Qr = ([t, e, r, n]) => {
 }, on = (t) => "#" + t.slice(0, t[3] < 1 ? 4 : 3).map(
   (e) => Math.round(e * 255).toString(16).padStart(2, "0")
 ).join(""), sn = (t, e) => e === "hsv" ? Pe(t, e) : e === "hsl" ? Pe(nn(t), e) : e === "rgb" ? Pe(ct(t), e) : on(ct(t));
-class I {
+class F {
   constructor(e) {
     $(this, "color");
     if (!e)
       this.color = [0, 0, 0, 1];
-    else if (e instanceof I)
+    else if (e instanceof F)
       this.color = [...e.color];
     else if (Array.isArray(e)) {
       const [r = 0, n = 0, i = 0, o = 1] = e;
@@ -1179,7 +1179,7 @@ class I {
   getSet(e, r) {
     if (r === void 0) return this.color[e];
     const n = [...this.color];
-    return n[e] = r, new I(n);
+    return n[e] = r, new F(n);
   }
   hue(e) {
     return this.getSet(0, e);
@@ -1200,7 +1200,7 @@ class I {
     return this.string("hex");
   }
   clone() {
-    return new I(this);
+    return new F(this);
   }
 }
 class De extends Xt {
@@ -1282,7 +1282,7 @@ class fn extends wt.EventEmitter {
     $(this, "$colorInput");
     this.config = { ...an, ...n }, r = ut(r) ?? document.createElement("button"), this.$toggle = r;
     const i = this.config.defaultColor || r.value || r.dataset.color || void 0;
-    this.config.headless || this.createToggle(r), this._setCurrentColor(new I(i), !1), i || this.clear(!1), this.config.dismissOnOutsideClick && window.addEventListener("pointerdown", (o) => {
+    this.config.headless || this.createToggle(r), this._setCurrentColor(new F(i), !1), i || this.clear(!1), this.config.dismissOnOutsideClick && window.addEventListener("pointerdown", (o) => {
       if (!this._open) return;
       const s = o.target;
       !s.closest(".cp_dialog") && !s.closest(".color-picker") && this.close();
@@ -1326,7 +1326,7 @@ class fn extends wt.EventEmitter {
   }
   createToggle(r) {
     const n = r instanceof HTMLInputElement;
-    this.isInput = n, this.$toggle = n ? document.createElement("button") : r, this.$input = n ? r : document.createElement("input"), r.replaceWith(this.$toggle), this.$input.tabIndex = -1, this.$input.readOnly = !0, this.$input.classList.add("cp_input"), this.config.toggleStyle === "input" && this.$toggle.classList.add("cp_wide"), this.$button = document.createElement("div"), this.$button.classList.add("cp_button"), this.$button.innerHTML = cn, this.$toggle.classList.add("color-picker"), this.$toggle.setAttribute("type", "button"), this.$toggle.append(this.$input, this.$button), this.changeHandler = () => this.setColor(this.$input.value), this.clickHandler = () => this.toggle(), this.$input.addEventListener("change", this.changeHandler), this.$toggle.addEventListener("click", this.clickHandler);
+    this.isInput = n, this.$toggle = n ? document.createElement("button") : r, this.$input = n ? r : document.createElement("input"), this.isInput && r.type == "color" && (r.type = "text"), r.replaceWith(this.$toggle), this.$input.tabIndex = -1, this.$input.readOnly = !0, this.$input.classList.add("cp_input"), this.config.toggleStyle === "input" && this.$toggle.classList.add("cp_wide"), this.$button = document.createElement("div"), this.$button.classList.add("cp_button"), this.$button.innerHTML = cn, this.$toggle.classList.add("color-picker"), this.$toggle.setAttribute("type", "button"), this.$toggle.append(this.$input, this.$button), this.changeHandler = () => this.setColor(this.$input.value), this.clickHandler = () => this.toggle(), this.$input.addEventListener("change", this.changeHandler), this.$toggle.addEventListener("click", this.clickHandler);
   }
   /**
    * Toggle whether the picker dialog is opened.
@@ -1372,7 +1372,7 @@ class fn extends wt.EventEmitter {
       const r = this.config.swatches.map((n) => {
         const i = document.createElement("button");
         i.className = "cp_swatch", i.style.setProperty("--cp-color", n), i.dataset.color = n;
-        const o = new I(i.dataset.color);
+        const o = new F(i.dataset.color);
         return i.addEventListener("click", () => this._setNewColor(o)), i;
       });
       this.$dialog.querySelector(".cp_swatches").append(...r);
@@ -1398,7 +1398,7 @@ class fn extends wt.EventEmitter {
     const o = this.$dialog.querySelector(".cp_eyedrop");
     this.config.enableEyedropper && "EyeDropper" in window ? o.addEventListener("click", () => {
       new EyeDropper().open().then((a) => {
-        const u = new I(a.sRGBHex);
+        const u = new F(a.sRGBHex);
         this._setNewColor(u);
       }).catch(() => {
       });
@@ -1411,7 +1411,7 @@ class fn extends wt.EventEmitter {
     }) : l.remove(), this.$colorInput.addEventListener("input", () => {
       try {
         const { color: a, format: u } = St(this.$colorInput.value);
-        this.setFormat(u, !1), this._setNewColor(new I(a), !1);
+        this.setFormat(u, !1), this._setNewColor(new F(a), !1);
       } catch {
       }
     }), this.$colorInput.addEventListener("keydown", (a) => {
@@ -1472,7 +1472,7 @@ class fn extends wt.EventEmitter {
    */
   setColor(r, n = !0) {
     if (!r) return this.clear(n);
-    this._setCurrentColor(new I(r), n);
+    this._setCurrentColor(new F(r), n);
   }
   /**
    * Set the picker color format.
