@@ -88,6 +88,10 @@ export class ColorPicker extends EventEmitter<{
     this.isInput = isInput
     this.$toggle = isInput ? document.createElement('button') : $from
     this.$input = isInput ? $from : document.createElement('input')
+	 if (this.isInput && 'color' == $from.type) {
+	   // input type="color" cannot be styled, change to 'text'
+		$from.type = 'text'
+	 }
 
     $from.replaceWith(this.$toggle)
 
