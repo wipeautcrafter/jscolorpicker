@@ -64,9 +64,6 @@
   display: flex;
   width: 100%;
   border: 1px solid var(--cp-border-color);
-}
-
-.cp_wide .cp_button {
   height: var(--cp-size);
 }
 
@@ -86,12 +83,11 @@
   display: block;
   flex-grow: 1;
   padding-left: 0.75rem;
+  height: inherit; /* or: var(--cp-size) */
 }
 
 .cp_wide .cp_input + .cp_button {
   border-left: 1px solid var(--cp-border-color);
-  height: inherit;
-  width: var(--cp-size);
 }
 
 .cp_wrap {
