@@ -32,7 +32,7 @@ pickers.push(
   new ColorPicker('#picker3', {
     showClearButton: true,
     //dismissOnEscape: false,
-    submitMode: 'instant', // 'instant' | 'confirm'
+    submitMode: 'confirm', // 'instant' | 'confirm'
     // defaultColor: 'red',
     defaultFormat: 'hex', // 'hex' | 'rgb' | 'hsv' | 'hsl'
     swatches: ['#d95d5d', '#db8525', '#e8c43c', '#bed649', '#9ecbdb', '#6399a5', '#c771a1'],
@@ -46,9 +46,11 @@ pickers.push(
     defaultFormat: 'rgb', // 'hex' | 'rgb' | 'hsv' | 'hsl'
   }),
 
-  new ColorPicker('#inline', {
-    headless: false,
-  })
+  new ColorPicker('#picker5', {
+    defaultFormat: 'hex', // 'hex' | 'rgb' | 'hsv' | 'hsl'
+    swatches: ['#d95d5d', '#db8525', '#e8c43c', '#bed649', '#9ecbdb', '#6399a5', '#c771a1'],
+	 swatchesOnly: true
+  }),
 )
 
 // Bind events
@@ -96,6 +98,9 @@ for (const btn of document.querySelectorAll<HTMLElement>('.changeBtn')) {
 for (const btn of document.querySelectorAll<HTMLElement>('.setBtn')) {
   btn.onclick = () => {
     const idx = +btn.dataset.picker!
-    pickers[idx - 1].setColor(getRandomColor())
+    //pickers[idx - 1].setColor(getRandomColor())
+
+    pickers[idx - 1].setColor([255,0,255,.1])
+    //pickers[idx - 1].setColor('red')
   }
 }

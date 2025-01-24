@@ -258,7 +258,10 @@ export class ColorPicker extends EventEmitter<{
         $swatch.dataset.color = swatch
 
         const color = new Color($swatch.dataset.color!)
-        $swatch.addEventListener('click', () => this._setNewColor(color))
+        $swatch.addEventListener('click', () => {
+          this._setNewColor(color)
+			 if (this.config.swatchesOnly) { this.close() }
+        })
 
         return $swatch
       })
@@ -359,6 +362,18 @@ export class ColorPicker extends EventEmitter<{
     this.$colorInput!.addEventListener('dblclick', () => {
       navigator.clipboard && navigator.clipboard.writeText(this.$colorInput!.value)
     })
+
+	 if (this.config.swatchesOnly) {
+		const $iptGroup = this.$dialog!.querySelector('.cp_input-group')
+	   $iptGroup && $iptGroup.remove()
+
+		const $formats = this.$dialog!.querySelector('.cp_formats')
+	   $formats && $formats.remove()
+
+      $hueTrack && $hueTrack.remove()
+      $hsvTrack && $hsvTrack.remove()
+      $alphaTrack && $alphaTrack.remove()
+  	 }
   }
 
   private getAnimationDuration() {
@@ -472,7 +487,7 @@ export class ColorPicker extends EventEmitter<{
   }
 
   private _setNewColor(color: Color, updateInput = true) {
-    if (this.config.submitMode === 'instant') {
+    if (this.config.submitMode === 'instant' || this.config.swatchesOnly) {
       return this._setCurrentColor(color, true, updateInput)
     }
 

@@ -37,6 +37,13 @@ export interface PickerConfig {
   swatches: string[] | null | false
 
   /**
+   * Hide hsv, hue and alpha sliders as well as format selector and input field. 
+   * Keep swatches only.
+   * Default: false
+   */
+  swatchesOnly: boolean
+
+  /**
    * Whether to enable the alpha (transparency) slider.
    * Default: true
    */
@@ -107,6 +114,7 @@ export const defaultConfig: PickerConfig = {
   container: null,
   defaultColor: null,
   swatches: null,
+  swatchesOnly: false,
   enableAlpha: true,
   enableEyedropper: true,
   formats: ['hex', 'rgb', 'hsv', 'hsl'],

@@ -499,7 +499,7 @@ function rt(t) {
       f -= _ - n.width, f *= a ? 1 : -1;
     }
   }
-  var k = Object.assign({
+  var S = Object.assign({
     position: l
   }, u && vr), B = c === !0 ? gr({
     x: f,
@@ -509,10 +509,10 @@ function rt(t) {
     y: v
   };
   if (f = B.x, v = B.y, a) {
-    var S;
-    return Object.assign({}, k, (S = {}, S[p] = L ? "0" : "", S[C] = x ? "0" : "", S.transform = (m.devicePixelRatio || 1) <= 1 ? "translate(" + f + "px, " + v + "px)" : "translate3d(" + f + "px, " + v + "px, 0)", S));
+    var k;
+    return Object.assign({}, S, (k = {}, k[p] = L ? "0" : "", k[C] = x ? "0" : "", k.transform = (m.devicePixelRatio || 1) <= 1 ? "translate(" + f + "px, " + v + "px)" : "translate3d(" + f + "px, " + v + "px, 0)", k));
   }
-  return Object.assign({}, k, (e = {}, e[p] = L ? v + "px" : "", e[C] = x ? f + "px" : "", e.transform = "", e));
+  return Object.assign({}, S, (e = {}, e[p] = L ? v + "px" : "", e[C] = x ? f + "px" : "", e.transform = "", e));
 }
 function mr(t) {
   var e = t.state, r = t.options, n = r.gpuAcceleration, i = n === void 0 ? !0 : n, o = r.adaptive, s = o === void 0 ? !0 : o, l = r.roundOffsets, a = l === void 0 ? !0 : l, u = {
@@ -722,12 +722,12 @@ function de(t, e) {
     bottom: E.bottom - m.bottom + x.bottom,
     left: m.left - E.left + x.left,
     right: E.right - m.right + x.right
-  }, k = t.modifiersData.offset;
-  if (g === le && k) {
-    var B = k[i];
-    Object.keys(_).forEach(function(S) {
-      var X = [H, T].indexOf(S) >= 0 ? 1 : -1, Y = [P, T].indexOf(S) >= 0 ? "y" : "x";
-      _[S] += B[Y] * X;
+  }, S = t.modifiersData.offset;
+  if (g === le && S) {
+    var B = S[i];
+    Object.keys(_).forEach(function(k) {
+      var X = [H, T].indexOf(k) >= 0 ? 1 : -1, Y = [P, T].indexOf(k) >= 0 ? "y" : "x";
+      _[k] += B[Y] * X;
     });
   }
   return _;
@@ -752,16 +752,16 @@ function Ar(t, e) {
     return f[b] - f[v];
   });
 }
-function kr(t) {
+function Sr(t) {
   if (W(t) === Te)
     return [];
   var e = Oe(t);
   return [nt(t), e, nt(e)];
 }
-function Sr(t) {
+function kr(t) {
   var e = t.state, r = t.options, n = t.name;
   if (!e.modifiersData[n]._skip) {
-    for (var i = r.mainAxis, o = i === void 0 ? !0 : i, s = r.altAxis, l = s === void 0 ? !0 : s, a = r.fallbackPlacements, u = r.padding, c = r.boundary, d = r.rootBoundary, g = r.altBoundary, f = r.flipVariations, b = f === void 0 ? !0 : f, v = r.allowedAutoPlacements, h = e.options.placement, x = W(h), L = x === h, C = a || (L || !b ? [Oe(h)] : kr(h)), p = [h].concat(C).reduce(function(Q, V) {
+    for (var i = r.mainAxis, o = i === void 0 ? !0 : i, s = r.altAxis, l = s === void 0 ? !0 : s, a = r.fallbackPlacements, u = r.padding, c = r.boundary, d = r.rootBoundary, g = r.altBoundary, f = r.flipVariations, b = f === void 0 ? !0 : f, v = r.allowedAutoPlacements, h = e.options.placement, x = W(h), L = x === h, C = a || (L || !b ? [Oe(h)] : Sr(h)), p = [h].concat(C).reduce(function(Q, V) {
       return Q.concat(W(V) === Te ? Ar(e, {
         placement: V,
         boundary: c,
@@ -771,22 +771,22 @@ function Sr(t) {
         allowedAutoPlacements: v
       }) : V);
     }, []), m = e.rects.reference, y = e.rects.popper, O = /* @__PURE__ */ new Map(), A = !0, E = p[0], _ = 0; _ < p.length; _++) {
-      var k = p[_], B = W(k), S = oe(k) === re, X = [P, T].indexOf(B) >= 0, Y = X ? "width" : "height", M = de(e, {
-        placement: k,
+      var S = p[_], B = W(S), k = oe(S) === re, X = [P, T].indexOf(B) >= 0, Y = X ? "width" : "height", M = de(e, {
+        placement: S,
         boundary: c,
         rootBoundary: d,
         altBoundary: g,
         padding: u
-      }), N = X ? S ? H : D : S ? T : P;
+      }), N = X ? k ? H : D : k ? T : P;
       m[Y] > y[Y] && (N = Oe(N));
       var ge = Oe(N), K = [];
       if (o && K.push(M[B] <= 0), l && K.push(M[N] <= 0, M[ge] <= 0), K.every(function(Q) {
         return Q;
       })) {
-        E = k, A = !1;
+        E = S, A = !1;
         break;
       }
-      O.set(k, K);
+      O.set(S, K);
     }
     if (A)
       for (var me = b ? 3 : 1, Ee = function(V) {
@@ -810,7 +810,7 @@ const Pr = {
   name: "flip",
   enabled: !0,
   phase: "main",
-  fn: Sr,
+  fn: kr,
   requiresIfExists: ["offset"],
   data: {
     _skip: !1
@@ -913,20 +913,20 @@ function Wr(t) {
   } : Object.assign({
     mainAxis: 0,
     altAxis: 0
-  }, E), k = e.modifiersData.offset ? e.modifiersData.offset[e.placement] : null, B = {
+  }, E), S = e.modifiersData.offset ? e.modifiersData.offset[e.placement] : null, B = {
     x: 0,
     y: 0
   };
   if (y) {
     if (o) {
-      var S, X = p === "y" ? P : D, Y = p === "y" ? T : H, M = p === "y" ? "height" : "width", N = y[p], ge = N + h[X], K = N - h[Y], me = f ? -A[M] / 2 : 0, Ee = L === re ? O[M] : A[M], se = L === re ? -A[M] : -O[M], ye = e.elements.arrow, Q = f && ye ? Be(ye) : {
+      var k, X = p === "y" ? P : D, Y = p === "y" ? T : H, M = p === "y" ? "height" : "width", N = y[p], ge = N + h[X], K = N - h[Y], me = f ? -A[M] / 2 : 0, Ee = L === re ? O[M] : A[M], se = L === re ? -A[M] : -O[M], ye = e.elements.arrow, Q = f && ye ? Be(ye) : {
         width: 0,
         height: 0
-      }, V = e.modifiersData["arrow#persistent"] ? e.modifiersData["arrow#persistent"].padding : Lt(), ae = V[X], we = V[Y], z = ue(0, O[M], Q[M]), Ae = C ? O[M] / 2 - me - z - ae - _.mainAxis : Ee - z - ae - _.mainAxis, Pt = C ? -O[M] / 2 + me + z + we + _.mainAxis : se + z + we + _.mainAxis, ke = e.elements.arrow && ve(e.elements.arrow), Dt = ke ? p === "y" ? ke.clientTop || 0 : ke.clientLeft || 0 : 0, qe = (S = k == null ? void 0 : k[p]) != null ? S : 0, Mt = N + Ae - qe - Dt, jt = N + Pt - qe, Ve = ue(f ? Le(ge, Mt) : ge, N, f ? G(K, jt) : K);
+      }, V = e.modifiersData["arrow#persistent"] ? e.modifiersData["arrow#persistent"].padding : Lt(), ae = V[X], we = V[Y], z = ue(0, O[M], Q[M]), Ae = C ? O[M] / 2 - me - z - ae - _.mainAxis : Ee - z - ae - _.mainAxis, Pt = C ? -O[M] / 2 + me + z + we + _.mainAxis : se + z + we + _.mainAxis, Se = e.elements.arrow && ve(e.elements.arrow), Dt = Se ? p === "y" ? Se.clientTop || 0 : Se.clientLeft || 0 : 0, qe = (k = S == null ? void 0 : S[p]) != null ? k : 0, Mt = N + Ae - qe - Dt, jt = N + Pt - qe, Ve = ue(f ? Le(ge, Mt) : ge, N, f ? G(K, jt) : K);
       y[p] = Ve, B[p] = Ve - N;
     }
     if (l) {
-      var Ue, Rt = p === "x" ? P : D, Tt = p === "x" ? T : H, Z = y[m], be = m === "y" ? "height" : "width", Xe = Z + h[Rt], Ye = Z - h[Tt], Se = [P, D].indexOf(x) !== -1, Ke = (Ue = k == null ? void 0 : k[m]) != null ? Ue : 0, ze = Se ? Xe : Z - O[be] - A[be] - Ke + _.altAxis, Ze = Se ? Z + O[be] + A[be] - Ke - _.altAxis : Ye, Ge = f && Se ? ur(ze, Z, Ze) : ue(f ? ze : Xe, Z, f ? Ze : Ye);
+      var Ue, Rt = p === "x" ? P : D, Tt = p === "x" ? T : H, Z = y[m], be = m === "y" ? "height" : "width", Xe = Z + h[Rt], Ye = Z - h[Tt], ke = [P, D].indexOf(x) !== -1, Ke = (Ue = S == null ? void 0 : S[m]) != null ? Ue : 0, ze = ke ? Xe : Z - O[be] - A[be] - Ke + _.altAxis, Ze = ke ? Z + O[be] + A[be] - Ke - _.altAxis : Ye, Ge = f && ke ? ur(ze, Z, Ze) : ue(f ? ze : Xe, Z, f ? Ze : Ye);
       y[m] = Ge, B[m] = Ge - Z;
     }
     e.modifiersData[n] = B;
@@ -1135,17 +1135,17 @@ var Gr = [br, Br, yr, ar, Tr, Pr, Ir, hr, Mr], Jr = /* @__PURE__ */ Zr({
 const Qr = ([t, e, r, n]) => {
   const i = Math.max(t, e, r), o = i - Math.min(t, e, r), s = o && (i == t ? (e - r) / o : i == e ? 2 + (r - t) / o : 4 + (t - e) / o);
   return [60 * (s < 0 ? s + 6 : s), i && o / i, i, n];
-}, kt = (t) => t.replace(/[^0-9%.,]/g, "").split(",").map((e) => parseFloat(e) / (e.endsWith("%") ? 100 : 1)), en = (t) => {
+}, St = (t) => t.replace(/[^0-9%.,]/g, "").split(",").map((e) => parseFloat(e) / (e.endsWith("%") ? 100 : 1)), en = (t) => {
   const e = document.createElement("span");
   e.style.display = "none", e.style.color = t, document.body.append(e);
   const { color: r } = getComputedStyle(e);
   if (e.remove(), !r) return null;
-  const [n, i, o, s] = kt(r);
+  const [n, i, o, s] = St(r);
   return Qr([n / 255, i / 255, o / 255, s]);
 }, tn = (t) => {
-  const e = kt(t).map((r, n) => Math.min(r, n ? 1 : 255));
+  const e = St(t).map((r, n) => Math.min(r, n ? 1 : 255));
   return e.length < 3 || e.some((r) => isNaN(r)) ? null : e;
-}, St = (t) => {
+}, kt = (t) => {
   let e;
   /^hsva?\(/i.test(t) ? e = "hsv" : /^hsla?\(/i.test(t) ? e = "hsl" : /^rgba?\(/i.test(t) ? e = "rgb" : e = "hex";
   const r = e === "hsv" ? tn(t) : en(t);
@@ -1174,7 +1174,7 @@ class F {
       const [r = 0, n = 0, i = 0, o = 1] = e;
       this.color = [r, n, i, o];
     } else
-      this.color = St(e).color;
+      this.color = kt(e).color;
   }
   getSet(e, r) {
     if (r === void 0) return this.color[e];
@@ -1241,6 +1241,7 @@ const an = {
   container: null,
   defaultColor: null,
   swatches: null,
+  swatchesOnly: !1,
   enableAlpha: !0,
   enableEyedropper: !0,
   formats: ["hex", "rgb", "hsv", "hsl"],
@@ -1373,7 +1374,9 @@ class fn extends wt.EventEmitter {
         const i = document.createElement("button");
         i.className = "cp_swatch", i.style.setProperty("--cp-color", n), i.dataset.color = n;
         const o = new F(i.dataset.color);
-        return i.addEventListener("click", () => this._setNewColor(o)), i;
+        return i.addEventListener("click", () => {
+          this._setNewColor(o), this.config.swatchesOnly && this.close();
+        }), i;
       });
       this.$dialog.querySelector(".cp_swatches").append(...r);
     }
@@ -1406,11 +1409,11 @@ class fn extends wt.EventEmitter {
     const s = this.$dialog.querySelector(".cp_submit");
     this.config.submitMode === "confirm" ? s.addEventListener("click", () => this.submit()) : s.remove();
     const l = this.$dialog.querySelector(".cp_clear");
-    this.config.showClearButton ? l.addEventListener("click", () => {
+    if (this.config.showClearButton ? l.addEventListener("click", () => {
       this.clear(), this.close();
     }) : l.remove(), this.$colorInput.addEventListener("input", () => {
       try {
-        const { color: a, format: u } = St(this.$colorInput.value);
+        const { color: a, format: u } = kt(this.$colorInput.value);
         this.setFormat(u, !1), this._setNewColor(new F(a), !1);
       } catch {
       }
@@ -1418,7 +1421,12 @@ class fn extends wt.EventEmitter {
       a.key === "Enter" && this.submit();
     }), this.$colorInput.addEventListener("dblclick", () => {
       navigator.clipboard && navigator.clipboard.writeText(this.$colorInput.value);
-    });
+    }), this.config.swatchesOnly) {
+      const a = this.$dialog.querySelector(".cp_input-group");
+      a && a.remove();
+      const u = this.$dialog.querySelector(".cp_formats");
+      u && u.remove(), n && n.remove(), r && r.remove(), i && i.remove();
+    }
   }
   getAnimationDuration() {
     const n = window.getComputedStyle(this.$toggle).getPropertyValue("--cp-delay");
@@ -1483,7 +1491,7 @@ class fn extends wt.EventEmitter {
     this._format = r, this.updateFormat(), n && (this.updateColor(), this.updateAppliedColor(!1));
   }
   _setNewColor(r, n = !0) {
-    if (this.config.submitMode === "instant")
+    if (this.config.submitMode === "instant" || this.config.swatchesOnly)
       return this._setCurrentColor(r, !0, n);
     this._newColor = r, this.updateColor(n);
   }
