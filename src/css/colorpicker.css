@@ -195,6 +195,7 @@
   transform: translate(-50%, -50%);
   pointer-events: none;
 
+  width: 1.65rem; /* For Safari */
   height: 1.65rem;
   aspect-ratio: 1;
 
