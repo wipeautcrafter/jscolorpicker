@@ -69,6 +69,10 @@
 
 .cp_dialog input, .cp_dialog button {
   margin: 0; /* CSS reset */
+  border-radius: 0; /* CSS reset */
+}
+.cp_dialog button:hover {
+	background-color: var(--cp-border-color-translucent) !important;
 }
 
 .cp_input {
@@ -321,7 +325,7 @@
 .cp_format {
   flex: 1 1 auto;
   border: none;
-  border-radius: 9999px;
+  border-radius: 9999px !important;
   padding: 0.125rem 0.25rem;
 
   background: none;
