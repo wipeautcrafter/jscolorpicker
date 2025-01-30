@@ -29,7 +29,6 @@ declare class ColorPicker extends EventEmitter<{
     close: [];
     closed: [];
     pick: [Color | null];
-    cancel: [];
 }> {
     /**
      * Get whether the dialog is currently open.
@@ -39,6 +38,10 @@ declare class ColorPicker extends EventEmitter<{
      * Get the picked color.
      */
     get color(): Color | null;
+    /**
+     * Get the array of swatches.
+     */
+    get swatches(): string[];
     /**
      * Get the color currently selected in the dialog.
      */
@@ -56,6 +59,7 @@ declare class ColorPicker extends EventEmitter<{
     private _format;
     private _color;
     private _newColor;
+    private _swatches;
     private config;
     private popper?;
     private isInput;
@@ -72,11 +76,17 @@ declare class ColorPicker extends EventEmitter<{
     private $colorInput?;
     private createToggle;
     /**
+     * Append the picker to a given element.
+     * @param target The element to attach the picker to.
+     */
+    appendTo(target: HTMLElement): void;
+    /**
      * Create a new ColorPicker instance.
      * @param $from The element or query to bind to. (leave null to create one)
      * @param config The picker configuration.
      */
     constructor($from?: HTMLInputElement | HTMLButtonElement | string | null, config?: Partial<PickerConfig>);
+    setSwatches(swatches: string[] | null | false): void;
     /**
      * Toggle whether the picker dialog is opened.
      * @param value Force open or closed?
@@ -132,6 +142,7 @@ declare class ColorPicker extends EventEmitter<{
     private updateColor;
     private updateAppliedColor;
     private updateFormat;
+    private updateSwatches;
 }
 export default ColorPicker;
 

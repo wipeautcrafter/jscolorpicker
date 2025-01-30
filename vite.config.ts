@@ -13,7 +13,6 @@ export default defineConfig({
       fileName: 'colorpicker',
       formats: ['iife', 'es'],
     },
-    minify: true,
     rollupOptions: {
       output: {
         assetFileNames: 'colorpicker.[ext]',

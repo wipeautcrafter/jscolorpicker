@@ -1,6 +1,6 @@
 var Ht = Object.defineProperty;
 var Bt = (t, e, r) => e in t ? Ht(t, e, { enumerable: !0, configurable: !0, writable: !0, value: r }) : t[e] = r;
-var $ = (t, e, r) => Bt(t, typeof e != "symbol" ? e + "" : e, r);
+var x = (t, e, r) => Bt(t, typeof e != "symbol" ? e + "" : e, r);
 function Nt(t) {
   return t && t.__esModule && Object.prototype.hasOwnProperty.call(t, "default") ? t.default : t;
 }
@@ -28,7 +28,7 @@ w.prototype._events = void 0;
 w.prototype._eventsCount = 0;
 w.prototype._maxListeners = void 0;
 var Qe = 10;
-function Ce(t) {
+function _e(t) {
   if (typeof t != "function")
     throw new TypeError('The "listener" argument must be of type Function. Received type ' + typeof t);
 }
@@ -83,7 +83,7 @@ w.prototype.emit = function(e) {
 };
 function dt(t, e, r, n) {
   var i, o, s;
-  if (Ce(r), o = t._events, o === void 0 ? (o = t._events = /* @__PURE__ */ Object.create(null), t._eventsCount = 0) : (o.newListener !== void 0 && (t.emit(
+  if (_e(r), o = t._events, o === void 0 ? (o = t._events = /* @__PURE__ */ Object.create(null), t._eventsCount = 0) : (o.newListener !== void 0 && (t.emit(
     "newListener",
     e,
     r.listener ? r.listener : r
@@ -112,14 +112,14 @@ function ht(t, e, r) {
   return i.listener = r, n.wrapFn = i, i;
 }
 w.prototype.once = function(e, r) {
-  return Ce(r), this.on(e, ht(this, e, r)), this;
+  return _e(r), this.on(e, ht(this, e, r)), this;
 };
 w.prototype.prependOnceListener = function(e, r) {
-  return Ce(r), this.prependListener(e, ht(this, e, r)), this;
+  return _e(r), this.prependListener(e, ht(this, e, r)), this;
 };
 w.prototype.removeListener = function(e, r) {
   var n, i, o, s, l;
-  if (Ce(r), i = this._events, i === void 0)
+  if (_e(r), i = this._events, i === void 0)
     return this;
   if (n = i[e], n === void 0)
     return this;
@@ -366,7 +366,7 @@ function U(t) {
     t.document
   )) || window.document).documentElement;
 }
-function _e(t) {
+function Ce(t) {
   return I(t) === "html" ? t : (
     // this is a quicker (but less type safe) way to save quite some bytes from the bundle
     // $FlowFixMe[incompatible-return]
@@ -389,7 +389,7 @@ function cr(t) {
     if (n.position === "fixed")
       return null;
   }
-  var i = _e(t);
+  var i = Ce(t);
   for (He(i) && (i = i.host); R(i) && ["html", "body"].indexOf(I(i)) < 0; ) {
     var o = q(i);
     if (o.transform !== "none" || o.perspective !== "none" || o.contain === "paint" || ["transform", "perspective"].indexOf(o.willChange) !== -1 || e && o.willChange === "filter" || e && o.filter && o.filter !== "none")
@@ -421,10 +421,10 @@ function Lt() {
     left: 0
   };
 }
-function Ct(t) {
+function _t(t) {
   return Object.assign({}, Lt(), t);
 }
-function _t(t, e) {
+function Ct(t, e) {
   return e.reduce(function(r, n) {
     return r[n] = t, r;
   }, {});
@@ -432,12 +432,12 @@ function _t(t, e) {
 var fr = function(e, r) {
   return e = typeof e == "function" ? e(Object.assign({}, r.rects, {
     placement: r.placement
-  })) : e, Ct(typeof e != "number" ? e : _t(e, he));
+  })) : e, _t(typeof e != "number" ? e : Ct(e, he));
 };
 function pr(t) {
   var e, r = t.state, n = t.name, i = t.options, o = r.elements.arrow, s = r.modifiersData.popperOffsets, l = W(r.placement), a = Ne(l), u = [D, H].indexOf(l) >= 0, c = u ? "height" : "width";
   if (!(!o || !s)) {
-    var d = fr(i.padding, r), g = Be(o), f = a === "y" ? P : D, b = a === "y" ? T : H, v = r.rects.reference[c] + r.rects.reference[a] - s[a] - r.rects.popper[c], h = s[a] - r.rects.reference[a], x = ve(o), L = x ? a === "y" ? x.clientHeight || 0 : x.clientWidth || 0 : 0, C = v / 2 - h / 2, p = d[f], m = L - g[c] - d[b], y = L / 2 - g[c] / 2 + C, O = ue(p, y, m), A = a;
+    var d = fr(i.padding, r), g = Be(o), f = a === "y" ? P : D, b = a === "y" ? T : H, v = r.rects.reference[c] + r.rects.reference[a] - s[a] - r.rects.popper[c], h = s[a] - r.rects.reference[a], $ = ve(o), L = $ ? a === "y" ? $.clientHeight || 0 : $.clientWidth || 0 : 0, _ = v / 2 - h / 2, p = d[f], m = L - g[c] - d[b], y = L / 2 - g[c] / 2 + _, O = ue(p, y, m), A = a;
     r.modifiersData[n] = (e = {}, e[A] = O, e.centerOffset = O - y, e);
   }
 }
@@ -479,7 +479,7 @@ function rt(t) {
     y: v
   };
   f = h.x, v = h.y;
-  var x = s.hasOwnProperty("x"), L = s.hasOwnProperty("y"), C = D, p = P, m = window;
+  var $ = s.hasOwnProperty("x"), L = s.hasOwnProperty("y"), _ = D, p = P, m = window;
   if (u) {
     var y = ve(r), O = "clientHeight", A = "clientWidth";
     if (y === j(r) && (y = U(r), q(y).position !== "static" && l === "absolute" && (O = "scrollHeight", A = "scrollWidth")), y = y, i === P || (i === D || i === H) && o === pe) {
@@ -491,12 +491,12 @@ function rt(t) {
       v -= E - n.height, v *= a ? 1 : -1;
     }
     if (i === D || (i === P || i === T) && o === pe) {
-      C = H;
-      var _ = d && y === m && m.visualViewport ? m.visualViewport.width : (
+      _ = H;
+      var C = d && y === m && m.visualViewport ? m.visualViewport.width : (
         // $FlowFixMe[prop-missing]
         y[A]
       );
-      f -= _ - n.width, f *= a ? 1 : -1;
+      f -= C - n.width, f *= a ? 1 : -1;
     }
   }
   var S = Object.assign({
@@ -510,9 +510,9 @@ function rt(t) {
   };
   if (f = B.x, v = B.y, a) {
     var k;
-    return Object.assign({}, S, (k = {}, k[p] = L ? "0" : "", k[C] = x ? "0" : "", k.transform = (m.devicePixelRatio || 1) <= 1 ? "translate(" + f + "px, " + v + "px)" : "translate3d(" + f + "px, " + v + "px, 0)", k));
+    return Object.assign({}, S, (k = {}, k[p] = L ? "0" : "", k[_] = $ ? "0" : "", k.transform = (m.devicePixelRatio || 1) <= 1 ? "translate(" + f + "px, " + v + "px)" : "translate3d(" + f + "px, " + v + "px, 0)", k));
   }
-  return Object.assign({}, S, (e = {}, e[p] = L ? v + "px" : "", e[C] = x ? f + "px" : "", e.transform = "", e));
+  return Object.assign({}, S, (e = {}, e[p] = L ? v + "px" : "", e[_] = $ ? f + "px" : "", e.transform = "", e));
 }
 function mr(t) {
   var e = t.state, r = t.options, n = r.gpuAcceleration, i = n === void 0 ? !0 : n, o = r.adaptive, s = o === void 0 ? !0 : o, l = r.roundOffsets, a = l === void 0 ? !0 : l, u = {
@@ -624,7 +624,7 @@ function Fe(t) {
   return /auto|scroll|overlay|hidden/.test(r + i + n);
 }
 function Et(t) {
-  return ["html", "body", "#document"].indexOf(I(t)) >= 0 ? t.ownerDocument.body : R(t) && Fe(t) ? t : Et(_e(t));
+  return ["html", "body", "#document"].indexOf(I(t)) >= 0 ? t.ownerDocument.body : R(t) && Fe(t) ? t : Et(Ce(t));
 }
 function fe(t, e) {
   var r;
@@ -632,7 +632,7 @@ function fe(t, e) {
   var n = Et(t), i = n === ((r = t.ownerDocument) == null ? void 0 : r.body), o = j(n), s = i ? [o].concat(o.visualViewport || [], Fe(n) ? n : []) : n, l = e.concat(s);
   return i ? l : (
     // $FlowFixMe[incompatible-call]: isBody tells us target will be an HTMLElement here
-    l.concat(fe(_e(s)))
+    l.concat(fe(Ce(s)))
   );
 }
 function je(t) {
@@ -643,21 +643,21 @@ function je(t) {
     bottom: t.y + t.height
   });
 }
-function Cr(t, e) {
+function _r(t, e) {
   var r = ie(t, !1, e === "fixed");
   return r.top = r.top + t.clientTop, r.left = r.left + t.clientLeft, r.bottom = r.top + t.clientHeight, r.right = r.left + t.clientWidth, r.width = t.clientWidth, r.height = t.clientHeight, r.x = r.left, r.y = r.top, r;
 }
 function it(t, e, r) {
-  return e === bt ? je(Or(t, r)) : J(e) ? Cr(e, r) : je(Lr(U(t)));
+  return e === bt ? je(Or(t, r)) : J(e) ? _r(e, r) : je(Lr(U(t)));
 }
-function _r(t) {
-  var e = fe(_e(t)), r = ["absolute", "fixed"].indexOf(q(t).position) >= 0, n = r && R(t) ? ve(t) : t;
+function Cr(t) {
+  var e = fe(Ce(t)), r = ["absolute", "fixed"].indexOf(q(t).position) >= 0, n = r && R(t) ? ve(t) : t;
   return J(n) ? e.filter(function(i) {
     return J(i) && Ot(i, n) && I(i) !== "body";
   }) : [];
 }
 function Er(t, e, r, n) {
-  var i = e === "clippingParents" ? _r(t) : [].concat(e), o = [].concat(i, [r]), s = o[0], l = o.reduce(function(a, u) {
+  var i = e === "clippingParents" ? Cr(t) : [].concat(e), o = [].concat(i, [r]), s = o[0], l = o.reduce(function(a, u) {
     var c = it(t, u, n);
     return a.top = G(c.top, a.top), a.right = Le(c.right, a.right), a.bottom = Le(c.bottom, a.bottom), a.left = G(c.left, a.left), a;
   }, it(t, s, n));
@@ -712,25 +712,25 @@ function At(t) {
 }
 function de(t, e) {
   e === void 0 && (e = {});
-  var r = e, n = r.placement, i = n === void 0 ? t.placement : n, o = r.strategy, s = o === void 0 ? t.strategy : o, l = r.boundary, a = l === void 0 ? Yt : l, u = r.rootBoundary, c = u === void 0 ? bt : u, d = r.elementContext, g = d === void 0 ? le : d, f = r.altBoundary, b = f === void 0 ? !1 : f, v = r.padding, h = v === void 0 ? 0 : v, x = Ct(typeof h != "number" ? h : _t(h, he)), L = g === le ? Kt : le, C = t.rects.popper, p = t.elements[b ? L : g], m = Er(J(p) ? p : p.contextElement || U(t.elements.popper), a, c, s), y = ie(t.elements.reference), O = At({
+  var r = e, n = r.placement, i = n === void 0 ? t.placement : n, o = r.strategy, s = o === void 0 ? t.strategy : o, l = r.boundary, a = l === void 0 ? Yt : l, u = r.rootBoundary, c = u === void 0 ? bt : u, d = r.elementContext, g = d === void 0 ? le : d, f = r.altBoundary, b = f === void 0 ? !1 : f, v = r.padding, h = v === void 0 ? 0 : v, $ = _t(typeof h != "number" ? h : Ct(h, he)), L = g === le ? Kt : le, _ = t.rects.popper, p = t.elements[b ? L : g], m = Er(J(p) ? p : p.contextElement || U(t.elements.popper), a, c, s), y = ie(t.elements.reference), O = At({
     reference: y,
-    element: C,
+    element: _,
     strategy: "absolute",
     placement: i
-  }), A = je(Object.assign({}, C, O)), E = g === le ? A : y, _ = {
-    top: m.top - E.top + x.top,
-    bottom: E.bottom - m.bottom + x.bottom,
-    left: m.left - E.left + x.left,
-    right: E.right - m.right + x.right
+  }), A = je(Object.assign({}, _, O)), E = g === le ? A : y, C = {
+    top: m.top - E.top + $.top,
+    bottom: E.bottom - m.bottom + $.bottom,
+    left: m.left - E.left + $.left,
+    right: E.right - m.right + $.right
   }, S = t.modifiersData.offset;
   if (g === le && S) {
     var B = S[i];
-    Object.keys(_).forEach(function(k) {
+    Object.keys(C).forEach(function(k) {
       var X = [H, T].indexOf(k) >= 0 ? 1 : -1, Y = [P, T].indexOf(k) >= 0 ? "y" : "x";
-      _[k] += B[Y] * X;
+      C[k] += B[Y] * X;
     });
   }
-  return _;
+  return C;
 }
 function Ar(t, e) {
   e === void 0 && (e = {});
@@ -761,7 +761,7 @@ function Sr(t) {
 function kr(t) {
   var e = t.state, r = t.options, n = t.name;
   if (!e.modifiersData[n]._skip) {
-    for (var i = r.mainAxis, o = i === void 0 ? !0 : i, s = r.altAxis, l = s === void 0 ? !0 : s, a = r.fallbackPlacements, u = r.padding, c = r.boundary, d = r.rootBoundary, g = r.altBoundary, f = r.flipVariations, b = f === void 0 ? !0 : f, v = r.allowedAutoPlacements, h = e.options.placement, x = W(h), L = x === h, C = a || (L || !b ? [Oe(h)] : Sr(h)), p = [h].concat(C).reduce(function(Q, V) {
+    for (var i = r.mainAxis, o = i === void 0 ? !0 : i, s = r.altAxis, l = s === void 0 ? !0 : s, a = r.fallbackPlacements, u = r.padding, c = r.boundary, d = r.rootBoundary, g = r.altBoundary, f = r.flipVariations, b = f === void 0 ? !0 : f, v = r.allowedAutoPlacements, h = e.options.placement, $ = W(h), L = $ === h, _ = a || (L || !b ? [Oe(h)] : Sr(h)), p = [h].concat(_).reduce(function(Q, V) {
       return Q.concat(W(V) === Te ? Ar(e, {
         placement: V,
         boundary: c,
@@ -770,8 +770,8 @@ function kr(t) {
         flipVariations: b,
         allowedAutoPlacements: v
       }) : V);
-    }, []), m = e.rects.reference, y = e.rects.popper, O = /* @__PURE__ */ new Map(), A = !0, E = p[0], _ = 0; _ < p.length; _++) {
-      var S = p[_], B = W(S), k = oe(S) === re, X = [P, T].indexOf(B) >= 0, Y = X ? "width" : "height", M = de(e, {
+    }, []), m = e.rects.reference, y = e.rects.popper, O = /* @__PURE__ */ new Map(), A = !0, E = p[0], C = 0; C < p.length; C++) {
+      var S = p[C], B = W(S), k = oe(S) === re, X = [P, T].indexOf(B) >= 0, Y = X ? "width" : "height", M = de(e, {
         placement: S,
         boundary: c,
         rootBoundary: d,
@@ -905,9 +905,9 @@ function Wr(t) {
     rootBoundary: u,
     padding: d,
     altBoundary: c
-  }), x = W(e.placement), L = oe(e.placement), C = !L, p = Ne(x), m = Nr(p), y = e.modifiersData.popperOffsets, O = e.rects.reference, A = e.rects.popper, E = typeof v == "function" ? v(Object.assign({}, e.rects, {
+  }), $ = W(e.placement), L = oe(e.placement), _ = !L, p = Ne($), m = Nr(p), y = e.modifiersData.popperOffsets, O = e.rects.reference, A = e.rects.popper, E = typeof v == "function" ? v(Object.assign({}, e.rects, {
     placement: e.placement
-  })) : v, _ = typeof E == "number" ? {
+  })) : v, C = typeof E == "number" ? {
     mainAxis: E,
     altAxis: E
   } : Object.assign({
@@ -922,11 +922,11 @@ function Wr(t) {
       var k, X = p === "y" ? P : D, Y = p === "y" ? T : H, M = p === "y" ? "height" : "width", N = y[p], ge = N + h[X], K = N - h[Y], me = f ? -A[M] / 2 : 0, Ee = L === re ? O[M] : A[M], se = L === re ? -A[M] : -O[M], ye = e.elements.arrow, Q = f && ye ? Be(ye) : {
         width: 0,
         height: 0
-      }, V = e.modifiersData["arrow#persistent"] ? e.modifiersData["arrow#persistent"].padding : Lt(), ae = V[X], we = V[Y], z = ue(0, O[M], Q[M]), Ae = C ? O[M] / 2 - me - z - ae - _.mainAxis : Ee - z - ae - _.mainAxis, Pt = C ? -O[M] / 2 + me + z + we + _.mainAxis : se + z + we + _.mainAxis, Se = e.elements.arrow && ve(e.elements.arrow), Dt = Se ? p === "y" ? Se.clientTop || 0 : Se.clientLeft || 0 : 0, qe = (k = S == null ? void 0 : S[p]) != null ? k : 0, Mt = N + Ae - qe - Dt, jt = N + Pt - qe, Ve = ue(f ? Le(ge, Mt) : ge, N, f ? G(K, jt) : K);
+      }, V = e.modifiersData["arrow#persistent"] ? e.modifiersData["arrow#persistent"].padding : Lt(), ae = V[X], we = V[Y], z = ue(0, O[M], Q[M]), Ae = _ ? O[M] / 2 - me - z - ae - C.mainAxis : Ee - z - ae - C.mainAxis, Pt = _ ? -O[M] / 2 + me + z + we + C.mainAxis : se + z + we + C.mainAxis, Se = e.elements.arrow && ve(e.elements.arrow), Dt = Se ? p === "y" ? Se.clientTop || 0 : Se.clientLeft || 0 : 0, qe = (k = S == null ? void 0 : S[p]) != null ? k : 0, Mt = N + Ae - qe - Dt, jt = N + Pt - qe, Ve = ue(f ? Le(ge, Mt) : ge, N, f ? G(K, jt) : K);
       y[p] = Ve, B[p] = Ve - N;
     }
     if (l) {
-      var Ue, Rt = p === "x" ? P : D, Tt = p === "x" ? T : H, Z = y[m], be = m === "y" ? "height" : "width", Xe = Z + h[Rt], Ye = Z - h[Tt], ke = [P, D].indexOf(x) !== -1, Ke = (Ue = S == null ? void 0 : S[m]) != null ? Ue : 0, ze = ke ? Xe : Z - O[be] - A[be] - Ke + _.altAxis, Ze = ke ? Z + O[be] + A[be] - Ke - _.altAxis : Ye, Ge = f && ke ? ur(ze, Z, Ze) : ue(f ? ze : Xe, Z, f ? Ze : Ye);
+      var Ue, Rt = p === "x" ? P : D, Tt = p === "x" ? T : H, Z = y[m], be = m === "y" ? "height" : "width", Xe = Z + h[Rt], Ye = Z - h[Tt], ke = [P, D].indexOf($) !== -1, Ke = (Ue = S == null ? void 0 : S[m]) != null ? Ue : 0, ze = ke ? Xe : Z - O[be] - A[be] - Ke + C.altAxis, Ze = ke ? Z + O[be] + A[be] - Ke - C.altAxis : Ye, Ge = f && ke ? ur(ze, Z, Ze) : ue(f ? ze : Xe, Z, f ? Ze : Ye);
       y[m] = Ge, B[m] = Ge - Z;
     }
     e.modifiersData[n] = B;
@@ -1048,14 +1048,14 @@ function Zr(t) {
       styles: {}
     }, d = [], g = !1, f = {
       state: c,
-      setOptions: function(x) {
-        var L = typeof x == "function" ? x(c.options) : x;
+      setOptions: function($) {
+        var L = typeof $ == "function" ? $(c.options) : $;
         v(), c.options = Object.assign({}, o, c.options, L), c.scrollParents = {
           reference: J(l) ? fe(l) : l.contextElement ? fe(l.contextElement) : [],
           popper: fe(a)
         };
-        var C = Yr(zr([].concat(n, c.options.modifiers)));
-        return c.orderedModifiers = C.filter(function(p) {
+        var _ = Yr(zr([].concat(n, c.options.modifiers)));
+        return c.orderedModifiers = _.filter(function(p) {
           return p.enabled;
         }), b(), f.update();
       },
@@ -1066,13 +1066,13 @@ function Zr(t) {
       // prefer the async Popper#update method
       forceUpdate: function() {
         if (!g) {
-          var x = c.elements, L = x.reference, C = x.popper;
-          if (lt(L, C)) {
+          var $ = c.elements, L = $.reference, _ = $.popper;
+          if (lt(L, _)) {
             c.rects = {
-              reference: Ur(L, ve(C), c.options.strategy === "fixed"),
-              popper: Be(C)
-            }, c.reset = !1, c.placement = c.options.placement, c.orderedModifiers.forEach(function(_) {
-              return c.modifiersData[_.name] = Object.assign({}, _.data);
+              reference: Ur(L, ve(_), c.options.strategy === "fixed"),
+              popper: Be(_)
+            }, c.reset = !1, c.placement = c.options.placement, c.orderedModifiers.forEach(function(C) {
+              return c.modifiersData[C.name] = Object.assign({}, C.data);
             });
             for (var p = 0; p < c.orderedModifiers.length; p++) {
               if (c.reset === !0) {
@@ -1108,13 +1108,13 @@ function Zr(t) {
     });
     function b() {
       c.orderedModifiers.forEach(function(h) {
-        var x = h.name, L = h.options, C = L === void 0 ? {} : L, p = h.effect;
+        var $ = h.name, L = h.options, _ = L === void 0 ? {} : L, p = h.effect;
         if (typeof p == "function") {
           var m = p({
             state: c,
-            name: x,
+            name: $,
             instance: f,
-            options: C
+            options: _
           }), y = function() {
           };
           d.push(m || y);
@@ -1165,7 +1165,7 @@ const Qr = ([t, e, r, n]) => {
 ).join(""), sn = (t, e) => e === "hsv" ? Pe(t, e) : e === "hsl" ? Pe(nn(t), e) : e === "rgb" ? Pe(ct(t), e) : on(ct(t));
 class F {
   constructor(e) {
-    $(this, "color");
+    x(this, "color");
     if (!e)
       this.color = [0, 0, 0, 1];
     else if (e instanceof F)
@@ -1206,10 +1206,10 @@ class F {
 class De extends Xt {
   constructor(r) {
     super();
-    $(this, "x", 0);
-    $(this, "y", 0);
-    $(this, "$track");
-    $(this, "$thumb");
+    x(this, "x", 0);
+    x(this, "y", 0);
+    x(this, "$track");
+    x(this, "$thumb");
     this.$track = r, this.$thumb = r.querySelector(".cp_thumb"), this.$track.addEventListener("pointerdown", (n) => {
       this.$track.setPointerCapture(n.pointerId), this.handleDrag(n), n.preventDefault();
     }), this.$track.addEventListener("pointermove", (n) => {
@@ -1262,28 +1262,29 @@ class fn extends wt.EventEmitter {
    */
   constructor(r, n = {}) {
     super();
-    $(this, "_open", !1);
-    $(this, "_unset", !0);
-    $(this, "_format");
-    $(this, "_color");
-    $(this, "_newColor");
-    $(this, "config");
-    $(this, "popper");
-    $(this, "isInput");
-    $(this, "$toggle");
-    $(this, "$dialog");
-    $(this, "$button");
-    $(this, "$input");
-    $(this, "changeHandler");
-    $(this, "clickHandler");
-    $(this, "hsvSlider");
-    $(this, "hueSlider");
-    $(this, "alphaSlider");
-    $(this, "$formats");
-    $(this, "$colorInput");
+    x(this, "_open", !1);
+    x(this, "_unset", !0);
+    x(this, "_format");
+    x(this, "_color");
+    x(this, "_newColor");
+    x(this, "_swatches");
+    x(this, "config");
+    x(this, "popper");
+    x(this, "isInput");
+    x(this, "$toggle");
+    x(this, "$dialog");
+    x(this, "$button");
+    x(this, "$input");
+    x(this, "changeHandler");
+    x(this, "clickHandler");
+    x(this, "hsvSlider");
+    x(this, "hueSlider");
+    x(this, "alphaSlider");
+    x(this, "$formats");
+    x(this, "$colorInput");
     this.config = { ...an, ...n }, r = ut(r) ?? document.createElement("button"), this.$toggle = r;
     const i = this.config.defaultColor || r.value || r.dataset.color || void 0;
-    this.config.headless || this.createToggle(r), this._setCurrentColor(new F(i), !1), i || this.clear(!1), this.config.dismissOnOutsideClick && window.addEventListener("pointerdown", (o) => {
+    this.config.headless || this.createToggle(r), this._setCurrentColor(new F(i), !1), i || this.clear(!1), this.setSwatches(this.config.swatches), this.config.dismissOnOutsideClick && window.addEventListener("pointerdown", (o) => {
       if (!this._open) return;
       const s = o.target;
       !s.closest(".cp_dialog") && !s.closest(".color-picker") && this.close();
@@ -1308,6 +1309,12 @@ class fn extends wt.EventEmitter {
     return this._unset ? null : this._color;
   }
   /**
+   * Get the array of swatches.
+   */
+  get swatches() {
+    return this._swatches;
+  }
+  /**
    * Get the color currently selected in the dialog.
    */
   get selectedColor() {
@@ -1330,6 +1337,16 @@ class fn extends wt.EventEmitter {
     this.isInput = n, this.$toggle = n ? document.createElement("button") : r, this.$input = n ? r : document.createElement("input"), this.isInput && r.type == "color" && (r.type = "text"), r.replaceWith(this.$toggle), this.$input.tabIndex = -1, this.$input.readOnly = !0, this.$input.classList.add("cp_input"), this.config.toggleStyle === "input" && this.$toggle.classList.add("cp_wide"), this.$button = document.createElement("div"), this.$button.classList.add("cp_button"), this.$button.innerHTML = cn, this.$toggle.classList.add("color-picker"), this.$toggle.setAttribute("type", "button"), this.$toggle.append(this.$input, this.$button), this.changeHandler = () => this.setColor(this.$input.value), this.clickHandler = () => this.toggle(), this.$input.addEventListener("change", this.changeHandler), this.$toggle.addEventListener("click", this.clickHandler);
   }
   /**
+   * Append the picker to a given element.
+   * @param target The element to attach the picker to.
+   */
+  appendTo(r) {
+    r.append(this.element);
+  }
+  setSwatches(r) {
+    this._swatches = r || [], this.updateSwatches();
+  }
+  /**
    * Toggle whether the picker dialog is opened.
    * @param value Force open or closed?
    * @param emit Emit event?
@@ -1346,7 +1363,7 @@ class fn extends wt.EventEmitter {
     if (this._open) return;
     this._open = !0, ce == null || ce.close(), ce = this;
     const n = ut(this.config.container) ?? document.body;
-    n.insertAdjacentHTML("beforeend", ln), this.$dialog = n.lastElementChild, this.$colorInput = this.$dialog.querySelector(".cp_value"), this.populateDialog(), this.bindDialog(), this.setFormat(this.config.defaultFormat, !1), this.updateColor(), this.popper = Jr(this.$toggle, this.$dialog, {
+    n.insertAdjacentHTML("beforeend", ln), this.$dialog = n.lastElementChild, this.$colorInput = this.$dialog.querySelector(".cp_value"), this.populateDialog(), this.updateSwatches(), this.bindDialog(), this.setFormat(this.config.defaultFormat, !1), this.updateColor(), this.popper = Jr(this.$toggle, this.$dialog, {
       placement: this.config.dialogPlacement,
       strategy: "absolute",
       modifiers: [
@@ -1369,17 +1386,6 @@ class fn extends wt.EventEmitter {
     });
   }
   populateDialog() {
-    if (this.config.swatches) {
-      const r = this.config.swatches.map((n) => {
-        const i = document.createElement("button");
-        i.className = "cp_swatch", i.style.setProperty("--cp-color", n), i.dataset.color = n;
-        const o = new F(i.dataset.color);
-        return i.addEventListener("click", () => {
-          this._setNewColor(o), this.config.swatchesOnly && this.close();
-        }), i;
-      });
-      this.$dialog.querySelector(".cp_swatches").append(...r);
-    }
     this.config.formats && (this.$formats = this.config.formats.map((r) => {
       const n = document.createElement("button");
       return n.className = "cp_format", n.dataset.format = r, n.textContent = r.toUpperCase(), n.addEventListener("click", () => this.setFormat(r)), n;
@@ -1512,6 +1518,18 @@ class fn extends wt.EventEmitter {
     this.$formats.forEach((n) => n.removeAttribute("aria-checked"));
     const r = this.$formats.find((n) => n.dataset.format === this._format);
     r && (r.ariaChecked = "true");
+  }
+  updateSwatches() {
+    if (!this.$dialog) return;
+    const r = this.$dialog.querySelector(".cp_swatches");
+    r.textContent = "", this._swatches.forEach((n) => {
+      const i = document.createElement("button");
+      i.className = "cp_swatch", i.style.setProperty("--cp-color", n), i.dataset.color = n;
+      const o = new F(i.dataset.color);
+      i.addEventListener("click", () => {
+        this._setNewColor(o), this.config.swatchesOnly && this.close();
+      }), r.append(i);
+    });
   }
 }
 export {

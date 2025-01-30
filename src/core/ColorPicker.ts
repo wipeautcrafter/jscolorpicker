@@ -22,7 +22,6 @@ export class ColorPicker extends EventEmitter<{
   close: []
   closed: []
   pick: [Color | null]
-  cancel: []
 }> {
   /**
    * Get whether the dialog is currently open.
@@ -35,6 +34,12 @@ export class ColorPicker extends EventEmitter<{
    */
   get color() {
     return this._unset ? null : this._color
+  }
+  /**
+   * Get the array of swatches.
+   */
+  get swatches() {
+    return this._swatches
   }
   /**
    * Get the color currently selected in the dialog.
@@ -61,6 +66,7 @@ export class ColorPicker extends EventEmitter<{
 
   private _color: Color
   private _newColor: Color
+  private _swatches: string[]
 
   private config: PickerConfig
   private popper?: PopperInstance
@@ -88,10 +94,10 @@ export class ColorPicker extends EventEmitter<{
     this.isInput = isInput
     this.$toggle = isInput ? document.createElement('button') : $from
     this.$input = isInput ? $from : document.createElement('input')
-	 if (this.isInput && 'color' == $from.type) {
-	   // input type="color" cannot be styled, change to 'text'
-		$from.type = 'text'
-	 }
+    if (this.isInput && 'color' == $from.type) {
+      // input type="color" cannot be styled, change to 'text'
+      $from.type = 'text'
+    }
 
     $from.replaceWith(this.$toggle)
 
@@ -117,6 +123,14 @@ export class ColorPicker extends EventEmitter<{
 
     this.$input.addEventListener('change', this.changeHandler)
     this.$toggle.addEventListener('click', this.clickHandler)
+  }
+
+  /**
+   * Append the picker to a given element.
+   * @param target The element to attach the picker to.
+   */
+  appendTo(target: HTMLElement) {
+    target.append(this.element)
   }
 
   /**
@@ -148,6 +162,8 @@ export class ColorPicker extends EventEmitter<{
     this._setCurrentColor(new Color(defaultColor), false)
     if (!defaultColor) this.clear(false)
 
+    this.setSwatches(this.config.swatches)
+
     // Dismissal events
     if (this.config.dismissOnOutsideClick) {
       window.addEventListener('pointerdown', (event) => {
@@ -169,6 +185,11 @@ export class ColorPicker extends EventEmitter<{
     }
 
     this.close()
+  }
+
+  setSwatches(swatches: string[] | null | false) {
+    this._swatches = swatches || []
+    this.updateSwatches()
   }
 
   /**
@@ -202,6 +223,7 @@ export class ColorPicker extends EventEmitter<{
     this.$colorInput = this.$dialog.querySelector('.cp_value')!
 
     this.populateDialog()
+    this.updateSwatches()
     this.bindDialog()
 
     this.setFormat(this.config.defaultFormat, false)
@@ -249,25 +271,6 @@ export class ColorPicker extends EventEmitter<{
   }
 
   private populateDialog() {
-    // Create swatches based on config and assign event listener
-    if (this.config.swatches) {
-      const $swatches = this.config.swatches.map((swatch) => {
-        const $swatch = document.createElement('button')
-        $swatch.className = 'cp_swatch'
-        $swatch.style.setProperty('--cp-color', swatch)
-        $swatch.dataset.color = swatch
-
-        const color = new Color($swatch.dataset.color!)
-        $swatch.addEventListener('click', () => {
-          this._setNewColor(color)
-			 if (this.config.swatchesOnly) { this.close() }
-        })
-
-        return $swatch
-      })
-      this.$dialog!.querySelector('.cp_swatches')!.append(...$swatches)
-    }
-
     // Create formats based on config and assign event listener
     if (this.config.formats) {
       this.$formats = this.config.formats.map((format) => {
@@ -363,17 +366,17 @@ export class ColorPicker extends EventEmitter<{
       navigator.clipboard && navigator.clipboard.writeText(this.$colorInput!.value)
     })
 
-	 if (this.config.swatchesOnly) {
-		const $iptGroup = this.$dialog!.querySelector('.cp_input-group')
-	   $iptGroup && $iptGroup.remove()
+    if (this.config.swatchesOnly) {
+      const $iptGroup = this.$dialog!.querySelector('.cp_input-group')
+      $iptGroup && $iptGroup.remove()
 
-		const $formats = this.$dialog!.querySelector('.cp_formats')
-	   $formats && $formats.remove()
+      const $formats = this.$dialog!.querySelector('.cp_formats')
+      $formats && $formats.remove()
 
       $hueTrack && $hueTrack.remove()
       $hsvTrack && $hsvTrack.remove()
       $alphaTrack && $alphaTrack.remove()
-  	 }
+    }
   }
 
   private getAnimationDuration() {
@@ -541,5 +544,29 @@ export class ColorPicker extends EventEmitter<{
     if ($checked) {
       $checked.ariaChecked = 'true'
     }
+  }
+
+  private updateSwatches() {
+    if (!this.$dialog) return
+
+    const $swatches = this.$dialog.querySelector('.cp_swatches')!
+    $swatches.textContent = ''
+
+    this._swatches.forEach((swatch) => {
+      const $swatch = document.createElement('button')
+      $swatch.className = 'cp_swatch'
+      $swatch.style.setProperty('--cp-color', swatch)
+      $swatch.dataset.color = swatch
+
+      const color = new Color($swatch.dataset.color!)
+      $swatch.addEventListener('click', () => {
+        this._setNewColor(color)
+        if (this.config.swatchesOnly) {
+          this.close()
+        }
+      })
+
+      $swatches.append($swatch)
+    })
   }
 }

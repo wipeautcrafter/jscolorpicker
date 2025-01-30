@@ -49,9 +49,12 @@ pickers.push(
   new ColorPicker('#picker5', {
     defaultFormat: 'hex', // 'hex' | 'rgb' | 'hsv' | 'hsl'
     swatches: ['#d95d5d', '#db8525', '#e8c43c', '#bed649', '#9ecbdb', '#6399a5', '#c771a1'],
-	 swatchesOnly: true
-  }),
+    swatchesOnly: true,
+  })
 )
+
+// @ts-ignore
+window.pickers = pickers
 
 // Bind events
 for (let picker of pickers) {
@@ -59,7 +62,6 @@ for (let picker of pickers) {
   picker.on('opened', () => console.log('opened'))
   picker.on('close', () => console.log('close'))
   picker.on('closed', () => console.log('closed'))
-  picker.on('cancel', () => console.log('cancel'))
   picker.on('pick', (color) => console.log(`pick ${color}`))
 }
 
@@ -100,7 +102,7 @@ for (const btn of document.querySelectorAll<HTMLElement>('.setBtn')) {
     const idx = +btn.dataset.picker!
     //pickers[idx - 1].setColor(getRandomColor())
 
-    pickers[idx - 1].setColor([255,0,255,.1])
+    pickers[idx - 1].setColor([255, 0, 255, 0.1])
     //pickers[idx - 1].setColor('red')
   }
 }

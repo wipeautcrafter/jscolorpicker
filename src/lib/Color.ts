@@ -32,8 +32,8 @@ export class Color {
     } else if (from instanceof Color) {
       this.color = [...from.color]
     } else if (Array.isArray(from)) {
-      const [r = 0, g = 0, b = 0, a = 1] = from
-      this.color = [r, g, b, a]
+      const [h = 0, s = 0, v = 0, a = 1] = from
+      this.color = [h, s, v, a]
     } else {
       this.color = parseColor(from).color
     }
