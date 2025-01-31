@@ -4,7 +4,6 @@ A color picker component supporting light and dark color schemes, swatches, inst
 
 ## Table of Contents
 
-- [Table of Contents](#table-of-contents)
 - [Features](#features)
 - [Live Demo](#live-demo)
 - [Screenshots](#screenshots)
