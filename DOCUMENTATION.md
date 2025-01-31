@@ -1,7 +1,7 @@
 # Documentation
 
 Below, you can find all type declarations, including the events.
-A more verbose and in-depth documentation will be provided soon.
+Refer to [jscolorpicker.com](https://www.jscolorpicker.com) for even more detailed documentation.
 
 ```ts
 class ColorPicker extends EventEmitter<{
