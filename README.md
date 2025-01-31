@@ -2,7 +2,7 @@
 
 A versatile, flexible and lightweight Javascript Color Picker Component supporting light and dark skins, swatches, multiple color formats, CSS color parsing, instant and confirm modes and much more.
 
-## Please visit [jscolorpicker.com](https://www.jscolorpicker.com/) for more detailed documentation and extensive demo's. <br><br> 
+## Please visit [jscolorpicker.com](https://www.jscolorpicker.com/) for more detailed documentation and extensive demo's.<br><br>
 
 ## Table of Contents
 
@@ -23,6 +23,7 @@ A versatile, flexible and lightweight Javascript Color Picker Component supporti
   - [Color Scheme](#color-scheme)
   - [CSS Variables](#css-variables)
 - [Developing](#developing)
+- [License](#license)
 
 ## Features
 
@@ -224,3 +225,11 @@ To run:
 ```sh
 bun|deno|npm|pnpm|yarn run dev
 ```
+
+## License
+
+This component is released under the MIT license. It is simple and easy to understand and places almost no restrictions on what you can do with the code.
+[More Information](http://en.wikipedia.org/wiki/MIT_License)
+
+The development of this component was funded by [Zygomatic](https://www.zygomatic.nl/).
+
