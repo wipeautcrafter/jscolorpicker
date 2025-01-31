@@ -2,7 +2,7 @@
 
 A versatile, flexible and lightweight Javascript Color Picker Component supporting light and dark skins, swatches, multiple color formats, CSS color parsing, instant and confirm modes and much more.
 
-## Please visit [jscolorpicker.com](https://www.jscolorpicker.com/) for more detailed documentation and extensive demo's.  
+## Please visit [jscolorpicker.com](https://www.jscolorpicker.com/) for more detailed documentation and extensive demo's. <br><br> 
 
 ## Table of Contents
 
