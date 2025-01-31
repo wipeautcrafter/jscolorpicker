@@ -42,7 +42,7 @@ A color picker component supporting light and dark color schemes, swatches, inst
 
 ## Live Demo
 
-TODO
+See the [demo page](https://www.jscolorpicker.com/#demo)
 
 ## Screenshots
 
