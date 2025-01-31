@@ -219,6 +219,10 @@ To build:
 ```sh
 bun|deno|npm|pnpm|yarn run build
 ```
+including minification:
+```
+sh build.sh
+```
 
 To run:
 
