@@ -2,7 +2,8 @@
 
 A color picker component supporting light and dark color schemes, swatches, instant and submit modes, multiple color formats, CSS color parsing and way more.
 
-## Please visit [jscoorpicker.com](https://www.jscolorpicker.com/) for more detailed documentation and extensive demo's.
+## Please visit [jscolorpicker.com](https://www.jscolorpicker.com/) for more detailed documentation and extensive demo's.
+
 
 ## Table of Contents
 
