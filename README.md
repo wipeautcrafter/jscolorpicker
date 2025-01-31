@@ -19,7 +19,6 @@ A color picker component supporting light and dark color schemes, swatches, inst
 - [Documentation](#documentation)
 - [Customization](#customization)
   - [Color Scheme](#color-scheme)
-  - [Toggle Size](#toggle-size)
   - [CSS Variables](#css-variables)
 - [Developing](#developing)
 
@@ -139,12 +138,11 @@ picker.clear()
 If you want to listen to certain events, like opening or picking, use the `.on()` method:
 
 ```js
+picker.on('pick', (color) => console.log('pick', color))
 picker.on('open', () => console.log('open'))
 picker.on('opened', () => console.log('opened'))
 picker.on('close', () => console.log('close'))
 picker.on('closed', () => console.log('closed'))
-picker.on('pick', (color) => console.log('pick', color))
-picker.on('cancel', () => console.log('cancel'))
 ```
 
 ### Dialog Only
@@ -176,26 +174,14 @@ You can change the color scheme by using one of the following dataset properties
 <html data-bs-theme="light"></html>
 ```
 
-### Toggle Size
-
-The size of the toggle button can be changed by altering the `height` property:
-
-```css
-.color-picker {
-  height: 2rem;
-}
-```
-
 ### CSS Variables
 
 You can alter a variety of styles using their respective CSS variables:
 
 ```css
 :root {
-  /* Animations (set to 0s to disable) */
-  --cp-delay: 150ms;
-
   /* Metrics */
+  --cp-size: 38px; /* Size of color picker thumg */
   --cp-border-radius-sm: 0.25rem;
   --cp-border-radius-lg: 0.5rem;
   --cp-swatch-width: 2rem;
@@ -211,6 +197,9 @@ You can alter a variety of styles using their respective CSS variables:
   /* Shadows */
   --cp-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
   --cp-box-shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+
+  /* Animations (set to 0s to disable) */
+  --cp-delay: 150ms;
 }
 ```
 
