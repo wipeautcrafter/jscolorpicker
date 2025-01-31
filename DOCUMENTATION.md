@@ -10,7 +10,6 @@ class ColorPicker extends EventEmitter<{
   close: []
   closed: []
   pick: [Color | null]
-  cancel: []
 }> {
   /**
    * Get whether the dialog is currently open.
