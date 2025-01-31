@@ -4,41 +4,44 @@ A color picker component supporting light and dark color schemes, swatches, inst
 
 ## Table of Contents
 
-- [JS ColorPicker](#js-colorpicker)
-  - [Table of Contents](#table-of-contents)
-  - [Features](#features)
-  - [Live Demo](#live-demo)
-  - [Screenshots](#screenshots)
-  - [Installation](#installation)
-    - [IIFE Bundle](#iife-bundle)
-    - [ESM Bundle](#esm-bundle)
-  - [Getting Started](#getting-started)
-    - [Creation](#creation)
-    - [Opening](#opening)
-    - [Setting Color](#setting-color)
-    - [Binding Events](#binding-events)
-    - [Dialog Only](#dialog-only)
-  - [Documentation](#documentation)
-  - [Customization](#customization)
-    - [Color Scheme](#color-scheme)
-    - [Toggle Size](#toggle-size)
-    - [CSS Variables](#css-variables)
-  - [Developing](#developing)
+- [Table of Contents](#table-of-contents)
+- [Features](#features)
+- [Live Demo](#live-demo)
+- [Screenshots](#screenshots)
+- [Installation](#installation)
+  - [IIFE Bundle](#iife-bundle)
+  - [ESM Bundle](#esm-bundle)
+- [Getting Started](#getting-started)
+  - [Creation](#creation)
+  - [Opening](#opening)
+  - [Setting Color](#setting-color)
+  - [Binding Events](#binding-events)
+  - [Dialog Only](#dialog-only)
+- [Documentation](#documentation)
+- [Customization](#customization)
+  - [Color Scheme](#color-scheme)
+  - [Toggle Size](#toggle-size)
+  - [CSS Variables](#css-variables)
+- [Developing](#developing)
 
 ## Features
 
-- 🌙 Dark and light themes
-- 🪞 Preview
-- 🌈 Swatches
-- 🫥 Alpha slider
-- 💧 EyeDropper
-- 📜 CSS color parsing (including names!)
+- 🏋️ Light weight (42kB minified, 14.5kB minified and gzipped)
+- 0️⃣ Zero dependencies
+- 😎 Easy to use and customize
 - 🔼 Button, input and hidden styles
+- 👆🏻 Touch friendly
+- 🌙 Dark and light theme
+- 🫥 Alpha slider (can be disabled)
+- 🌈 Color Swatches
 - 🔢 Multiple color formats
-- ⏱️ Customizable animation speed
+- ✢ Uses popper.js for positioning
+- 🪞 Preview
 - ✅ Apply color immediately, or on submit
-- 🚫 Clearable
+- 📜 CSS color parsing (including named colors)
+- 💧 EyeDropper on Chrome
 - ⌨️ Keyboard support
+- 🚫 Clearable
 
 ## Live Demo
 
