@@ -150,10 +150,7 @@
 
   position: absolute;
   z-index: 1055;
-
-  width: auto;
-  min-width: 16rem;
-  max-width: 22rem;
+  width: 17.2rem;
 
   background-color: var(--cp-body-bg);
 

@@ -13,6 +13,7 @@ pickers.push(
     toggleStyle: 'input',
     showClearButton: true,
     //dismissOnEscape: false,
+	 dismissOnOutsideClick: false,
     submitMode: 'instant', // 'instant' | 'confirm'
     // defaultColor: 'red',
     defaultFormat: 'hex', // 'hex' | 'rgb' | 'hsv' | 'hsl'
@@ -26,16 +27,16 @@ pickers.push(
     submitMode: 'confirm', // 'instant' | 'confirm'
     // defaultColor: 'red',
     defaultFormat: 'rgb', // 'hex' | 'rgb' | 'hsv' | 'hsl'
-    swatches: ['#d95d5d', '#db8525', '#e8c43c', '#bed649', '#9ecbdb', '#6399a5', '#c771a1'],
   }),
 
   new ColorPicker('#picker3', {
     showClearButton: true,
     //dismissOnEscape: false,
+	 dismissOnOutsideClick: false,
     submitMode: 'confirm', // 'instant' | 'confirm'
     // defaultColor: 'red',
     defaultFormat: 'hex', // 'hex' | 'rgb' | 'hsv' | 'hsl'
-    swatches: ['#d95d5d', '#db8525', '#e8c43c', '#bed649', '#9ecbdb', '#6399a5', '#c771a1'],
+    swatches: ['#d95d5d', '#db8525', '#e8c43c', '#bed649', '#9ecbdb', '#6399a5', '#c771a1', 'orange', 'purple', 'black', 'white', 'transparent'],
   }),
 
   new ColorPicker('#picker4', {
@@ -100,9 +101,15 @@ for (const btn of document.querySelectorAll<HTMLElement>('.changeBtn')) {
 for (const btn of document.querySelectorAll<HTMLElement>('.setBtn')) {
   btn.onclick = () => {
     const idx = +btn.dataset.picker!
-    //pickers[idx - 1].setColor(getRandomColor())
-
-    pickers[idx - 1].setColor([255, 0, 255, 0.1])
-    //pickers[idx - 1].setColor('red')
+    pickers[idx - 1].setColor(getRandomColor())
   }
 }
+
+for (const btn of document.querySelectorAll<HTMLElement>('.swatchesBtn')) {
+  btn.onclick = () => {
+    const idx = +btn.dataset.picker!
+    pickers[idx - 1].setSwatches(['red','green','blue'])
+  }
+}
+
+
