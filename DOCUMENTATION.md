@@ -88,6 +88,13 @@ class ColorPicker extends EventEmitter<{
    */
   setColor(color: Color | number[] | string | null, emit?: boolean): void
 
+  /** 
+   * Update swatches 
+   * @param {array} swatches An array of new colors for swatches
+   *                Use null/false for no swatches
+   */
+  setSwatches(swatches: string[] | null | false): void 
+
   /**
    * Set the picker color format.
    * @param format The color format.
