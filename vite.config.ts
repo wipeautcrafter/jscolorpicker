@@ -18,6 +18,8 @@ export default defineConfig({
         assetFileNames: 'colorpicker.[ext]',
       },
     },
+    minify: false,
+    cssMinify: false,
   },
   plugins: [dts({ rollupTypes: true })],
 })
