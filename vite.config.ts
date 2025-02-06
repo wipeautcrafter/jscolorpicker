@@ -1,6 +1,8 @@
 import { resolve } from 'path'
 import { defineConfig } from 'vite'
+
 import dts from 'vite-plugin-dts'
+import viteHTML from './plugins/viteHTML'
 
 export default defineConfig({
   server: {
@@ -21,5 +23,5 @@ export default defineConfig({
     minify: false,
     cssMinify: false,
   },
-  plugins: [dts({ rollupTypes: true })],
+  plugins: [dts({ rollupTypes: true }), viteHTML()],
 })

@@ -7,8 +7,8 @@ import { defaultConfig } from './config'
 import { parseColor } from '../lib/colorParse'
 import { getElement } from '../lib/domUtil'
 
-import dialogContent from '../html/dialog.min.html?raw'
-import caretContent from '../html/caret.min.html?raw'
+import dialogContent from '../html/dialog.html?raw'
+import caretContent from '../html/caret.html?raw'
 
 import type { PickerConfig } from './config'
 import type { ColorFormat } from '../lib/Color'
