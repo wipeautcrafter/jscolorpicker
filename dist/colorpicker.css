@@ -24,7 +24,7 @@
 :root {
   box-sizing: border-box;
 
-  --cp-size: 38px;
+  --cp-size: 2.375rem;
   --cp-delay: 150ms;
 
   --cp-border-radius-sm: 0.25rem;
