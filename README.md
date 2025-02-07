@@ -184,7 +184,7 @@ You can alter a variety of styles using their respective CSS variables:
 ```css
 :root {
   /* Metrics */
-  --cp-size: 2.375rem; /* Size of color picker thumg */
+  --cp-size: 2.375rem; /* Size of color picker thumb */
   --cp-border-radius-sm: 0.25rem;
   --cp-border-radius-lg: 0.5rem;
   --cp-swatch-width: 2rem;
