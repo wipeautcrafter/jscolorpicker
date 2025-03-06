@@ -181,7 +181,7 @@ interface PickerConfig {
 
   /**
    * Whether to show the clear button for resetting the color.
-   * Default: true
+   * Default: false
    */
   showClearButton: boolean
 

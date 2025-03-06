@@ -120,7 +120,7 @@ export const defaultConfig: PickerConfig = {
   formats: ['hex', 'rgb', 'hsv', 'hsl'],
   defaultFormat: 'hex',
   submitMode: 'confirm',
-  showClearButton: true,
+  showClearButton: false,
   dismissOnOutsideClick: true,
   dismissOnEscape: true,
   dialogPlacement: 'top',

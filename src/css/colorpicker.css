@@ -299,7 +299,7 @@
   padding: 0;
   border: 1px solid var(--cp-border-color);
 
-  border-radius: var(--cp-border-radius-sm);
+  border-radius: var(--cp-border-radius-sm) !important;
   overflow: hidden;
   cursor: pointer;
 

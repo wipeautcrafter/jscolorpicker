@@ -1898,7 +1898,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
     formats: ["hex", "rgb", "hsv", "hsl"],
     defaultFormat: "hex",
     submitMode: "confirm",
-    showClearButton: true,
+    showClearButton: false,
     dismissOnOutsideClick: true,
     dismissOnEscape: true,
     dialogPlacement: "top",
