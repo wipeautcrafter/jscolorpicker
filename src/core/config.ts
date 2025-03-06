@@ -27,7 +27,7 @@ export interface PickerConfig {
    * The initial color.
    * Default: null
    */
-  defaultColor: string | null
+  color: string | null
 
   /**
    * A list of predefined color swatches available for selection.
@@ -112,7 +112,7 @@ export const defaultConfig: PickerConfig = {
   headless: false,
   toggleStyle: 'button',
   container: null,
-  defaultColor: null,
+  color: null,
   swatches: null,
   swatchesOnly: false,
   enableAlpha: true,

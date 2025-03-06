@@ -76,7 +76,7 @@
 }
 
 .cp_input {
-  display: none;
+  display: none !important;
   pointer-events: none;
   margin: 0;
   border: 0;
@@ -84,7 +84,7 @@
 
 .cp_wide .cp_input {
   font-family: inherit;
-  display: block;
+  display: block !important;
   flex-grow: 1;
   padding-left: 0.75rem;
   height: inherit; /* or: var(--cp-size) */

@@ -15,7 +15,7 @@ pickers.push(
     //dismissOnEscape: false,
 	 dismissOnOutsideClick: false,
     submitMode: 'instant', // 'instant' | 'confirm'
-    // defaultColor: 'red',
+    // color: 'red',
     defaultFormat: 'hex', // 'hex' | 'rgb' | 'hsv' | 'hsl'
     swatches: ['#d95d5d', '#db8525', '#e8c43c', '#bed649', '#9ecbdb', '#6399a5', '#c771a1'],
   }),
@@ -25,7 +25,7 @@ pickers.push(
     showClearButton: true,
     //dismissOnEscape: false,
     submitMode: 'confirm', // 'instant' | 'confirm'
-    // defaultColor: 'red',
+     color: 'red',
     defaultFormat: 'rgb', // 'hex' | 'rgb' | 'hsv' | 'hsl'
   }),
 
@@ -34,7 +34,7 @@ pickers.push(
     //dismissOnEscape: false,
 	 dismissOnOutsideClick: false,
     submitMode: 'confirm', // 'instant' | 'confirm'
-    // defaultColor: 'red',
+    // color: 'red',
     defaultFormat: 'hex', // 'hex' | 'rgb' | 'hsv' | 'hsl'
     swatches: ['#d95d5d', '#db8525', '#e8c43c', '#bed649', '#9ecbdb', '#6399a5', '#c771a1', 'orange', 'purple', 'black', 'white', 'transparent'],
   }),
@@ -43,7 +43,7 @@ pickers.push(
     showClearButton: true,
     //dismissOnEscape: false,
     submitMode: 'confirm', // 'instant' | 'confirm'
-    defaultColor: 'blue',
+    color: 'blue',
     defaultFormat: 'rgb', // 'hex' | 'rgb' | 'hsv' | 'hsl'
   }),
 
@@ -70,7 +70,7 @@ document.getElementById('promptBtn')!.onclick = async (e) => {
   const $target = e.target as HTMLButtonElement | HTMLInputElement
   const picker = new ColorPicker($target, {
     headless: true,
-    defaultColor: '#f00',
+    color: '#f00',
     swatches: ['#000', '#fff'],
   })
   const color = await picker.prompt()

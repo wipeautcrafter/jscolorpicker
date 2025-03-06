@@ -1888,7 +1888,7 @@ const defaultConfig = {
   headless: false,
   toggleStyle: "button",
   container: null,
-  defaultColor: null,
+  color: null,
   swatches: null,
   swatchesOnly: false,
   enableAlpha: true,
@@ -1941,7 +1941,7 @@ class ColorPicker extends eventsExports.EventEmitter {
     this.config = { ...defaultConfig, ...config };
     $from = getElement($from) ?? document.createElement("button");
     this.$toggle = $from;
-    const defaultColor = this.config.defaultColor || $from.value || $from.dataset.color || void 0;
+    const defaultColor = this.config.color || $from.value || $from.dataset.color || void 0;
     if (!this.config.headless) this.createToggle($from);
     this._setCurrentColor(new Color(defaultColor), false);
     if (!defaultColor) this.clear(false);

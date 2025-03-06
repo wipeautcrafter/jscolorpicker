@@ -152,7 +152,7 @@ export class ColorPicker extends EventEmitter<{
     this.$toggle = $from
 
     const defaultColor =
-      this.config.defaultColor ||
+      this.config.color ||
       ($from as HTMLInputElement).value ||
       $from.dataset.color ||
       undefined
