@@ -151,7 +151,7 @@ export class ColorPicker extends EventEmitter<{
     // Create toggle
     this.$toggle = $from
 
-    const defaultColor =
+    const color =
       this.config.color ||
       ($from as HTMLInputElement).value ||
       $from.dataset.color ||
@@ -159,8 +159,8 @@ export class ColorPicker extends EventEmitter<{
 
     if (!this.config.headless) this.createToggle($from)
 
-    this._setCurrentColor(new Color(defaultColor), false)
-    if (!defaultColor) this.clear(false)
+    this._setCurrentColor(new Color(color), false)
+    if (!color) this.clear(false)
 
     this.setSwatches(this.config.swatches)
 

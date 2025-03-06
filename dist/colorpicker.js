@@ -1941,10 +1941,10 @@ class ColorPicker extends eventsExports.EventEmitter {
     this.config = { ...defaultConfig, ...config };
     $from = getElement($from) ?? document.createElement("button");
     this.$toggle = $from;
-    const defaultColor = this.config.color || $from.value || $from.dataset.color || void 0;
+    const color = this.config.color || $from.value || $from.dataset.color || void 0;
     if (!this.config.headless) this.createToggle($from);
-    this._setCurrentColor(new Color(defaultColor), false);
-    if (!defaultColor) this.clear(false);
+    this._setCurrentColor(new Color(color), false);
+    if (!color) this.clear(false);
     this.setSwatches(this.config.swatches);
     if (this.config.dismissOnOutsideClick) {
       window.addEventListener("pointerdown", (event) => {
