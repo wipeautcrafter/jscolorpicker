@@ -129,7 +129,7 @@ interface PickerConfig {
    * The initial color.
    * Default: null
    */
-  defaultColor: string | null
+  color: string | null
 
   /**
    * A list of predefined color swatches available for selection.
