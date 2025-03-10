@@ -21,7 +21,7 @@ declare interface Color {
     alpha(value: number): Color;
 }
 
-declare type ColorFormat = 'hex' | 'rgb' | 'hsv' | 'hsl';
+declare type ColorFormat = 'hex' | 'rgb' | 'rgba' | 'hsv' | 'hsl';
 
 declare class ColorPicker extends EventEmitter<{
     open: [];

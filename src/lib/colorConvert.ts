@@ -16,16 +16,18 @@ const hsv2rgb = ([h, s, v, a]: number[]) => {
   return [f(5), f(3), f(1), a]
 }
 
-const toFn = ([c1, c2, c3, a]: number[], name: string) => {
-  const alphaSuffix = a < 1 ? 'a' : ''
+const toFn = ([c1, c2, c3, a]: number[], name: string, forceAlpha: boolean = false) => {
+  const includeAlpha = forceAlpha || a < 1;
+  if ('rgb' === name && includeAlpha) { name = 'rgba'; }
 
   const values = name.startsWith('hs')
     ? [chop(c1), chop(c2 * 100) + '%', chop(c3 * 100) + '%']
     : [chop(c1 * 255), chop(c2 * 255), chop(c3 * 255)]
 
-  if (alphaSuffix) values.push(fix(a, 2))
-  return `${name}${alphaSuffix}(${values.join()})`
+  if (includeAlpha) values.push(fix(a, 2))
+  return `${name}(${values.join()})`
 }
+
 
 const toHex = (color: number[]) =>
   '#' +
@@ -42,5 +44,7 @@ export const convertColor = (color: number[], format: ColorFormat) => {
   if (format === 'hsv') return toFn(color, format)
   if (format === 'hsl') return toFn(hsv2hsl(color), format)
   if (format === 'rgb') return toFn(hsv2rgb(color), format)
+  // Force rgba, even if color doesn't have alpha
+  if (format === 'rgba') return toFn(hsv2rgb(color), format, true)
   return toHex(hsv2rgb(color))
 }

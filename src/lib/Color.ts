@@ -1,7 +1,7 @@
 import { parseColor } from './colorParse'
 import { convertColor } from './colorConvert'
 
-export type ColorFormat = 'hex' | 'rgb' | 'hsv' | 'hsl'
+export type ColorFormat = 'hex' | 'rgb' | 'rgba' | 'hsv' | 'hsl'
 
 export class Color {
   private readonly color: number[]
