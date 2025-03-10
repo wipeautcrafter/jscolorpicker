@@ -136,6 +136,7 @@
 
   display: grid;
   place-items: center;
+  color: var(--cp-body-color);
 }
 .cp_caret svg {
   transition: transform var(--cp-delay) ease-in-out;
