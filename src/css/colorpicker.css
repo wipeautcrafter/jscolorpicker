@@ -305,7 +305,7 @@
   aspect-ratio: 1;
 
   padding: 0;
-  border: 1px solid var(--cp-border-color);
+  border: 1px solid rgba(0,0,0,0.2);
 
   border-radius: var(--cp-border-radius-sm) !important;
   overflow: hidden;
@@ -315,7 +315,7 @@
 }
 
 .cp_swatch:hover {
-  border: 1px solid var(--cp-border-color) !important;
+  border: 1px solid var(--cp-body-color) !important;
 }
 
 /* Formats */
