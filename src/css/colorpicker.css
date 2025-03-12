@@ -301,14 +301,11 @@
 
   width: var(--cp-swatch-width);
   aspect-ratio: 1;
-
   padding: 0;
-  border: 1px solid rgba(0,0,0,0.2);
-
+  border: 1px solid rgba(0,0,0,0.2) !important;
   border-radius: var(--cp-border-radius-sm) !important;
   overflow: hidden;
   cursor: pointer;
-
   background: linear-gradient(var(--cp-color), var(--cp-color)), var(--cp-bg-checker);
   transition: all .2s ease-in-out;
 }
