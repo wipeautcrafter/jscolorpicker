@@ -125,6 +125,7 @@ declare class ColorPicker extends EventEmitter<{
      * @param emit Emit event?
      */
     clear(emit?: boolean): void;
+    getColor(): Color | null;
     /**
      * Set the picker color value.
      * @param color The new color value.

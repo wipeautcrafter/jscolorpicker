@@ -104,6 +104,15 @@ for (const btn of document.querySelectorAll<HTMLElement>('.setBtn')) {
   }
 }
 
+for (const btn of document.querySelectorAll<HTMLElement>('.getBtn')) {
+  btn.onclick = () => {
+    const idx = +btn.dataset.picker!
+    const color = pickers[idx - 1].getColor()
+    console.log(color ? color.string('rgba') : null)
+  }
+}
+
+
 for (const btn of document.querySelectorAll<HTMLElement>('.swatchesBtn')) {
   btn.onclick = () => {
     const idx = +btn.dataset.picker!

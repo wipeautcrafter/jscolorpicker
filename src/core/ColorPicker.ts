@@ -465,6 +465,10 @@ export class ColorPicker extends EventEmitter<{
     this.updateAppliedColor(emit)
   }
 
+  getColor() {
+    return this.color
+  }
+
   /**
    * Set the picker color value.
    * @param color The new color value.

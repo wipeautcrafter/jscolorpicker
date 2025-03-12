@@ -2258,6 +2258,9 @@ class ColorPicker extends eventsExports.EventEmitter {
     this._unset = true;
     this.updateAppliedColor(emit2);
   }
+  getColor() {
+    return this.color;
+  }
   /**
    * Set the picker color value.
    * @param color The new color value.

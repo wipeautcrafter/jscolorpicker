@@ -2260,6 +2260,9 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
       this._unset = true;
       this.updateAppliedColor(emit);
     }
+    getColor() {
+      return this.color;
+    }
     /**
      * Set the picker color value.
      * @param color The new color value.
