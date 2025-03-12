@@ -529,7 +529,7 @@ export class ColorPicker extends EventEmitter<{
   private updateAppliedColor(emit = true) {
     const color = this._unset ? '' : this._color.string(this.config.defaultFormat)
 
-    if (this.$input) this.$input.value = color
+    if (this.$input) { this.$input.value = color; this.$input.dataset.color = color }
     if (this.$toggle) this.$toggle.dataset.color = color
     if (this.$button) this.$button.classList.toggle('cp_unset', this._unset)
 

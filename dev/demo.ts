@@ -4,8 +4,6 @@ const getRandomColor = () => {
   return '#' + (((1 << 24) * Math.random()) | 0).toString(16).padStart(6, '0')
 }
 
-//const div = document.createElement('div');
-
 const pickers: ColorPicker[] = []
 
 pickers.push(

@@ -65,8 +65,6 @@
 }
 
 .cp_wide {
-  display: flex;
-  width: 100%;
   border: 1px solid var(--cp-border-color);
   height: var(--cp-size);
 }
@@ -312,10 +310,11 @@
   cursor: pointer;
 
   background: linear-gradient(var(--cp-color), var(--cp-color)), var(--cp-bg-checker);
+  transition: all .2s ease-in-out;
 }
 
 .cp_swatch:hover {
-  border: 1px solid var(--cp-body-color) !important;
+   transform: scale(1.15);
 }
 
 /* Formats */
