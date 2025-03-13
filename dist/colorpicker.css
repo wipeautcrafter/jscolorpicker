@@ -69,7 +69,8 @@
   height: var(--cp-size);
 }
 
-.cp_dialog input, .cp_dialog button {
+.cp_dialog input,
+.cp_dialog button {
   margin: 0; /* CSS reset */
   border-radius: 0; /* CSS reset */
 }
@@ -116,7 +117,7 @@
   background: linear-gradient(var(--cp-current-color), var(--cp-current-color)),
     var(--cp-bg-checker);
 
-	border-radius: 3px;
+  border-radius: 3px;
 }
 
 .cp_button.cp_unset {
@@ -302,16 +303,16 @@
   width: var(--cp-swatch-width);
   aspect-ratio: 1;
   padding: 0;
-  border: 1px solid rgba(0,0,0,0.2) !important;
+  border: 1px solid rgba(0, 0, 0, 0.2) !important;
   border-radius: var(--cp-border-radius-sm) !important;
   overflow: hidden;
   cursor: pointer;
   background: linear-gradient(var(--cp-color), var(--cp-color)), var(--cp-bg-checker);
-  transition: all .2s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 
 .cp_swatch:hover {
-   transform: scale(1.15);
+  transform: scale(1.15);
 }
 
 /* Formats */

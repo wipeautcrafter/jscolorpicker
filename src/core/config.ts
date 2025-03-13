@@ -1,5 +1,6 @@
-import type { ColorFormat } from '../lib/Color'
 import type { Placement } from '@popperjs/core'
+import type { ColorFormat } from '../lib/Color'
+import type { StaticPlacement } from '../lib/placement'
 
 export interface PickerConfig {
   /**
@@ -37,7 +38,7 @@ export interface PickerConfig {
   swatches: string[] | null | false
 
   /**
-   * Hide hsv, hue and alpha sliders as well as format selector and input field. 
+   * Hide hsv, hue and alpha sliders as well as format selector and input field.
    * Keep swatches only.
    * Default: false
    */
@@ -96,7 +97,7 @@ export interface PickerConfig {
   dismissOnEscape: boolean
 
   /**
-   * How to place the dialog relative to the toggle.
+   * How to place the dialog relative to its target.
    * Default: 'top'
    */
   dialogPlacement: Placement
@@ -106,6 +107,18 @@ export interface PickerConfig {
    * Default: 8
    */
   dialogOffset: number
+
+  /**
+   * How to place the dialog when no anchor element is defined.
+   * Default: 'top'
+   */
+  staticPlacement: StaticPlacement
+
+  /**
+   * How big the gap between the dialog and the edge of the page should be, in pixels.
+   * Default: 8
+   */
+  staticOffset: number
 }
 
 export const defaultConfig: PickerConfig = {
@@ -125,4 +138,6 @@ export const defaultConfig: PickerConfig = {
   dismissOnEscape: true,
   dialogPlacement: 'top',
   dialogOffset: 8,
+  staticPlacement: 'center',
+  staticOffset: 8,
 }

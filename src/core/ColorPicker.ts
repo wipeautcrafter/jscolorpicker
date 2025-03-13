@@ -6,6 +6,7 @@ import { Slider } from './Slider'
 import { defaultConfig } from './config'
 import { parseColor } from '../lib/colorParse'
 import { getElement } from '../lib/domUtil'
+import { alignElement } from '../lib/placement'
 
 import dialogContent from '../html/dialog.html?raw'
 import caretContent from '../html/caret.html?raw'
@@ -23,6 +24,8 @@ export class ColorPicker extends EventEmitter<{
   closed: []
   pick: [Color | null]
 }> {
+  static Color = Color
+
   /**
    * Get whether the dialog is currently open.
    */
@@ -152,10 +155,7 @@ export class ColorPicker extends EventEmitter<{
     this.$toggle = $from
 
     const color =
-      this.config.color ||
-      ($from as HTMLInputElement).value ||
-      $from.dataset.color ||
-      undefined
+      this.config.color || ($from as HTMLInputElement).value || $from.dataset.color || undefined
 
     if (!this.config.headless) this.createToggle($from)
 
@@ -230,18 +230,25 @@ export class ColorPicker extends EventEmitter<{
     this.updateColor()
 
     // Create popper
-    this.popper = createPopper(this.$toggle, this.$dialog!, {
-      placement: this.config.dialogPlacement,
-      strategy: 'absolute',
-      modifiers: [
-        {
-          name: 'offset',
-          options: {
-            offset: [0, this.config.dialogOffset],
+    const toggleExists = document.documentElement.contains(this.$toggle)
+
+    if (toggleExists) {
+      this.popper = createPopper(this.$toggle, this.$dialog!, {
+        placement: this.config.dialogPlacement,
+        strategy: 'absolute',
+        modifiers: [
+          {
+            name: 'offset',
+            options: {
+              offset: [0, this.config.dialogOffset],
+            },
           },
-        },
-      ],
-    })
+        ],
+      })
+    } else {
+      this.popper = undefined
+      alignElement(this.$dialog, this.config.staticPlacement, this.config.staticOffset)
+    }
 
     this.$colorInput.focus({ preventScroll: true })
 
@@ -465,10 +472,6 @@ export class ColorPicker extends EventEmitter<{
     this.updateAppliedColor(emit)
   }
 
-  getColor() {
-    return this.color
-  }
-
   /**
    * Set the picker color value.
    * @param color The new color value.
@@ -533,7 +536,10 @@ export class ColorPicker extends EventEmitter<{
   private updateAppliedColor(emit = true) {
     const color = this._unset ? '' : this._color.string(this.config.defaultFormat)
 
-    if (this.$input) { this.$input.value = color; this.$input.dataset.color = color }
+    if (this.$input) {
+      this.$input.value = color
+      this.$input.dataset.color = color
+    }
     if (this.$toggle) this.$toggle.dataset.color = color
     if (this.$button) this.$button.classList.toggle('cp_unset', this._unset)
 

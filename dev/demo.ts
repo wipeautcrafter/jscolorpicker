@@ -11,11 +11,11 @@ pickers.push(
     toggleStyle: 'input',
     showClearButton: true,
     //dismissOnEscape: false,
-	 dismissOnOutsideClick: false,
+    dismissOnOutsideClick: false,
     submitMode: 'instant', // 'instant' | 'confirm'
     // color: 'red',
-   // defaultFormat: 'hex', // 'hex' | 'rgb' | 'hsv' | 'hsl'
-	 defaultFormat: 'hex',
+    // defaultFormat: 'hex', // 'hex' | 'rgb' | 'hsv' | 'hsl'
+    defaultFormat: 'hex',
     swatches: ['#d95d5d', '#db8525', '#e8c43c', '#bed649', '#9ecbdb', '#6399a5', '#c771a1'],
   }),
 
@@ -24,18 +24,31 @@ pickers.push(
     showClearButton: true,
     //dismissOnEscape: false,
     submitMode: 'confirm', // 'instant' | 'confirm'
-     color: 'red',
+    color: 'red',
     defaultFormat: 'rgb', // 'hex' | 'rgb' | 'hsv' | 'hsl'
   }),
 
   new ColorPicker('#picker3', {
     showClearButton: true,
     //dismissOnEscape: false,
-	 dismissOnOutsideClick: false,
+    dismissOnOutsideClick: false,
     submitMode: 'confirm', // 'instant' | 'confirm'
     // color: 'red',
     defaultFormat: 'hex', // 'hex' | 'rgb' | 'hsv' | 'hsl'
-    swatches: ['#d95d5d', '#db8525', '#e8c43c', '#bed649', '#9ecbdb', '#6399a5', '#c771a1', 'orange', 'purple', 'black', 'white', 'transparent'],
+    swatches: [
+      '#d95d5d',
+      '#db8525',
+      '#e8c43c',
+      '#bed649',
+      '#9ecbdb',
+      '#6399a5',
+      '#c771a1',
+      'orange',
+      'purple',
+      'black',
+      'white',
+      'transparent',
+    ],
   }),
 
   new ColorPicker('#picker4', {
@@ -107,17 +120,13 @@ for (const btn of document.querySelectorAll<HTMLElement>('.setBtn')) {
 for (const btn of document.querySelectorAll<HTMLElement>('.getBtn')) {
   btn.onclick = () => {
     const idx = +btn.dataset.picker!
-    const color = pickers[idx - 1].getColor()
-    console.log(color ? color.string('rgba') : null)
+    console.log(pickers[idx - 1].color?.string('rgba'))
   }
 }
-
 
 for (const btn of document.querySelectorAll<HTMLElement>('.swatchesBtn')) {
   btn.onclick = () => {
     const idx = +btn.dataset.picker!
-    pickers[idx - 1].setSwatches(['red','green','blue'])
+    pickers[idx - 1].setSwatches(['red', 'green', 'blue'])
   }
 }
-
-

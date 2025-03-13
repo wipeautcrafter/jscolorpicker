@@ -30,6 +30,7 @@ declare class ColorPicker extends EventEmitter<{
     closed: [];
     pick: [Color | null];
 }> {
+    static Color: typeof Color;
     /**
      * Get whether the dialog is currently open.
      */
@@ -125,7 +126,6 @@ declare class ColorPicker extends EventEmitter<{
      * @param emit Emit event?
      */
     clear(emit?: boolean): void;
-    getColor(): Color | null;
     /**
      * Set the picker color value.
      * @param color The new color value.
@@ -228,7 +228,7 @@ declare interface PickerConfig {
      */
     dismissOnEscape: boolean;
     /**
-     * How to place the dialog relative to the toggle.
+     * How to place the dialog relative to its target.
      * Default: 'top'
      */
     dialogPlacement: Placement;
@@ -237,6 +237,18 @@ declare interface PickerConfig {
      * Default: 8
      */
     dialogOffset: number;
+    /**
+     * How to place the dialog when no anchor element is defined.
+     * Default: 'top'
+     */
+    staticPlacement: StaticPlacement;
+    /**
+     * How big the gap between the dialog and the edge of the page should be, in pixels.
+     * Default: 8
+     */
+    staticOffset: number;
 }
+
+declare type StaticPlacement = 'center' | 'top left' | 'top center' | 'top right' | 'center left' | 'center center' | 'center right' | 'bottom left' | 'bottom center' | 'bottom right';
 
 export { }
