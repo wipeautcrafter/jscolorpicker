@@ -208,9 +208,23 @@ interface PickerConfig {
    * Default: 8
    */
   dialogOffset: number
+
+  /**
+   * How to place the dialog when no anchor element is defined.
+   * Default: 'top'
+   */
+  staticPlacement: 'top left' | 'top center' | 'top right' |
+                   'center left' | 'center center' | 'center right' |
+                   'bottom left' | 'bottom center' | 'bottom right'
+
+  /**
+   * How big the gap between the dialog and the edge of the page should be, in pixels.
+   * Default: 8
+   */
+  staticOffset: number
 }
 
-type ColorFormat = 'hex' | 'rgb' | 'hsv' | 'hsl'
+type ColorFormat = 'hex' | 'rgb' | 'rgba' | 'hsv' | 'hsl'
 
 class Color {
   string(format: ColorFormat): string
