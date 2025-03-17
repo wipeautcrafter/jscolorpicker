@@ -2245,7 +2245,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
      * @param emit Emit event?
      */
     submit(color = this._newColor, emit = true) {
-      this._setCurrentColor(color);
+      this._setCurrentColor(color, emit, true, true);
       this.close(emit);
     }
     /**
@@ -2304,16 +2304,16 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
     }
     _setNewColor(color, updateInput = true) {
       if (this.config.submitMode === "instant" || this.config.swatchesOnly) {
-        return this._setCurrentColor(color, true, updateInput);
+        return this._setCurrentColor(color, true, updateInput, true);
       }
       this._newColor = color;
       this.updateColor(updateInput);
     }
-    _setCurrentColor(color, emit = true, updateInput = true) {
+    _setCurrentColor(color, emit = true, updateInput = true, fireOnChange = false) {
       this._unset = false;
       this._newColor = this._color = color;
       this.updateColor(updateInput);
-      this.updateAppliedColor(emit);
+      this.updateAppliedColor(emit, fireOnChange);
     }
     updateColor(updateInput = true) {
       var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j;
@@ -2329,14 +2329,15 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
       (_i = this.hueSlider) == null ? void 0 : _i.move(this._newColor.hue() / 360);
       (_j = this.alphaSlider) == null ? void 0 : _j.move(this._newColor.alpha());
       if (updateInput && this.$colorInput) {
-        this.$colorInput.value = this._newColor.string(this._format);
+        this.$colorInput.setAttribute("value", this._newColor.string(this._format));
       }
     }
-    updateAppliedColor(emit = true) {
+    updateAppliedColor(emit = true, fireOnChange = false) {
       const color = this._unset ? "" : this._color.string(this.config.defaultFormat);
       if (this.$input) {
-        this.$input.value = color;
+        this.$input.setAttribute("value", color);
         this.$input.dataset.color = color;
+        fireOnChange && this.$input.dispatchEvent(new Event("change"));
       }
       if (this.$toggle) this.$toggle.dataset.color = color;
       if (this.$button) this.$button.classList.toggle("cp_unset", this._unset);
