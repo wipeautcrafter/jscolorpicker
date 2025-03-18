@@ -529,7 +529,7 @@ export class ColorPicker extends EventEmitter<{
     this.alphaSlider?.move(this._newColor.alpha())
 
     if (updateInput && this.$colorInput) {
-      this.$colorInput.setAttribute('value', this._newColor.string(this._format))
+      this.$colorInput.value = this._newColor.string(this._format)
     }
   }
 
@@ -537,7 +537,7 @@ export class ColorPicker extends EventEmitter<{
     const color = this._unset ? '' : this._color.string(this.config.defaultFormat)
 
     if (this.$input) {
-      this.$input.setAttribute('value', color)
+      this.$input.value = color
       this.$input.dataset.color = color
       fireOnChange && this.$input.dispatchEvent(new Event('change'))
     }

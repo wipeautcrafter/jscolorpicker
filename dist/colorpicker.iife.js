@@ -2329,13 +2329,13 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
       (_i = this.hueSlider) == null ? void 0 : _i.move(this._newColor.hue() / 360);
       (_j = this.alphaSlider) == null ? void 0 : _j.move(this._newColor.alpha());
       if (updateInput && this.$colorInput) {
-        this.$colorInput.setAttribute("value", this._newColor.string(this._format));
+        this.$colorInput.value = this._newColor.string(this._format);
       }
     }
     updateAppliedColor(emit = true, fireOnChange = false) {
       const color = this._unset ? "" : this._color.string(this.config.defaultFormat);
       if (this.$input) {
-        this.$input.setAttribute("value", color);
+        this.$input.value = color;
         this.$input.dataset.color = color;
         fireOnChange && this.$input.dispatchEvent(new Event("change"));
       }

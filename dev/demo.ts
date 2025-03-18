@@ -130,3 +130,9 @@ for (const btn of document.querySelectorAll<HTMLElement>('.swatchesBtn')) {
     pickers[idx - 1].setSwatches(['red', 'green', 'blue'])
   }
 }
+
+document.querySelector('#setValueBtn').onclick = () => {
+  const picker = document.querySelector('#picker1');
+  picker.value = 'yellow';
+  picker.dispatchEvent(new Event('change'));
+}
