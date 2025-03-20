@@ -143,7 +143,7 @@ export class ColorPicker extends EventEmitter<{
    */
   constructor(
     $from?: HTMLInputElement | HTMLButtonElement | string | null,
-    config: Partial<PickerConfig> = {}
+    config: Partial<PickerConfig> = {},
   ) {
     super()
     this.config = { ...defaultConfig, ...config }
@@ -505,7 +505,12 @@ export class ColorPicker extends EventEmitter<{
     this.updateColor(updateInput)
   }
 
-  private _setCurrentColor(color: Color, emit = true, updateInput = true, fireOnChange: boolean = false) {
+  private _setCurrentColor(
+    color: Color,
+    emit = true,
+    updateInput = true,
+    fireOnChange: boolean = false,
+  ) {
     this._unset = false
     this._newColor = this._color = color
 

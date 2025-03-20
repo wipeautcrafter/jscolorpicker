@@ -17,8 +17,10 @@ const hsv2rgb = ([h, s, v, a]: number[]) => {
 }
 
 const toFn = ([c1, c2, c3, a]: number[], name: string, forceAlpha: boolean = false) => {
-  const includeAlpha = forceAlpha || a < 1;
-  if ('rgb' === name && includeAlpha) { name = 'rgba'; }
+  const includeAlpha = forceAlpha || a < 1
+  if ('rgb' === name && includeAlpha) {
+    name = 'rgba'
+  }
 
   const values = name.startsWith('hs')
     ? [chop(c1), chop(c2 * 100) + '%', chop(c3 * 100) + '%']
@@ -28,7 +30,6 @@ const toFn = ([c1, c2, c3, a]: number[], name: string, forceAlpha: boolean = fal
   return `${name}(${values.join()})`
 }
 
-
 const toHex = (color: number[]) =>
   '#' +
   color
@@ -36,7 +37,7 @@ const toHex = (color: number[]) =>
     .map((v) =>
       Math.round(v * 255)
         .toString(16)
-        .padStart(2, '0')
+        .padStart(2, '0'),
     )
     .join('')
 
