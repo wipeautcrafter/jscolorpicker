@@ -40,7 +40,7 @@ An open source, free (as in beer), versatile, flexible and lightweight Javascrip
 - 🪞 Preview
 - ✅ Apply color immediately, or on submit
 - 📜 CSS color parsing (including named colors)
-- 💧 EyeDropper on Chrome
+- 💧 EyeDropper on Chrome and Edge
 - ⌨️ Keyboard support
 - 🚫 Clearable
 
@@ -105,8 +105,7 @@ Next instantiate the ColorPicker, passing an element to bind to and an (optional
 
 ```js
 const picker = new ColorPicker('#picker', {
-  submitMode: 'instant',
-  showSubmitButton: false,
+  submitMode: 'instant'
 })
 ```
 
@@ -193,7 +192,8 @@ You can alter a variety of styles using their respective CSS variables:
   --cp-body-bg: #fff;
   --cp-body-color: #212529;
   --cp-body-color-rgb: 33, 37, 41;
-  --cp-border-color: #dee2e6;
+  --cp-border-color: #ccc;
+  --cp-button-color: #ccc;
   --cp-border-color-translucent: rgba(0, 0, 0, 0.175);
   --cp-tertiary-color: rgba(33, 37, 41, 0.5);
 
