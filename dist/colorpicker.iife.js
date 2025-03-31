@@ -1940,6 +1940,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
       super();
       __publicField(this, "_open", false);
       __publicField(this, "_unset", true);
+      __publicField(this, "_firingChange", false);
       __publicField(this, "_format");
       __publicField(this, "_color");
       __publicField(this, "_newColor");
@@ -2041,7 +2042,11 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
       this.$toggle.classList.add("color-picker");
       this.$toggle.setAttribute("type", "button");
       this.$toggle.append(this.$input, this.$button);
-      this.changeHandler = () => this.setColor(this.$input.value);
+      this.changeHandler = () => {
+        if (!this._firingChange) {
+          this.setColor(this.$input.value, false);
+        }
+      };
       this.clickHandler = () => this.toggle();
       this.$input.addEventListener("change", this.changeHandler);
       this.$toggle.addEventListener("click", this.clickHandler);
@@ -2245,7 +2250,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
      * @param emit Emit event?
      */
     submit(color = this._newColor, emit = true) {
-      this._setCurrentColor(color, emit, true, true);
+      this._setCurrentColor(color, emit, true);
       this.close(emit);
     }
     /**
@@ -2303,17 +2308,18 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
       }
     }
     _setNewColor(color, updateInput = true) {
-      if (this.config.submitMode === "instant" || this.config.swatchesOnly) {
-        return this._setCurrentColor(color, true, updateInput, true);
-      }
       this._newColor = color;
+      if (this.config.submitMode === "instant" || this.config.swatchesOnly) {
+        this._color = color;
+        this.updateAppliedColor(true);
+      }
       this.updateColor(updateInput);
     }
-    _setCurrentColor(color, emit = true, updateInput = true, fireOnChange = false) {
+    _setCurrentColor(color, emit = true, updateInput = true) {
       this._unset = false;
       this._newColor = this._color = color;
       this.updateColor(updateInput);
-      this.updateAppliedColor(emit, fireOnChange);
+      this.updateAppliedColor(emit);
     }
     updateColor(updateInput = true) {
       var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j;
@@ -2332,16 +2338,22 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
         this.$colorInput.value = this._newColor.string(this._format);
       }
     }
-    updateAppliedColor(emit = true, fireOnChange = false) {
+    updateAppliedColor(emit = true) {
       const color = this._unset ? "" : this._color.string(this.config.defaultFormat);
       if (this.$input) {
         this.$input.value = color;
         this.$input.dataset.color = color;
-        fireOnChange && this.$input.dispatchEvent(new Event("change"));
       }
       if (this.$toggle) this.$toggle.dataset.color = color;
       if (this.$button) this.$button.classList.toggle("cp_unset", this._unset);
-      if (emit) this.emit("pick", this.color);
+      if (emit) {
+        this.emit("pick", this.color);
+        if (this.$input) {
+          this._firingChange = true;
+          this.$input.dispatchEvent(new Event("change"));
+          this._firingChange = false;
+        }
+      }
     }
     updateFormat() {
       if (!this.$formats) return;

@@ -23,7 +23,7 @@
       <div>
         <b>Input element, instant, swatches</b>
         <div>
-          <input id="picker1" autocomplete="off" value="#112233" />
+          <input id="picker1" autocomplete="off" value="transparent" onchange="console.log('onchange', this.value)" />
         </div>
         <button class="btn btn-secondary changeBtn" data-picker="picker1">Change</button>
         <button class="btn btn-secondary setBtn" data-picker="1">Set</button>
@@ -66,6 +66,8 @@
       </div>
     </div>
     <!--/.container-->
+
+	<div id="testDiv"></div>
 
     <script src="demo.ts" type="module"></script>
   </body>

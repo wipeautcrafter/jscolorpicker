@@ -57,6 +57,7 @@ declare class ColorPicker extends EventEmitter<{
     get element(): HTMLElement;
     private _open;
     private _unset;
+    private _firingChange;
     private _format;
     private _color;
     private _newColor;

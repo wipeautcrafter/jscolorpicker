@@ -1938,6 +1938,7 @@ class ColorPicker extends eventsExports.EventEmitter {
     super();
     __publicField(this, "_open", false);
     __publicField(this, "_unset", true);
+    __publicField(this, "_firingChange", false);
     __publicField(this, "_format");
     __publicField(this, "_color");
     __publicField(this, "_newColor");
@@ -2039,7 +2040,11 @@ class ColorPicker extends eventsExports.EventEmitter {
     this.$toggle.classList.add("color-picker");
     this.$toggle.setAttribute("type", "button");
     this.$toggle.append(this.$input, this.$button);
-    this.changeHandler = () => this.setColor(this.$input.value);
+    this.changeHandler = () => {
+      if (!this._firingChange) {
+        this.setColor(this.$input.value, false);
+      }
+    };
     this.clickHandler = () => this.toggle();
     this.$input.addEventListener("change", this.changeHandler);
     this.$toggle.addEventListener("click", this.clickHandler);
@@ -2243,7 +2248,7 @@ class ColorPicker extends eventsExports.EventEmitter {
    * @param emit Emit event?
    */
   submit(color = this._newColor, emit2 = true) {
-    this._setCurrentColor(color, emit2, true, true);
+    this._setCurrentColor(color, emit2, true);
     this.close(emit2);
   }
   /**
@@ -2301,17 +2306,18 @@ class ColorPicker extends eventsExports.EventEmitter {
     }
   }
   _setNewColor(color, updateInput = true) {
-    if (this.config.submitMode === "instant" || this.config.swatchesOnly) {
-      return this._setCurrentColor(color, true, updateInput, true);
-    }
     this._newColor = color;
+    if (this.config.submitMode === "instant" || this.config.swatchesOnly) {
+      this._color = color;
+      this.updateAppliedColor(true);
+    }
     this.updateColor(updateInput);
   }
-  _setCurrentColor(color, emit2 = true, updateInput = true, fireOnChange = false) {
+  _setCurrentColor(color, emit2 = true, updateInput = true) {
     this._unset = false;
     this._newColor = this._color = color;
     this.updateColor(updateInput);
-    this.updateAppliedColor(emit2, fireOnChange);
+    this.updateAppliedColor(emit2);
   }
   updateColor(updateInput = true) {
     var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j;
@@ -2330,16 +2336,22 @@ class ColorPicker extends eventsExports.EventEmitter {
       this.$colorInput.value = this._newColor.string(this._format);
     }
   }
-  updateAppliedColor(emit2 = true, fireOnChange = false) {
+  updateAppliedColor(emit2 = true) {
     const color = this._unset ? "" : this._color.string(this.config.defaultFormat);
     if (this.$input) {
       this.$input.value = color;
       this.$input.dataset.color = color;
-      fireOnChange && this.$input.dispatchEvent(new Event("change"));
     }
     if (this.$toggle) this.$toggle.dataset.color = color;
     if (this.$button) this.$button.classList.toggle("cp_unset", this._unset);
-    if (emit2) this.emit("pick", this.color);
+    if (emit2) {
+      this.emit("pick", this.color);
+      if (this.$input) {
+        this._firingChange = true;
+        this.$input.dispatchEvent(new Event("change"));
+        this._firingChange = false;
+      }
+    }
   }
   updateFormat() {
     if (!this.$formats) return;

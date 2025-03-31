@@ -65,6 +65,7 @@ export class ColorPicker extends EventEmitter<{
 
   private _open = false
   private _unset = true
+  private _firingChange = false
   private _format: ColorFormat
 
   private _color: Color
@@ -121,7 +122,11 @@ export class ColorPicker extends EventEmitter<{
     this.$toggle.append(this.$input, this.$button)
 
     // Bind events
-    this.changeHandler = () => this.setColor(this.$input!.value)
+    this.changeHandler = () => {
+      if (!this._firingChange) {
+        this.setColor(this.$input!.value, false)
+      }
+    }
     this.clickHandler = () => this.toggle()
 
     this.$input.addEventListener('change', this.changeHandler)
@@ -427,7 +432,7 @@ export class ColorPicker extends EventEmitter<{
    * @param emit Emit event?
    */
   submit(color = this._newColor, emit = true) {
-    this._setCurrentColor(color, emit, true, true)
+    this._setCurrentColor(color, emit, true)
     this.close(emit)
   }
 
@@ -497,25 +502,26 @@ export class ColorPicker extends EventEmitter<{
   }
 
   private _setNewColor(color: Color, updateInput = true) {
+    this._newColor = color
+
     if (this.config.submitMode === 'instant' || this.config.swatchesOnly) {
-      return this._setCurrentColor(color, true, updateInput, true)
+      this._color = color
+      this.updateAppliedColor(true)
     }
 
-    this._newColor = color
     this.updateColor(updateInput)
   }
 
   private _setCurrentColor(
     color: Color,
     emit = true,
-    updateInput = true,
-    fireOnChange: boolean = false,
+    updateInput = true
   ) {
     this._unset = false
     this._newColor = this._color = color
 
     this.updateColor(updateInput)
-    this.updateAppliedColor(emit, fireOnChange)
+    this.updateAppliedColor(emit)
   }
 
   private updateColor(updateInput = true) {
@@ -538,18 +544,24 @@ export class ColorPicker extends EventEmitter<{
     }
   }
 
-  private updateAppliedColor(emit = true, fireOnChange: boolean = false) {
+  private updateAppliedColor(emit = true) {
     const color = this._unset ? '' : this._color.string(this.config.defaultFormat)
 
     if (this.$input) {
       this.$input.value = color
       this.$input.dataset.color = color
-      fireOnChange && this.$input.dispatchEvent(new Event('change'))
     }
     if (this.$toggle) this.$toggle.dataset.color = color
     if (this.$button) this.$button.classList.toggle('cp_unset', this._unset)
 
-    if (emit) this.emit('pick', this.color)
+    if (emit) {
+      this.emit('pick', this.color)
+      if (this.$input) {
+        this._firingChange = true
+        this.$input.dispatchEvent(new Event('change'))
+        this._firingChange = false
+      }
+    }
   }
 
   private updateFormat() {
