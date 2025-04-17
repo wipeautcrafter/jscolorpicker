@@ -1,4 +1,4 @@
-# JS ColorPicker
+# Javascript Color Picker
 
 An open source, free (as in beer), versatile, flexible and lightweight Javascript Color Picker Component supporting light and dark skins, swatches, multiple color formats, CSS color parsing, instant and confirm modes and much more.
 
