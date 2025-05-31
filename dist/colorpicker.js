@@ -2308,6 +2308,7 @@ class ColorPicker extends eventsExports.EventEmitter {
   _setNewColor(color, updateInput = true) {
     this._newColor = color;
     if (this.config.submitMode === "instant" || this.config.swatchesOnly) {
+      this._unset = false;
       this._color = color;
       this.updateAppliedColor(true);
     }
@@ -2343,6 +2344,7 @@ class ColorPicker extends eventsExports.EventEmitter {
       this.$input.dataset.color = color;
     }
     if (this.$toggle) this.$toggle.dataset.color = color;
+    console.log("btn", this.$button, this._unset);
     if (this.$button) this.$button.classList.toggle("cp_unset", this._unset);
     if (emit2) {
       this.emit("pick", this.color);

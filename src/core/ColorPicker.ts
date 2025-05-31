@@ -65,7 +65,7 @@ export class ColorPicker extends EventEmitter<{
 
   private _open = false
   private _unset = true
-  private _firingChange = false
+  private _firingChange = false
   private _format: ColorFormat
 
   private _color: Color
@@ -505,6 +505,7 @@ export class ColorPicker extends EventEmitter<{
     this._newColor = color
 
     if (this.config.submitMode === 'instant' || this.config.swatchesOnly) {
+      this._unset = false
       this._color = color
       this.updateAppliedColor(true)
     }
@@ -552,6 +553,7 @@ export class ColorPicker extends EventEmitter<{
       this.$input.dataset.color = color
     }
     if (this.$toggle) this.$toggle.dataset.color = color
+      console.log('btn',this.$button, this._unset)
     if (this.$button) this.$button.classList.toggle('cp_unset', this._unset)
 
     if (emit) {
