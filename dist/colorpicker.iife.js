@@ -2346,7 +2346,6 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
         this.$input.dataset.color = color;
       }
       if (this.$toggle) this.$toggle.dataset.color = color;
-      console.log("btn", this.$button, this._unset);
       if (this.$button) this.$button.classList.toggle("cp_unset", this._unset);
       if (emit) {
         this.emit("pick", this.color);
