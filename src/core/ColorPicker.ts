@@ -148,7 +148,7 @@ export class ColorPicker extends EventEmitter<{
    */
   constructor(
     $from?: HTMLInputElement | HTMLButtonElement | string | null,
-    config: Partial<PickerConfig> = {},
+    config: Partial<PickerConfig> = {}
   ) {
     super()
     this.config = { ...defaultConfig, ...config }
@@ -270,10 +270,8 @@ export class ColorPicker extends EventEmitter<{
    */
   prompt(destroy = false): Promise<Color | null> {
     return new Promise((resolve) => {
-      let color: Color | null = null
+      this.once('close', () => resolve(this.color))
 
-      this.on('pick', (newColor) => (color = newColor))
-      this.once('close', () => resolve(color))
       if (destroy) {
         this.once('closed', () => this.destroy())
       }
@@ -513,11 +511,7 @@ export class ColorPicker extends EventEmitter<{
     this.updateColor(updateInput)
   }
 
-  private _setCurrentColor(
-    color: Color,
-    emit = true,
-    updateInput = true
-  ) {
+  private _setCurrentColor(color: Color, emit = true, updateInput = true) {
     this._unset = false
     this._newColor = this._color = color
 

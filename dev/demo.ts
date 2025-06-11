@@ -33,7 +33,7 @@ pickers.push(
     dismissOnOutsideClick: false,
     submitMode: 'instant', // 'instant' | 'confirm'
     // color: 'red',
-	 color: 'transparent',
+    color: 'transparent',
     defaultFormat: 'hex', // 'hex' | 'rgb' | 'hsv' | 'hsl'
     swatches: [
       '#d95d5d',
@@ -131,8 +131,8 @@ for (const btn of document.querySelectorAll<HTMLElement>('.swatchesBtn')) {
   }
 }
 
-document.querySelector('#setValueBtn').onclick = () => {
-  const picker = document.querySelector('#picker1');
-  picker.value = 'yellow';
-  picker.dispatchEvent(new Event('change'));
-}
+document.querySelector('#setValueBtn')!.addEventListener('click', () => {
+  const picker = document.querySelector('#picker1') as HTMLInputElement
+  picker.value = 'yellow'
+  picker.dispatchEvent(new Event('change'))
+})
