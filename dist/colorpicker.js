@@ -1105,7 +1105,6 @@ function detectOverflow(state, options) {
   var popperOffsets2 = computeOffsets({
     reference: referenceClientRect,
     element: popperRect,
-    strategy: "absolute",
     placement
   });
   var popperClientRect = rectToClientRect(Object.assign({}, popperRect, popperOffsets2));
@@ -1352,7 +1351,6 @@ function popperOffsets(_ref) {
   state.modifiersData[name] = computeOffsets({
     reference: state.rects.reference,
     element: state.rects.popper,
-    strategy: "absolute",
     placement: state.placement
   });
 }
@@ -2122,9 +2120,7 @@ class ColorPicker extends eventsExports.EventEmitter {
    */
   prompt(destroy = false) {
     return new Promise((resolve) => {
-      let color = null;
-      this.on("pick", (newColor) => color = newColor);
-      this.once("close", () => resolve(color));
+      this.once("close", () => resolve(this.color));
       if (destroy) {
         this.once("closed", () => this.destroy());
       }
