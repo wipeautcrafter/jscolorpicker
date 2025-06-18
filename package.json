@@ -14,10 +14,10 @@
     "@popperjs/core": "^2.11.8",
     "@types/bun": "^1.1.13",
     "@types/color": "^4.2.0",
-    "esbuild": "^0.25.1",
+    "esbuild": "^0.25.5",
     "events": "^3.3.0",
     "typescript": "~5.6.2",
-    "vite": "^5.4.10",
+    "vite": "^5.4.19",
     "vite-plugin-dts": "^4.3.0"
   }
 }
