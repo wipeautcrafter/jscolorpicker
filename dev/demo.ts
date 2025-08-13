@@ -117,6 +117,21 @@ for (const btn of document.querySelectorAll<HTMLElement>('.setBtn')) {
   }
 }
 
+for (const btn of document.querySelectorAll<HTMLElement>('.setValueBtn')) {
+  btn.onclick = () => {
+    const idx = +btn.dataset.picker
+    const pickerElement = document.getElementById(`picker${idx}`)
+    if (pickerElement instanceof HTMLButtonElement) {
+      pickerElement.setAttribute('data-color', getRandomColor())
+    }
+    else {
+      pickerElement.value = getRandomColor()
+    }
+    pickerElement.dispatchEvent(new Event('change'))
+  }
+}
+
+
 for (const btn of document.querySelectorAll<HTMLElement>('.getBtn')) {
   btn.onclick = () => {
     const idx = +btn.dataset.picker!
@@ -130,9 +145,3 @@ for (const btn of document.querySelectorAll<HTMLElement>('.swatchesBtn')) {
     pickers[idx - 1].setSwatches(['red', 'green', 'blue'])
   }
 }
-
-document.querySelector('#setValueBtn')!.addEventListener('click', () => {
-  const picker = document.querySelector('#picker1') as HTMLInputElement
-  picker.value = 'yellow'
-  picker.dispatchEvent(new Event('change'))
-})

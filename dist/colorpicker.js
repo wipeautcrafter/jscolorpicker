@@ -2042,12 +2042,13 @@ class ColorPicker extends eventsExports.EventEmitter {
     this.$toggle.append(this.$input, this.$button);
     this.changeHandler = () => {
       if (!this._firingChange) {
-        this.setColor(this.$input.value, false);
+        this.setColor(this.isInput ? this.$input.value : this.$toggle.getAttribute("data-color"), false);
       }
     };
     this.clickHandler = () => this.toggle();
-    this.$input.addEventListener("change", this.changeHandler);
     this.$toggle.addEventListener("click", this.clickHandler);
+    const $el = isInput ? this.$input : this.$toggle;
+    $el.addEventListener("change", this.changeHandler);
   }
   /**
    * Append the picker to a given element.
