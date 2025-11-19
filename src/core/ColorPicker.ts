@@ -372,11 +372,6 @@ export class ColorPicker extends EventEmitter<{
       if (event.key === 'Enter') this.submit()
     })
 
-    // Dblclick input to copy color to clipboard
-    this.$colorInput!.addEventListener('dblclick', () => {
-      navigator.clipboard && navigator.clipboard.writeText(this.$colorInput!.value)
-    })
-
     if (this.config.swatchesOnly) {
       const $iptGroup = this.$dialog!.querySelector('.cp_input-group')
       $iptGroup && $iptGroup.remove()

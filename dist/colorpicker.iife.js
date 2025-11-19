@@ -2203,9 +2203,6 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
       this.$colorInput.addEventListener("keydown", (event) => {
         if (event.key === "Enter") this.submit();
       });
-      this.$colorInput.addEventListener("dblclick", () => {
-        navigator.clipboard && navigator.clipboard.writeText(this.$colorInput.value);
-      });
       if (this.config.swatchesOnly) {
         const $iptGroup = this.$dialog.querySelector(".cp_input-group");
         $iptGroup && $iptGroup.remove();
