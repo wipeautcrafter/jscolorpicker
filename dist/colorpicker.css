@@ -26,8 +26,6 @@
 }
 
 :root {
-  box-sizing: border-box;
-
   --cp-size: 2.375rem;
   --cp-delay: 150ms;
 
@@ -39,6 +37,10 @@
   --cp-box-shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
 
   --cp-bg-checker: repeating-conic-gradient(#808080 0% 25%, transparent 0% 50%) 50% / 0.5rem 0.5rem;
+}
+
+.color-picker, .cp_dialog {
+  box-sizing: border-box;
 }
 
 /* Picker toggle button */
