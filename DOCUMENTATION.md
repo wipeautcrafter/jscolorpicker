@@ -161,6 +161,7 @@ interface PickerConfig {
   /**
    * The set of color formats the user can choose from.
    * Pass null or false to disable format selection.
+   * Note: 'oklch' is supported but not included by default.
    * Default: ['hex', 'rgb', 'hsv', 'hsl']
    */
   formats: ColorFormat[] | null | false
@@ -224,7 +225,7 @@ interface PickerConfig {
   staticOffset: number
 }
 
-type ColorFormat = 'hex' | 'rgb' | 'rgba' | 'hsv' | 'hsl'
+type ColorFormat = 'hex' | 'rgb' | 'rgba' | 'hsv' | 'hsl' | 'oklch'
 
 class Color {
   string(format: ColorFormat): string

@@ -15,6 +15,7 @@ pickers.push(
     submitMode: 'instant', // 'instant' | 'confirm'
     // defaultFormat: 'hex', // 'hex' | 'rgb' | 'hsv' | 'hsl'
     defaultFormat: 'rgba',
+    formats: ['hex', 'rgb', 'oklch'],
     swatches: ['#d95d5d', '#db8525', '#e8c43c', '#bed649', '#9ecbdb', '#6399a5', '#c771a1'],
   }),
 
