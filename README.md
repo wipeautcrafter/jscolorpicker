@@ -229,6 +229,7 @@ To run:
 ```sh
 bun|deno|npm|pnpm|yarn run dev
 ```
+Then visit `http://[your-ip]:5173/dev/`
 
 ## License
 
