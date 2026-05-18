@@ -4814,7 +4814,7 @@ const getFormat = (input) => {
   if (input.match(/^oklch/i)) return "oklch";
   return "hex";
 };
-const hsvRegex = /^hsva?\(\s*(?<h>[+-]?(?:\d+(?:\.\d+)?|\.\d+)(?:deg|rad|turn|grad)?)\s*(?:(?:,\s*)|\s+)(?<s>[+-]?(?:\d+(?:\.\d+)?|\.\d+)%)\s*(?:(?:,\s*)|\s+)(?<v>[+-]?(?:\d+(?:\.\d+)?|\.\d+)%)\s*(?:(?:,\s*|\s*\/\s*)(?<a>[+-]?(?:\d+(?:\.\d+)?|\.\d+)%?))?\s*\)$/i;
+const hsvRegex = /^hsva?\(\s*(?<h>[+-]?(?:\d+(?:\.\d+)?|\.\d+)(?:deg)?)\s*(?:(?:,\s*)|\s+)(?<s>[+-]?(?:\d+(?:\.\d+)?|\.\d+)%)\s*(?:(?:,\s*)|\s+)(?<v>[+-]?(?:\d+(?:\.\d+)?|\.\d+)%)\s*(?:(?:,\s*|\s*\/\s*)(?<a>[+-]?(?:\d+(?:\.\d+)?|\.\d+)%?))?\s*\)$/i;
 const parseFallback = (input) => {
   const match = input.match(hsvRegex);
   if (!(match == null ? void 0 : match.groups)) return null;

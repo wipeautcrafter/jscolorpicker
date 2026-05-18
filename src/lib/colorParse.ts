@@ -10,7 +10,7 @@ const getFormat = (input: string): ColorFormat => {
 }
 
 const hsvRegex =
-  /^hsva?\(\s*(?<h>[+-]?(?:\d+(?:\.\d+)?|\.\d+)(?:deg|rad|turn|grad)?)\s*(?:(?:,\s*)|\s+)(?<s>[+-]?(?:\d+(?:\.\d+)?|\.\d+)%)\s*(?:(?:,\s*)|\s+)(?<v>[+-]?(?:\d+(?:\.\d+)?|\.\d+)%)\s*(?:(?:,\s*|\s*\/\s*)(?<a>[+-]?(?:\d+(?:\.\d+)?|\.\d+)%?))?\s*\)$/i;
+  /^hsva?\(\s*(?<h>[+-]?(?:\d+(?:\.\d+)?|\.\d+)(?:deg)?)\s*(?:(?:,\s*)|\s+)(?<s>[+-]?(?:\d+(?:\.\d+)?|\.\d+)%)\s*(?:(?:,\s*)|\s+)(?<v>[+-]?(?:\d+(?:\.\d+)?|\.\d+)%)\s*(?:(?:,\s*|\s*\/\s*)(?<a>[+-]?(?:\d+(?:\.\d+)?|\.\d+)%?))?\s*\)$/i;
 
 const parseFallback = (input: string) => {
   const match = input.match(hsvRegex);
