@@ -1,51 +1,42 @@
+import { clampRgb, converter, parse } from "culori"
 import type { ColorFormat } from './Color'
 
-// https://stackoverflow.com/a/54070620
-const rgb2hsv = ([r, g, b, a]: number[]) => {
-  const v = Math.max(r, g, b)
-  const c = v - Math.min(r, g, b)
-  const h = c && (v == r ? (g - b) / c : v == g ? 2 + (b - r) / c : 4 + (r - g) / c)
-  return [60 * (h < 0 ? h + 6 : h), v && c / v, v, a]
+const getFormat = (input: string): ColorFormat => {
+  if(input.match(/^rgb/i)) return 'rgb'
+  if(input.match(/^hsl/i)) return 'hsl'
+  if(input.match(/^hsv/i)) return 'hsv'
+  if(input.match(/^oklch/i)) return 'oklch'
+  return 'hex'
 }
 
-const strip = (input: string) =>
-  input
-    .replace(/[^0-9%.,]/g, '')
-    .split(',')
-    .map((v) => parseFloat(v) / (v.endsWith('%') ? 100 : 1))
+const hsvRegex =
+  /^hsva?\(\s*(?<h>[+-]?(?:\d+(?:\.\d+)?|\.\d+)(?:deg|rad|turn|grad)?)\s*(?:(?:,\s*)|\s+)(?<s>[+-]?(?:\d+(?:\.\d+)?|\.\d+)%)\s*(?:(?:,\s*)|\s+)(?<v>[+-]?(?:\d+(?:\.\d+)?|\.\d+)%)\s*(?:(?:,\s*|\s*\/\s*)(?<a>[+-]?(?:\d+(?:\.\d+)?|\.\d+)%?))?\s*\)$/i;
 
-const parseCSS = (input: string) => {
-  const $el = document.createElement('span')
-  $el.style.display = 'none'
-  $el.style.color = input
-  document.body.append($el)
-  const { color } = getComputedStyle($el)
-  $el.remove()
+const parseFallback = (input: string) => {
+  const match = input.match(hsvRegex);
+  if(!match?.groups) return null;
+  
+  const {h, s, v, a = '1'} = match.groups;
+  const alphaPercentage = a?.match(/%$/);
 
-  if (!color) return null
-  const [r, g, b, a] = strip(color)
-  return rgb2hsv([r / 255, g / 255, b / 255, a])
+  return {
+    mode: 'hsv',
+    h: Number.parseFloat(h),
+    s: Number.parseFloat(s) / 100,
+    v: Number.parseFloat(v) / 100,
+    alpha: Number.parseFloat(a) / (alphaPercentage ? 100 : 1)
+  } as const
 }
 
-const parseHSV = (input: string) => {
-  const color = strip(input).map((v, i) => Math.min(v, i ? 1 : 255))
-  if (color.length < 3 || color.some((v) => isNaN(v))) return null
-  return color
-}
+export const parseColor = (raw: string): { color: number[]; format: ColorFormat } => {
+  const input = raw.trim()
+  const format = getFormat(input)
+  const parsed = parse(input) ?? parseFallback(input)
 
-export const parseColor = (input: string) => {
-  let format: ColorFormat
+  if(!parsed) throw new Error('Color could not be parsed!')
 
-  if (/^hsva?\(/i.test(input)) format = 'hsv'
-  else if (/^hsla?\(/i.test(input)) format = 'hsl'
-  else if (/^rgba?\(/i.test(input)) format = 'rgb'
-  else if (/^oklch\(/i.test(input)) format = 'oklch'
-  else format = 'hex'
-
-  const color = format === 'hsv' ? parseHSV(input) : parseCSS(input)
-  if (!color) throw new Error('Color could not be parsed!')
-
-  color[3] = color[3] ?? 1
+  const {h = 0, s, v, alpha = 1} = clampRgb(converter('hsv')(parsed))
+  const color = [h, s, v, alpha]
 
   return { color, format }
 }
