@@ -1,5 +1,6 @@
 import { parseColor } from './colorParse'
 import { convertColor } from './colorConvert'
+import type { Hsv } from 'culori'
 
 export type ColorFormat = 'hex' | 'rgb' | 'rgba' | 'hsv' | 'hsl' | 'oklch'
 
@@ -40,10 +41,21 @@ export class Color {
   }
 
   string(format: ColorFormat) {
-    return convertColor(this.color, format)
+    const repr = this.toCulori()
+    return convertColor(repr, format)
   }
   toString() {
     return this.string('hex')
+  }
+
+  private toCulori(): Hsv {
+    return {
+      mode: 'hsv',
+      h: this.color[0],
+      s: this.color[1],
+      v: this.color[2],
+      alpha: this.color[3]
+    }
   }
 
   clone() {

@@ -7,6 +7,7 @@ declare class Color {
     constructor(from?: Color | number[] | string);
     string(format: ColorFormat): string;
     toString(): string;
+    private toCulori;
     clone(): Color;
 }
 
