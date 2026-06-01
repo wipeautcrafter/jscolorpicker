@@ -212,11 +212,12 @@ interface PickerConfig {
 
   /**
    * How to place the dialog when no anchor element is defined.
-   * Default: 'top'
+   * Default: 'center'
    */
-  staticPlacement: 'top left' | 'top center' | 'top right' |
-                   'center left' | 'center center' | 'center right' |
-                   'bottom left' | 'bottom center' | 'bottom right'
+  staticPlacement: 'center' |
+                   'top-left' | 'top-center' | 'top-right' |
+                   'center-left' | 'center-center' | 'center-right' |
+                   'bottom-left' | 'bottom-center' | 'bottom-right'
 
   /**
    * How big the gap between the dialog and the edge of the page should be, in pixels.

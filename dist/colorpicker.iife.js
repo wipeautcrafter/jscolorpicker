@@ -5025,7 +5025,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
     return document.querySelector(from);
   };
   const alignElement = (element, placement, offset2) => {
-    const [y, x = "center"] = placement.split(" ");
+    const [y, x = "center"] = placement.split(/[-\s]/);
     const distance = `${offset2}px`;
     const alignY = y === "bottom" ? "bottom" : "top";
     const centerY = y === "center";
