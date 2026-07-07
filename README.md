@@ -28,7 +28,6 @@ An open source, free (as in beer), versatile, flexible and lightweight Javascrip
 ## Features
 
 - 🏋️ Light weight (42kB minified, 14.5kB minified and gzipped)
-- 0️⃣ Zero dependencies
 - 😎 Easy to use and customize
 - 🔼 Button, input and hidden styles
 - 👆🏻 Touch friendly
@@ -217,11 +216,7 @@ bun|deno|npm|pnpm|yarn install
 To build:
 
 ```sh
-bun|deno|npm|pnpm|yarn run build
-```
-including minification:
-```
-sh build.sh
+./build.sh
 ```
 
 To run:
@@ -229,11 +224,13 @@ To run:
 ```sh
 bun|deno|npm|pnpm|yarn run dev
 ```
+
 Then visit `http://[your-ip]:5173/dev/`
 
 ## License
 
 This component is released under the MIT license. It is simple and easy to understand and places almost no restrictions on what you can do with the code.
+
 [More Information](http://en.wikipedia.org/wiki/MIT_License)
 
 The development of this component was funded by [Zygomatic](https://www.zygomatic.nl/).
